@@ -17,15 +17,6 @@ class SettingsServiceProvider extends ServiceProvider
             $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
         }
 
-        $this->publishes(
-            [
-                __DIR__ . '/../config/config.php' => config_path('app-settings-config.php'),
-                __DIR__ . '/../config/definitions.php' => config_path('app-settings-definitions.php'),
-            ],
-            'settings'
-        );
-
-
     }
 
 }

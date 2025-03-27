@@ -1,5 +1,7 @@
 <?php
 
+namespace xGrz\Settings\Enums;
+
 enum SettingType: int
 {
     case ON_OFF = 1;
