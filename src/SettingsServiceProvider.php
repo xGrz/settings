@@ -13,7 +13,6 @@ class SettingsServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-
     }
 
 }
