@@ -14,6 +14,7 @@ jobs:
 
     strategy:
       matrix:
+        php-version: [8.1, 8.2, 8.3]
         laravel-version: [10.x, 11.x, 12.x]
 
     steps:
@@ -23,7 +24,7 @@ jobs:
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.2
+          php-version: ${{ matrix.php-version }}
           extensions: mbstring, bcmath, sqlite3
           coverage: none
 
