@@ -17,7 +17,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "xGrz\\Settings\\Tests": "tests/"
+            "xGrz\\Settings\\Tests\\": "tests/"
         }
     },
     "extra": {
