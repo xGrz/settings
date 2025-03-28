@@ -36,5 +36,9 @@ return [
         ->context('settings')
         ->prefix('system')
         ->suffix('name')
+        ->settingType(\xGrz\Settings\Enums\SettingType::INTEGER),
+    Entry::make()
+        ->prefix('system')
+        ->suffix('yes_no')
         ->settingType(\xGrz\Settings\Enums\SettingType::YES_NO),
 ];

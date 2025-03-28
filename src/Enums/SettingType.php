@@ -40,4 +40,13 @@ enum SettingType: int
         return in_array($settingType, $this->allowedChanges());
     }
 
+    public function castValueOnSet(mixed $value): mixed
+    {
+        return match ($this) {
+            self::ON_OFF, self::YES_NO => (bool)$value,
+            self::INTEGER => (int)$value,
+            self::FLOAT => (float)$value,
+            default => $value,
+        };
+    }
 }

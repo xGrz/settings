@@ -8,7 +8,7 @@ use xGrz\Settings\Helpers\SettingEntry;
 use xGrz\Settings\Helpers\SettingsConfig;
 use xGrz\Settings\Models\Setting;
 
-class SettingEntryTest extends TestCase
+class InitBaseSettingsTest extends TestCase
 {
     public SettingEntry $entry;
 
@@ -43,9 +43,16 @@ class SettingEntryTest extends TestCase
                 'description' => 'Page length2',
                 'value' => 12,
                 'context' => 'settings',
-                'setting_type' => SettingType::YES_NO,
+                'setting_type' => SettingType::INTEGER,
             ]
         );
+
+        $this->assertDatabaseHas(SettingsConfig::getDatabaseTableName(),
+            [
+                'prefix' => 'system',
+                'suffix' => 'yesNo',
+                'setting_type' => SettingType::YES_NO,
+            ]);
     }
 
 
