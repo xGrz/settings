@@ -5,6 +5,7 @@ namespace xGrz\Settings\Models;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use xGrz\Settings\Casts\DynamicSettingValueCast;
 use xGrz\Settings\Database\Factories\SettingFactory;
 use xGrz\Settings\Enums\SettingType;
 use xGrz\Settings\Helpers\SettingsConfig;
@@ -29,12 +30,14 @@ class Setting extends Model
         return SettingFactory::new();
     }
 
+
     protected $casts = [
         'prefix' => 'string',
         'suffix' => 'string',
         'description' => 'string',
         'context' => 'string',
         'setting_type' => SettingType::class,
+        'value' => DynamicSettingValueCast::class
     ];
 
     protected $guarded = ['id', 'key'];

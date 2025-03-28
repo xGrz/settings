@@ -9,14 +9,12 @@ class SettingObserver
     public function creating(Setting $setting): void
     {
         $this->formatKeys($setting);
-        $this->formatValue($setting);
     }
 
     public function updating(Setting $setting): void
     {
         $this->formatKeys($setting);
         $this->discardIncorrectTypeChanges($setting);
-        $this->formatValue($setting);
     }
 
     private function formatKeys(Setting $setting): void
@@ -35,11 +33,6 @@ class SettingObserver
             // if change is not allowed revert change;
             $setting->setting_type = $setting->getOriginal('setting_type');
         }
-    }
-
-    private function formatValue(Setting $setting): void
-    {
-        $setting->value = $setting->setting_type->castValueOnSet($setting->value);
     }
 
 

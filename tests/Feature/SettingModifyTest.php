@@ -1,6 +1,5 @@
 <?php
 
-
 use Tests\TestCase;
 use xGrz\Settings\Enums\SettingType;
 use xGrz\Settings\Helpers\InitBaseSettings;

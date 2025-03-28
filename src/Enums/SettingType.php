@@ -43,9 +43,9 @@ enum SettingType: int
     public function castValueOnSet(mixed $value): mixed
     {
         return match ($this) {
-            self::ON_OFF, self::YES_NO => (bool)$value,
-            self::INTEGER => (int)$value,
-            self::FLOAT => (float)$value,
+            self::ON_OFF, self::YES_NO => str($value)->toBoolean(),
+            self::INTEGER => str($value)->toInteger(),
+            self::FLOAT => str($value)->replace(',', '.')->toFloat(),
             default => $value,
         };
     }
