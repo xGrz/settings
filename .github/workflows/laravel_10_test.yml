@@ -14,6 +14,11 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        php-version: [8.1, 8.2, 8.3]
+        laravel-version: [10.x, 11.x, 12.x]
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -21,7 +26,7 @@ jobs:
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.2
+          php-version: ${{ matrix.php-version }}
           extensions: mbstring, bcmath, sqlite3
           coverage: none
 
@@ -29,7 +34,7 @@ jobs:
         run: |
           composer self-update
           # Zainstaluj zależności, w tym odpowiednią wersję illuminate/support
-          composer require illuminate/support:11.x --dev --no-interaction
+          composer require illuminate/support:${{ matrix.laravel-version }}.* --dev --no-interaction
 
       - name: Run tests
         run: vendor/bin/phpunit
