@@ -9,16 +9,13 @@
     "autoload": {
         "psr-4": {
             "xGrz\\Settings\\": "src/",
-            "xGrz\\Settings\\Database\\Factories\\": "database/factories/"
+            "xGrz\\Settings\\Database\\Factories\\": "database/factories/",
+            "xGrz\\Settings\\Tests\\Unit\\": "tests/Unit/",
+            "xGrz\\Settings\\Tests\\": "tests/"
         },
         "files": [
             "src/Helpers/global.php"
         ]
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "xGrz\\Settings\\Tests\\": "tests/"
-        }
     },
     "extra": {
         "laravel": {
@@ -38,8 +35,5 @@
     "require": {
         "php": "^8.0",
         "illuminate/support": "^10.0 || ^11.0 || ^12.0"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^10.0"
     }
 }

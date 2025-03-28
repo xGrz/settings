@@ -1,12 +1,14 @@
 <?php
 
+namespace xGrz\Settings\Tests\Feature;
 
-use Tests\TestCase;
+use Illuminate\Support\Facades\Config;
 use xGrz\Settings\Enums\SettingType;
 use xGrz\Settings\Helpers\InitBaseSettings;
 use xGrz\Settings\Helpers\SettingEntry;
 use xGrz\Settings\Helpers\SettingsConfig;
 use xGrz\Settings\Models\Setting;
+use xGrz\Settings\Tests\TestCase;
 
 class InitBaseSettingsTest extends TestCase
 {
