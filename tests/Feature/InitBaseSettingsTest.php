@@ -1,12 +1,13 @@
 <?php
 
+namespace xGrz\Settings\Tests\Feature;
 
-use Tests\TestCase;
 use xGrz\Settings\Enums\SettingType;
 use xGrz\Settings\Helpers\InitBaseSettings;
 use xGrz\Settings\Helpers\SettingEntry;
 use xGrz\Settings\Helpers\SettingsConfig;
 use xGrz\Settings\Models\Setting;
+use xGrz\Settings\Tests\TestCase;
 
 class InitBaseSettingsTest extends TestCase
 {
@@ -16,8 +17,6 @@ class InitBaseSettingsTest extends TestCase
     {
         parent::setUp();
         Setting::truncate();
-        $defaultConfig = include __DIR__ . '/../../config/definitions.php';
-        Config::set('app-settings-definitions', $defaultConfig);
     }
 
     public function test_init_base_settings()
