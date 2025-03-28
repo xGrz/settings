@@ -92,6 +92,9 @@ class SettingEntry
         return $this;
     }
 
+    /**
+     * @throws DetectValueTypeException
+     */
     public function getDefinition(): array
     {
         return [
@@ -113,6 +116,8 @@ class SettingEntry
         if (is_float($value)) return SettingType::FLOAT;
         if (is_int($value)) return SettingType::INTEGER;
         if (is_string($value)) return str($value)->length() > 200 ? SettingType::TEXT : SettingType::STRING;
+
+        // unknown type
         if (is_null($value)) $value = 'null';
         $message = str('Could not detect setting type by its value [' . $value . ']')
             ->when($prefix && $suffix, fn($message) => $message->append(' for [')->append(join('.', [$prefix, $suffix]))->append(']'));

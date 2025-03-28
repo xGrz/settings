@@ -23,4 +23,21 @@ enum SettingType: int
         };
     }
 
+    public function allowedChanges(): array
+    {
+        // First value is old, second value is new (can be changed to)
+        return match ($this) {
+            self::ON_OFF => [self::YES_NO],
+            self::YES_NO => [self::ON_OFF],
+            self::INTEGER => [self::FLOAT],
+            self::STRING => [self::TEXT],
+            default => [],
+        };
+    }
+
+    public function canBeChangedTo(SettingType $settingType): bool
+    {
+        return in_array($settingType, $this->allowedChanges());
+    }
+
 }

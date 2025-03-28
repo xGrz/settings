@@ -6,5 +6,6 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'xGrz\\Settings\\Database\\Factories\\' => array($baseDir . '/database/factories'),
     'xGrz\\Settings\\' => array($baseDir . '/src'),
 );

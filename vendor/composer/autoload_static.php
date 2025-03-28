@@ -13,11 +13,16 @@ class ComposerStaticInit3f0a3200ae830ec624a3c735e683fd05
     public static $prefixLengthsPsr4 = array (
         'x' => 
         array (
+            'xGrz\\Settings\\Database\\Factories\\' => 33,
             'xGrz\\Settings\\' => 14,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
+        'xGrz\\Settings\\Database\\Factories\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/database/factories',
+        ),
         'xGrz\\Settings\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',

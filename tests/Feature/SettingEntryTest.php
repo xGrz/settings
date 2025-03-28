@@ -20,7 +20,6 @@ class SettingEntryTest extends TestCase
         Config::set('app-settings-definitions', $defaultConfig);
     }
 
-
     public function test_init_base_settings()
     {
         InitBaseSettings::make();
