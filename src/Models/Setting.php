@@ -2,14 +2,14 @@
 
 namespace xGrz\Settings\Models;
 
-use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use xGrz\Settings\Casts\DynamicSettingValueCast;
+use xGrz\Settings\Casts\KeyNameCast;
+use xGrz\Settings\Casts\SettingTypeCast;
 use xGrz\Settings\Database\Factories\SettingFactory;
 use xGrz\Settings\Enums\SettingType;
 use xGrz\Settings\Helpers\SettingsConfig;
-use xGrz\Settings\Observers\SettingObserver;
 
 /**
  * @property-read int $id
@@ -20,7 +20,6 @@ use xGrz\Settings\Observers\SettingObserver;
  * @property-read string $key
  * @property SettingType $setting_type
  */
-#[ObservedBy(SettingObserver::class)]
 class Setting extends Model
 {
     use HasFactory;
@@ -32,11 +31,11 @@ class Setting extends Model
 
 
     protected $casts = [
-        'prefix' => 'string',
-        'suffix' => 'string',
+        'prefix' => KeyNameCast::class,
+        'suffix' => KeyNameCast::class,
         'description' => 'string',
         'context' => 'string',
-        'setting_type' => SettingType::class,
+        'setting_type' => SettingTypeCast::class,
         'value' => DynamicSettingValueCast::class
     ];
 
