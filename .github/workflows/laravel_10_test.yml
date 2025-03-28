@@ -1,9 +1,10 @@
-name: Test Laravel Package
+name: Laravel 10.x
 
 on:
   push:
     branches:
       - main
+
   pull_request:
     branches:
       - main
@@ -12,30 +13,26 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        php-version: [8.1, 8.2, 8.3]
-        laravel-version: [10.x, 11.x, 12.x]
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Check out code
+        uses: actions/checkout@v3
 
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php-version }}
-          extensions: mbstring, bcmath, sqlite3
+          php-version: 8.1
+          extensions: mbstring
           coverage: none
 
-      - name: Install Composer dependencies
-        run: |
-          composer self-update
-          composer install --prefer-dist --no-interaction
+      - name: Install Laravel 10 dependencies
+        run: composer require "laravel/framework:10.*" --no-update
+        env:
+          COMPOSER_ALLOW_SUPERUSER: 1
 
-      - name: Set Laravel version
-        run: |
-          composer require "illuminate/support:${{ matrix.laravel-version }}.*" --dev
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --no-suggest
+        env:
+          COMPOSER_ALLOW_SUPERUSER: 1
 
-      - name: Run tests
+      - name: Run PHPUnit tests
         run: vendor/bin/phpunit
