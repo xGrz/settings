@@ -4,9 +4,11 @@ on:
   push:
     branches:
       - main
+      - development
   pull_request:
     branches:
       - main
+      - development
 
 jobs:
   test:
@@ -14,6 +16,7 @@ jobs:
 
     strategy:
       matrix:
+        php-version: [8.1, 8.2, 8.3]
         laravel-version: [10.x, 11.x, 12.x]
 
     steps:
@@ -23,19 +26,15 @@ jobs:
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.2
+          php-version: ${{ matrix.php-version }}
           extensions: mbstring, bcmath, sqlite3
           coverage: none
 
       - name: Install Composer dependencies
         run: |
           composer self-update
-          composer install --prefer-dist --no-interaction
-
-      - name: Set Laravel version
-        run: |
-          composer require "illuminate/support:${{ matrix.laravel-version }}.*"
-          composer update
+          # Zainstaluj zależności, w tym odpowiednią wersję illuminate/support
+          composer require illuminate/support:${{ matrix.laravel-version }}.* --dev --no-interaction
 
       - name: Run tests
         run: vendor/bin/phpunit
