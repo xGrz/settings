@@ -3,6 +3,8 @@
 namespace xGrz\Settings;
 
 use Illuminate\Support\ServiceProvider;
+use xGrz\Settings\Services\SettingsService;
+
 
 class SettingsServiceProvider extends ServiceProvider
 {
@@ -17,6 +19,8 @@ class SettingsServiceProvider extends ServiceProvider
             $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
         }
 
+
+        $this->app->singleton(SettingsService::class, fn() => new SettingsService());
     }
 
 }
