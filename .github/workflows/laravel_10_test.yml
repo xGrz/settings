@@ -34,7 +34,7 @@ jobs:
 
       - name: Set Laravel version
         run: |
-          composer require "illuminate/support:${{ matrix.laravel-version }}.*" --dev
+          composer require "illuminate/support:${{ matrix.laravel-version }}.*"
 
       - name: Run tests
         run: vendor/bin/phpunit
