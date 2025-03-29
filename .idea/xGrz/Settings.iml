@@ -6,6 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/../../src" isTestSource="false" packagePrefix="XGrz\Settings\" />
       <sourceFolder url="file://$MODULE_DIR$/../../tests/Feature" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/../../tests/Unit" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../tests" isTestSource="true" packagePrefix="XGrz\Settings\Tests\" />
       <excludeFolder url="file://$MODULE_DIR$/../../vendor/fakerphp/faker" />
       <excludeFolder url="file://$MODULE_DIR$/../../vendor/filp/whoops" />
       <excludeFolder url="file://$MODULE_DIR$/../../vendor/hamcrest/hamcrest-php" />

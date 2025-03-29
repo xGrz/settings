@@ -17,6 +17,7 @@ class Settings extends Facade
 
     public static function get(string $key)
     {
-        return SettingsService::get($key);
+        return 'abc';
+//        return SettingsService::get($key);
     }
 }

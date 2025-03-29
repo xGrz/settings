@@ -16,7 +16,9 @@
         ]
     },
     "autoload-dev": {
-        "XGrz\\Settings\\Tests\\": "tests/"
+        "psr-4": {
+            "XGrz\\Settings\\Tests\\": "tests/"
+        }
     },
     "extra": {
         "laravel": {
@@ -44,8 +46,12 @@
         "larastan/larastan": "^3.2"
     },
     "scripts": {
-        "test": "phpunit",
-        "test-coverage": "phpunit --coverage-text",
-        "phpstan": "vendor/bin/phpstan --configuration=phpstan.neon --memory-limit=2G"
+        "qtest": "phpunit --colors --testdox",
+        "qtestc": "phpunit --colors --testdox --coverage-text",
+        "phpstan": "vendor/bin/phpstan --configuration=phpstan.neon --memory-limit=2G",
+        "test": [
+            "@qtestc",
+            "@phpstan"
+        ]
     }
 }

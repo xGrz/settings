@@ -7,10 +7,18 @@ use XGrz\Settings\SettingsServiceProvider;
 
 abstract class TestCase extends Orchestra
 {
-    protected function getPackageProviders($app)
+    protected function getPackageProviders($app): array
     {
         return [
             SettingsServiceProvider::class,
         ];
     }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->artisan('migrate');
+    }
+
 }
