@@ -1,6 +1,6 @@
 <?php
 
-namespace xGrz\Settings\Exceptions;
+namespace XGrz\Settings\Exceptions;
 
 class DetectValueTypeException extends \Exception
 {

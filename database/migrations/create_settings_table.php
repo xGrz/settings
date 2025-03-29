@@ -2,8 +2,9 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-use xGrz\Settings\Helpers\SettingsConfig;
+use XGrz\Settings\Helpers\SettingsConfig;
 
 return new class extends Migration {
 
@@ -17,9 +18,12 @@ return new class extends Migration {
 
             $table->string('suffix'); // slug suffix
 
-            $table->string('key')
-                ->virtualAs("CONCAT(`prefix`, '.', `suffix`)")
-                ->unique();
+            if (DB::getDriverName() !== 'sqlite') {
+                $table->string('key')
+                    ->index()
+                    ->generatedAs("CONCAT(`prefix`, '.', `suffix`)")
+                    ->unique();
+            }
 
             $table->string('description')
                 ->nullable();
@@ -33,6 +37,11 @@ return new class extends Migration {
 
             $table->timestamps();
         });
+
+        if (DB::getDriverName() === 'sqlite') {
+            DB::statement('ALTER TABLE ' . SettingsConfig::getDatabaseTableName() . ' ADD COLUMN key TEXT GENERATED ALWAYS AS (prefix || "." || suffix) VIRTUAL');
+        }
+
 
     }
 

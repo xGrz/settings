@@ -1,11 +1,11 @@
 <?php
 
-namespace xGrz\Settings\Database\Factories;
+namespace XGrz\Settings\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
-use xGrz\Settings\Enums\SettingType;
-use xGrz\Settings\Models\Setting;
+use XGrz\Settings\Enums\SettingType;
+use XGrz\Settings\Models\Setting;
 
 class SettingFactory extends Factory
 {

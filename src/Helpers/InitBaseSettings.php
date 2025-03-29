@@ -1,9 +1,9 @@
 <?php
 
-namespace xGrz\Settings\Helpers;
+namespace XGrz\Settings\Helpers;
 
 use Illuminate\Database\UniqueConstraintViolationException;
-use xGrz\Settings\Models\Setting;
+use XGrz\Settings\Models\Setting;
 
 class InitBaseSettings
 {
@@ -22,9 +22,9 @@ class InitBaseSettings
         $this->init();
     }
 
-    public static function make(): static
+    public static function make(): InitBaseSettings
     {
-        return new static();
+        return new self();
     }
 
     private function processBaseConfig(): void
