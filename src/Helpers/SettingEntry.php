@@ -1,13 +1,13 @@
 <?php
 
-namespace xGrz\Settings\Helpers;
+namespace XGrz\Settings\Helpers;
 
-use xGrz\Settings\Enums\SettingType;
-use xGrz\Settings\Exceptions\DetectValueTypeException;
+use XGrz\Settings\Enums\SettingType;
+use XGrz\Settings\Exceptions\DetectValueTypeException;
 
 class SettingEntry
 {
-    private ?string $prefix = 'global';
+    private string $prefix = 'global';
     private ?string $suffix = null;
     private ?SettingType $settingType = null;
     private ?string $description = null;
@@ -26,9 +26,9 @@ class SettingEntry
             ->context($context);
     }
 
-    public static function make(?SettingType $settingType = null, ?string $prefix = null, ?string $suffix = null, string $description = null, int|float|string|null $value = null, ?string $context = null): static
+    public static function make(?SettingType $settingType = null, ?string $prefix = null, ?string $suffix = null, string $description = null, int|float|string|null $value = null, ?string $context = null): SettingEntry
     {
-        return new static($settingType, $prefix, $suffix, $description, $value, $context);
+        return new self($settingType, $prefix, $suffix, $description, $value, $context);
     }
 
     public function fill(array $data): static

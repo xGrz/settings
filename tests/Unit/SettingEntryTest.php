@@ -1,12 +1,12 @@
 <?php
 
-namespace xGrz\Settings\Tests\Unit;
+namespace XGrz\Settings\Tests\Unit;
 
 use Illuminate\Support\Str;
-use xGrz\Settings\Enums\SettingType;
-use xGrz\Settings\Exceptions\DetectValueTypeException;
-use xGrz\Settings\Helpers\SettingEntry;
-use xGrz\Settings\Tests\TestCase;
+use XGrz\Settings\Enums\SettingType;
+use XGrz\Settings\Exceptions\DetectValueTypeException;
+use XGrz\Settings\Helpers\SettingEntry;
+use XGrz\Settings\Tests\TestCase;
 
 class SettingEntryTest extends TestCase
 {

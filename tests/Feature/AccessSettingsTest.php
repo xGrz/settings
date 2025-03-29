@@ -1,11 +1,11 @@
 <?php
 
-namespace xGrz\Settings\Tests\Feature;
+namespace XGrz\Settings\Tests\Feature;
 
 use Illuminate\Support\Facades\Config;
-use xGrz\Settings\Facades\Settings;
-use xGrz\Settings\Models\Setting;
-use xGrz\Settings\Tests\TestCase;
+use XGrz\Settings\Facades\Settings;
+use XGrz\Settings\Models\Setting;
+use XGrz\Settings\Tests\TestCase;
 
 class AccessSettingsTest extends TestCase
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace xGrz\Settings\Facades;
+namespace XGrz\Settings\Facades;
 
 use Illuminate\Support\Facades\Facade;
-use xGrz\Settings\Services\SettingsService;
+use XGrz\Settings\Services\SettingsService;
 
 /**
  * @see SettingsService

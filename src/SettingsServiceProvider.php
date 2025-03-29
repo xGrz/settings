@@ -1,6 +1,6 @@
 <?php
 
-namespace xGrz\Settings;
+namespace XGrz\Settings;
 
 use Illuminate\Support\ServiceProvider;
 

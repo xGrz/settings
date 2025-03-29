@@ -1,10 +1,10 @@
 <?php
 
-namespace xGrz\Settings\Casts;
+namespace XGrz\Settings\Casts;
 
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
-use xGrz\Settings\Enums\SettingType;
+use XGrz\Settings\Enums\SettingType;
 
 class SettingTypeCast implements CastsAttributes
 {

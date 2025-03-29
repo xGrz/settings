@@ -1,10 +1,16 @@
 <?php
 
-namespace xGrz\Settings\Tests;
+namespace XGrz\Settings\Tests;
 
-use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Orchestra\Testbench\TestCase as Orchestra;
+use XGrz\Settings\SettingsServiceProvider;
 
-abstract class TestCase extends BaseTestCase
+abstract class TestCase extends Orchestra
 {
-    use CreatesApplication;
+    protected function getPackageProviders($app)
+    {
+        return [
+            SettingsServiceProvider::class,
+        ];
+    }
 }

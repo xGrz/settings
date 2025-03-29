@@ -1,6 +1,6 @@
 <?php
 
-namespace xGrz\Settings\Helpers;
+namespace XGrz\Settings\Helpers;
 
 class SettingsConfig
 {

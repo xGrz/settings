@@ -1,6 +1,6 @@
 <?php
 
-namespace xGrz\Settings\Enums;
+namespace XGrz\Settings\Enums;
 
 enum SettingType: int
 {

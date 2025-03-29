@@ -1,11 +1,11 @@
 <?php
 
-namespace xGrz\Settings\Tests\Feature;
+namespace XGrz\Settings\Tests\Feature;
 
-use xGrz\Settings\Enums\SettingType;
-use xGrz\Settings\Helpers\SettingsConfig;
-use xGrz\Settings\Models\Setting;
-use xGrz\Settings\Tests\TestCase;
+use XGrz\Settings\Enums\SettingType;
+use XGrz\Settings\Helpers\SettingsConfig;
+use XGrz\Settings\Models\Setting;
+use XGrz\Settings\Tests\TestCase;
 
 class SettingModelTest extends TestCase
 {

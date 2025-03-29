@@ -5,7 +5,7 @@
  * php artisan laravel-app-settings:sync
  */
 
-use xGrz\Settings\Helpers\SettingEntry as Entry;
+use XGrz\Settings\Helpers\SettingEntry as Entry;
 
 return [
     'system' => [
@@ -36,9 +36,9 @@ return [
         ->context('settings')
         ->prefix('system')
         ->suffix('name')
-        ->settingType(\xGrz\Settings\Enums\SettingType::INTEGER),
+        ->settingType(\XGrz\Settings\Enums\SettingType::INTEGER),
     Entry::make()
         ->prefix('system')
         ->suffix('yes_no')
-        ->settingType(\xGrz\Settings\Enums\SettingType::YES_NO),
+        ->settingType(\XGrz\Settings\Enums\SettingType::YES_NO),
 ];

@@ -1,6 +1,6 @@
 <?php
 
-namespace xGrz\Settings\Casts;
+namespace XGrz\Settings\Casts;
 
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;

@@ -1,8 +1,8 @@
 <?php
 
-namespace xGrz\Settings\Services;
+namespace XGrz\Settings\Services;
 
-use xGrz\Settings\Models\Setting;
+use XGrz\Settings\Models\Setting;
 
 class SettingsService
 {

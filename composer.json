@@ -8,19 +8,20 @@
     ],
     "autoload": {
         "psr-4": {
-            "xGrz\\Settings\\": "src/",
-            "xGrz\\Settings\\Database\\Factories\\": "database/factories/",
-            "xGrz\\Settings\\Tests\\Unit\\": "tests/Unit/",
-            "xGrz\\Settings\\Tests\\": "tests/"
+            "XGrz\\Settings\\": "src/",
+            "XGrz\\Settings\\Database\\Factories\\": "database/factories/"
         },
         "files": [
             "src/Helpers/global.php"
         ]
     },
+    "autoload-dev": {
+        "XGrz\\Settings\\Tests\\": "tests/"
+    },
     "extra": {
         "laravel": {
             "providers": [
-                "xGrz\\Settings\\SettingsServiceProvider"
+                "XGrz\\Settings\\SettingsServiceProvider"
             ]
         }
     },
@@ -33,7 +34,18 @@
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
-        "php": "^8.0",
+        "php": "^8.1",
         "illuminate/support": "^10.0 || ^11.0 || ^12.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^8.0 || ^9.0 || ^10.0",
+        "phpunit/phpunit": "^10.0",
+        "phpstan/phpstan": "^2.1",
+        "larastan/larastan": "^3.2"
+    },
+    "scripts": {
+        "test": "phpunit",
+        "test-coverage": "phpunit --coverage-text",
+        "phpstan": "vendor/bin/phpstan --configuration=phpstan.neon --memory-limit=2G"
     }
 }
