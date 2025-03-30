@@ -69,4 +69,13 @@ class CacheSettingsTest extends TestCase
         $this->expectException(SettingKeyNotFoundException::class);
         Settings::get('system.name');
     }
+
+    public function test_read_settings_from_cache_without_touching_database()
+    {
+        Settings::refreshCache();
+
+        $this->expectsDatabaseQueryCount(0);
+        $systemNameValue = Settings::get('system.name');
+        $this->assertSame(12, $systemNameValue);
+    }
 }
