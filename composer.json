@@ -50,7 +50,7 @@
         "qtestc": "phpunit --colors --testdox --coverage-text",
         "phpstan": "vendor/bin/phpstan --configuration=phpstan.neon --memory-limit=2G",
         "test": [
-            "@qtest",
+            "@qtestc",
             "@phpstan"
         ]
     }

@@ -1,6 +1,12 @@
 name: Package tests
 
-on: [ push, pull_request ]
+on:
+  push:
+    branches:
+      - main
+      - dev
+  pull_request:
+  workflow_dispatch:
 
 jobs:
   test:
