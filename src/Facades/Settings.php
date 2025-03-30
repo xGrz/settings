@@ -4,6 +4,7 @@ namespace XGrz\Settings\Facades;
 
 use Throwable;
 use XGrz\Settings\Exceptions\SettingKeyNotFoundException;
+use XGrz\Settings\Helpers\SettingsConfig;
 use XGrz\Settings\Models\Setting;
 
 /**
@@ -15,7 +16,17 @@ class Settings
 
     public function __construct()
     {
-        $this->settings = Setting::all()->pluck('value', 'key')->toArray();
+        $this->load();
+    }
+
+    private function load(): void
+    {
+        $this->settings = cache()
+            ->remember(
+                SettingsConfig::getCacheKey(),
+                SettingsConfig::getCacheTTL(),
+                fn() => Setting::all()->pluck('value', 'key')->toArray()
+            );
     }
 
     private static function getInstance(): Settings
@@ -28,13 +39,18 @@ class Settings
      */
     public static function get(string $key)
     {
-        $settings = self::getSettings();
+        $settings = self::all();
         throw_if(!array_key_exists($key, $settings), new SettingKeyNotFoundException('Setting key "' . $key . '" not found'));
         return $settings[$key];
     }
 
-    public static function getSettings(): array
+    public static function all(): array
     {
         return self::getInstance()->settings;
+    }
+
+    public static function invalidateCache(): void
+    {
+        cache()->forget(SettingsConfig::getCacheKey());
     }
 }

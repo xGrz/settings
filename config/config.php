@@ -14,7 +14,7 @@ return [
          * Set cache timeout for settings (in seconds)
          * You can set false to disable cache
          */
-        'timeout' => 86400,
+        'ttl' => 86400,
 
         /* Cache key to store data. Change only when you have a conflict with other modules */
         'key' => 'settings'

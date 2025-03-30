@@ -6,5 +6,13 @@
         <entry key="LaravelIdeaSettings.switchedToSrcFolder" value="true" />
       </map>
     </option>
+    <option name="generationStringOptionValues">
+      <map>
+        <entry key="createObserver.method_created" value="" />
+        <entry key="createObserver.method_restored" value="" />
+        <entry key="createObserver.method_saved" value="1" />
+        <entry key="createObserver.method_updated" value="" />
+      </map>
+    </option>
   </component>
 </project>
