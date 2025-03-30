@@ -12,6 +12,7 @@ use XGrz\Settings\Models\Setting;
  */
 class Settings
 {
+
     private array $settings = [];
 
     public function __construct()
@@ -34,6 +35,14 @@ class Settings
         return app(Settings::class);
     }
 
+    private function getSettings(): array
+    {
+        if (empty($this->settings)) {
+            $this->load();
+        }
+        return $this->settings;
+    }
+
     /**
      * @throws Throwable
      */
@@ -46,11 +55,18 @@ class Settings
 
     public static function all(): array
     {
-        return self::getInstance()->settings;
+        return self::getInstance()->getSettings();
     }
 
     public static function invalidateCache(): void
     {
         cache()->forget(SettingsConfig::getCacheKey());
+        self::getInstance()->settings = [];
+    }
+
+    public static function refreshCache(): void
+    {
+        self::invalidateCache();
+        self::getInstance()->load();
     }
 }

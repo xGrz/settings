@@ -23,7 +23,7 @@ return new class extends Migration {
             if (DB::getDriverName() !== 'sqlite') {
                 $table->string('key')
                     ->index()
-                    ->generatedAs("CONCAT(`prefix`, '.', `suffix`)")
+                    ->virtualAs("CONCAT(`prefix`, '.', `suffix`)")
                     ->unique();
             }
 

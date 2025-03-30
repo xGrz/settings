@@ -2,6 +2,7 @@
 
 namespace XGrz\Settings\Models;
 
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use XGrz\Settings\Casts\DynamicSettingValueCast;
@@ -10,6 +11,7 @@ use XGrz\Settings\Casts\SettingTypeCast;
 use XGrz\Settings\Database\Factories\SettingFactory;
 use XGrz\Settings\Enums\SettingType;
 use XGrz\Settings\Helpers\SettingsConfig;
+use XGrz\Settings\Observers\SettingObserver;
 
 /**
  * @property-read int $id
@@ -21,6 +23,7 @@ use XGrz\Settings\Helpers\SettingsConfig;
  * @property SettingType $setting_type
  * @property mixed $value
  */
+#[ObservedBy(SettingObserver::class)]
 class Setting extends Model
 {
     use HasFactory;

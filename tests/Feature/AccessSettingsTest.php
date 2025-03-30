@@ -32,6 +32,7 @@ class AccessSettingsTest extends TestCase
 
     public function test_single_request_to_database()
     {
+        Settings::invalidateCache();
         $this->expectsDatabaseQueryCount(1);
         Settings::get('system.sellerAddressName');
         Settings::get('system.sellerAddressPostalCode');
