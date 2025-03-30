@@ -28,8 +28,8 @@ abstract class TestCase extends Orchestra
     {
         // Setup default database to use sqlite :memory:
         tap($app['config'], function (Repository $config) {
-            $defaultConfig = include __DIR__ . '/../config/definitions.php';
-            $config->set('app-settings-definitions', $defaultConfig);
+            $defaultConfig = include __DIR__ . '/../config/test-config.php';
+            $config->set('app-settings', $defaultConfig);
         });
     }
 }

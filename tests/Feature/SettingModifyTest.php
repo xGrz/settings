@@ -2,7 +2,6 @@
 
 namespace XGrz\Settings\Tests\Feature;
 
-use Illuminate\Support\Facades\Config;
 use XGrz\Settings\Enums\SettingType;
 use XGrz\Settings\Helpers\InitBaseSettings;
 use XGrz\Settings\Helpers\SettingEntry;
@@ -18,8 +17,6 @@ class SettingModifyTest extends TestCase
     {
         parent::setUp();
         Setting::truncate();
-        $defaultConfig = include __DIR__ . '/../../config/definitions.php';
-        Config::set('app-settings-definitions', $defaultConfig);
         InitBaseSettings::make();
     }
 

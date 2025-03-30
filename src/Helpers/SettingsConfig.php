@@ -6,16 +6,16 @@ class SettingsConfig
 {
     public static function getDatabaseTableName(): string
     {
-        return 'system_settings';
+        return config('app-settings.database_table', 'system_settings');
     }
 
     public static function getCacheKey(): ?string
     {
-        return cache('settings.cache.key', 'app_settings');
+        return config('app-settings.cache.key', 'app_settings');
     }
 
     public static function getCacheTTL(): ?int
     {
-        return cache('settings.cache.ttl', null);
+        return config('app-settings.cache.ttl', 86400);
     }
 }

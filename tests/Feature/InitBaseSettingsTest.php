@@ -19,8 +19,6 @@ class InitBaseSettingsTest extends TestCase
     {
         parent::setUp();
         Setting::truncate();
-        $defaultConfig = include __DIR__ . '/../../config/definitions.php';
-        Config::set('app-settings-definitions', $defaultConfig);
     }
 
     public function test_init_base_settings()
@@ -62,15 +60,14 @@ class InitBaseSettingsTest extends TestCase
     public function test_initialize_base_settings_throws_exception_on_duplicated_key()
     {
         Setting::truncate();
-        $config = Config::get('app-settings-definitions');
-        $config[] = SettingEntry::make()
+        $config = Config::get('app-settings');
+        $config['initial'][] = SettingEntry::make()
             ->prefix('system')
             ->suffix('yes_no')
             ->context('abc')
             ->value(true)
             ->settingType(SettingType::YES_NO);
-        Config::set('app-settings-definitions', $config);
-
+        Config::set('app-settings', $config);
 
         $this->expectException(DuplicatedKeyException::class);
         InitBaseSettings::make();
