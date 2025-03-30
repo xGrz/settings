@@ -47,11 +47,11 @@
     },
     "scripts": {
         "qtest": "phpunit --colors --testdox",
-        "qtestc": "phpunit --colors --testdox --coverage-text",
+        "qtestc": "phpunit --colors --testdox --coverage-text --coverage-html ./coverage",
         "phpstan": "vendor/bin/phpstan --configuration=phpstan.neon --memory-limit=2G",
         "test": [
-            "@qtestc",
-            "@phpstan"
+            "@phpstan",
+            "@qtestc"
         ]
     }
 }

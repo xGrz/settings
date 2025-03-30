@@ -2,22 +2,36 @@
 
 namespace XGrz\Settings\Facades;
 
-use Illuminate\Support\Facades\Facade;
-use XGrz\Settings\Services\SettingsService;
+use XGrz\Settings\Models\Setting;
 
 /**
  * @see SettingsService
  */
-class Settings extends Facade
+class Settings
 {
-    protected static function getFacadeAccessor(): string
+    private array $settings = [];
+
+    public function __construct()
     {
-        return SettingsService::class;
+        $this->settings = Setting::all()->pluck('value', 'key')->toArray();
+    }
+
+    private static function getInstance(): Settings
+    {
+        return app(Settings::class);
     }
 
     public static function get(string $key)
     {
-        return 'abc';
-//        return SettingsService::get($key);
+        $settings = self::getSettings();
+        if (!array_key_exists($key, $settings)) {
+            return null;
+        }
+        return $settings[$key];
+    }
+
+    public static function getSettings(): array
+    {
+        return self::getInstance()->settings;
     }
 }

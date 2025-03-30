@@ -2,8 +2,8 @@
 
 namespace XGrz\Settings\Tests\Feature;
 
-use Illuminate\Support\Facades\Config;
 use XGrz\Settings\Facades\Settings;
+use XGrz\Settings\Helpers\InitBaseSettings;
 use XGrz\Settings\Models\Setting;
 use XGrz\Settings\Tests\TestCase;
 
@@ -13,12 +13,20 @@ class AccessSettingsTest extends TestCase
     {
         parent::setUp();
         Setting::truncate();
-        $defaultConfig = include __DIR__ . '/../../config/definitions.php';
-        Config::set('app-settings-definitions', $defaultConfig);
+        InitBaseSettings::make();
     }
 
     public function test_can_read_settings()
     {
-        $this->assertEquals('abc', Settings::get('system.sellerAddressName'));
+        $this->assertEquals('Laravel Corporation', Settings::get('system.sellerAddressName'));
+        $this->assertEquals('00-950', Settings::get('system.sellerAddressPostalCode'));
+        $this->assertEquals(10, Settings::get('pageLength.default'));
+    }
+
+    public function test_single_request_to_database()
+    {
+        $this->expectsDatabaseQueryCount(1);
+        Settings::get('system.sellerAddressName');
+        Settings::get('system.sellerAddressPostalCode');
     }
 }

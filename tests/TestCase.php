@@ -2,6 +2,7 @@
 
 namespace XGrz\Settings\Tests;
 
+use Illuminate\Contracts\Config\Repository;
 use Orchestra\Testbench\TestCase as Orchestra;
 use XGrz\Settings\SettingsServiceProvider;
 
@@ -23,4 +24,12 @@ abstract class TestCase extends Orchestra
         $this->artisan('migrate');
     }
 
+    protected function defineEnvironment($app): void
+    {
+        // Setup default database to use sqlite :memory:
+        tap($app['config'], function (Repository $config) {
+            $defaultConfig = include __DIR__ . '/../config/definitions.php';
+            $config->set('app-settings-definitions', $defaultConfig);
+        });
+    }
 }
