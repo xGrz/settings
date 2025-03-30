@@ -15,7 +15,7 @@ class SettingEntry
     private ?string $context = null;
 
 
-    private function __construct(?SettingType $settingType = null, ?string $prefix = null, ?string $suffix = null, ?string $description = null, int|float|string|null $value = null, ?string $context = null)
+    private function __construct(?SettingType $settingType = null, ?string $prefix = null, ?string $suffix = null, ?string $description = null, int|float|string|bool|null $value = null, ?string $context = null)
     {
         $this
             ->settingType($settingType)
@@ -26,7 +26,7 @@ class SettingEntry
             ->context($context);
     }
 
-    public static function make(?SettingType $settingType = null, ?string $prefix = null, ?string $suffix = null, ?string $description = null, int|float|string|null $value = null, ?string $context = null): SettingEntry
+    public static function make(?SettingType $settingType = null, ?string $prefix = null, ?string $suffix = null, ?string $description = null, int|float|string|bool|null $value = null, ?string $context = null): SettingEntry
     {
         return new self($settingType, $prefix, $suffix, $description, $value, $context);
     }
@@ -76,7 +76,7 @@ class SettingEntry
         return $this;
     }
 
-    public function value(float|int|string|null $value): static
+    public function value(float|int|string|bool|null $value): static
     {
         $this->value = $value;
 

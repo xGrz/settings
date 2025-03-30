@@ -18,6 +18,8 @@ return new class extends Migration {
 
             $table->string('suffix'); // slug suffix
 
+            $table->unique(['prefix', 'suffix']);
+
             if (DB::getDriverName() !== 'sqlite') {
                 $table->string('key')
                     ->index()

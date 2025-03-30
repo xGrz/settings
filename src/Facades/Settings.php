@@ -2,6 +2,8 @@
 
 namespace XGrz\Settings\Facades;
 
+use Throwable;
+use XGrz\Settings\Exceptions\SettingKeyNotFoundException;
 use XGrz\Settings\Models\Setting;
 
 /**
@@ -21,12 +23,13 @@ class Settings
         return app(Settings::class);
     }
 
+    /**
+     * @throws Throwable
+     */
     public static function get(string $key)
     {
         $settings = self::getSettings();
-        if (!array_key_exists($key, $settings)) {
-            return null;
-        }
+        throw_if(!array_key_exists($key, $settings), new SettingKeyNotFoundException('Setting key "' . $key . '" not found'));
         return $settings[$key];
     }
 

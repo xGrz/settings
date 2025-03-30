@@ -3,6 +3,8 @@
 namespace XGrz\Settings\Helpers;
 
 use Illuminate\Database\UniqueConstraintViolationException;
+use XGrz\Settings\Exceptions\DetectValueTypeException;
+use XGrz\Settings\Exceptions\DuplicatedKeyException;
 use XGrz\Settings\Models\Setting;
 
 class InitBaseSettings
@@ -58,13 +60,17 @@ class InitBaseSettings
         return $this->settings;
     }
 
+    /**
+     * @throws DuplicatedKeyException
+     * @throws DetectValueTypeException
+     */
     private function init(): void
     {
         foreach ($this->getDefinedSettings() as $setting) {
             try {
                 Setting::create($setting->getDefinition());
             } catch (UniqueConstraintViolationException $exception) {
-
+                throw new DuplicatedKeyException('Duplicated key: ' . $setting->getDefinition()['prefix'] . $setting->getDefinition()['suffix']);
             }
         }
     }

@@ -4,6 +4,7 @@ namespace XGrz\Settings\Tests\Feature;
 
 use Illuminate\Support\Facades\Config;
 use XGrz\Settings\Enums\SettingType;
+use XGrz\Settings\Exceptions\DuplicatedKeyException;
 use XGrz\Settings\Helpers\InitBaseSettings;
 use XGrz\Settings\Helpers\SettingEntry;
 use XGrz\Settings\Helpers\SettingsConfig;
@@ -58,4 +59,20 @@ class InitBaseSettingsTest extends TestCase
     }
 
 
+    public function test_initialize_base_settings_throws_exception_on_duplicated_key()
+    {
+        Setting::truncate();
+        $config = Config::get('app-settings-definitions');
+        $config[] = SettingEntry::make()
+            ->prefix('system')
+            ->suffix('yes_no')
+            ->context('abc')
+            ->value(true)
+            ->settingType(SettingType::YES_NO);
+        Config::set('app-settings-definitions', $config);
+
+
+        $this->expectException(DuplicatedKeyException::class);
+        InitBaseSettings::make();
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace XGrz\Settings\Tests\Feature;
 
+use XGrz\Settings\Exceptions\SettingKeyNotFoundException;
 use XGrz\Settings\Facades\Settings;
 use XGrz\Settings\Helpers\InitBaseSettings;
 use XGrz\Settings\Models\Setting;
@@ -14,6 +15,12 @@ class AccessSettingsTest extends TestCase
         parent::setUp();
         Setting::truncate();
         InitBaseSettings::make();
+    }
+
+    public function test_setting_not_found_throws_exception()
+    {
+        $this->expectException(SettingKeyNotFoundException::class);
+        Settings::get('not-found');
     }
 
     public function test_can_read_settings()
