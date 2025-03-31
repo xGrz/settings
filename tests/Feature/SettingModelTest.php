@@ -305,4 +305,19 @@ class SettingModelTest extends TestCase
 
     }
 
+    public function test_model_create_uses_casts()
+    {
+        Setting::truncate();
+        Setting::create([
+            'prefix' => 'prefix method - test',
+            'suffix' => 'suffix method - test',
+            'setting_type' => SettingType::STRING,
+        ]);
+
+        $this->assertDatabaseHas(SettingsConfig::getDatabaseTableName(), [
+            'prefix' => 'prefixMethodTest',
+            'suffix' => 'suffixMethodTest',
+            'setting_type' => SettingType::STRING->value,
+        ]);
+    }
 }

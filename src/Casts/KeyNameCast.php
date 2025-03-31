@@ -14,6 +14,9 @@ class KeyNameCast implements CastsAttributes
 
     public function set(?Model $model, string $key, mixed $value, array $attributes): mixed
     {
-        return str($value)->camel()->toString();
+        return str($value)
+            ->replaceMatches('/[^\w\s\-]/u', '')
+            ->camel()
+            ->toString();
     }
 }

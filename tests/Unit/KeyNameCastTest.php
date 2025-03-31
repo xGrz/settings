@@ -15,8 +15,14 @@ class KeyNameCastTest extends TestCase
 
     public function test_key_name_get_cast()
     {
-        // expects do not change fetched key
+        // expects return unchanged key
         $castedValue = (new KeyNameCast())->get(null, 'prefix', 'some key', []);
         $this->assertSame('some key', $castedValue);
+    }
+
+    public function test_key_name_with_slashes_set_cast()
+    {
+        $castedValue = (new KeyNameCast())->set(null, 'prefix', 'app\Filament\Resources\RepairResource+/*!@#$%^&()', []);
+        $this->assertSame('appFilamentResourcesRepairResource', $castedValue);
     }
 }

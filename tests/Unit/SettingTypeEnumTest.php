@@ -3,7 +3,7 @@
 use XGrz\Settings\Enums\SettingType;
 use XGrz\Settings\Tests\TestCase;
 
-class SettingTypeLabelTest extends TestCase
+class SettingTypeEnumTest extends TestCase
 {
 
     public function test_setting_type_text_returns_localized_label()
@@ -44,6 +44,16 @@ class SettingTypeLabelTest extends TestCase
 
         $this->app->setLocale('pl');
         $this->assertSame('Wartość logiczna (włączony/wyłączony)', $type->getLabel());
+    }
+
+    public function test_is_boolean_on_type_enum()
+    {
+        $this->assertTrue(SettingType::ON_OFF->isBoolean());
+        $this->assertTrue(SettingType::YES_NO->isBoolean());
+        $this->assertFalse(SettingType::STRING->isBoolean());
+        $this->assertFalse(SettingType::TEXT->isBoolean());
+        $this->assertFalse(SettingType::INTEGER->isBoolean());
+        $this->assertFalse(SettingType::FLOAT->isBoolean());
     }
 
 
