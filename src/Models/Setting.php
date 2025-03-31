@@ -28,11 +28,7 @@ class Setting extends Model
 {
     use HasFactory;
 
-    protected static function newFactory(): SettingFactory
-    {
-        return SettingFactory::new();
-    }
-
+    protected $guarded = ['id', 'key'];
 
     protected $casts = [
         'prefix' => KeyNameCast::class,
@@ -43,11 +39,23 @@ class Setting extends Model
         'value' => DynamicSettingValueCast::class
     ];
 
-    protected $guarded = ['id', 'key'];
+    protected static function newFactory(): SettingFactory
+    {
+        return SettingFactory::new();
+    }
 
     public function getTable(): string
     {
         return SettingsConfig::getDatabaseTableName();
+    }
+
+    public function getLabel(): mixed
+    {
+        return match ($this->setting_type) {
+            SettingType::YES_NO => $this->value ? __('settings::label.yes') : __('settings::label.no'),
+            SettingType::ON_OFF => $this->value ? __('settings::label.on') : __('settings::label.off'),
+            default => $this->value,
+        };
     }
 
 }
