@@ -14,12 +14,12 @@ enum SettingType: int
     public function getLabel(): string
     {
         return match ($this) {
-            self::ON_OFF => __('Boolean (ON/OFF)'),
-            self::YES_NO => __('Boolean (YES/NO)'),
-            self::TEXT => __('Text'),
-            self::INTEGER => __('Integer'),
-            self::FLOAT => __('Float'),
-            self::STRING => __('String'),
+            self::ON_OFF => __('settings::types.on_off'),
+            self::YES_NO => __('settings::types.yes_no'),
+            self::TEXT => __('settings::types.text'),
+            self::INTEGER => __('settings::types.integer'),
+            self::FLOAT => __('settings::types.float'),
+            self::STRING => __('settings::types.string'),
         };
     }
 
