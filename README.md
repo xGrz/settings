@@ -1,3 +1,9 @@
+![Version](https://img.shields.io/github/v/tag/xgrz/settings?label=Release&color=stone&sort=semver)
+[![Tests](https://github.com/xGrz/settings/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/xGrz/settings/actions/workflows/tests.yml)
+![L10](https://img.shields.io/badge/Laravel-v10.x-blue)
+![L11](https://img.shields.io/badge/Laravel-v11.x-blue)
+![L12](https://img.shields.io/badge/Laravel-v12.x-blue)
+
 # *Settings* Package for Laravel
 
 ## Compatibility
