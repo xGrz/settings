@@ -23,7 +23,7 @@ cache system instead of a database cache.
 1. Install the package from Packagist and publish the configuration:
     ```
     composer require xgrz/settings
-    php artisan settings:publish
+    php artisan settings:publish-config
     ```
 
 2. Edit the configuration file in your `config/app-settings` folder:

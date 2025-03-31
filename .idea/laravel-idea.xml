@@ -18,5 +18,10 @@
       </LaravelCodeGeneration>
     </option>
     <option name="frameworkFound" value="true" />
+    <option name="translation">
+      <LaravelTranslation>
+        <option name="defaultPath" value="lang" />
+      </LaravelTranslation>
+    </option>
   </component>
 </project>
