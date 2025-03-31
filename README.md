@@ -25,7 +25,7 @@ cache system instead of a database cache.
     - Define the cache timeout
 
 3. The last key in the `app-settings` config file is `initial`. This is very useful during development. You can
-   predefine setting keys and values and inject them into every application instance.
+   predefine setting keys and values and inject them into every application instance ([see details](docs/settings))
 
 4. After customizing your configuration file, run the migration:
    ```
