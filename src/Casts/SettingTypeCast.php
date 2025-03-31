@@ -16,7 +16,7 @@ class SettingTypeCast implements CastsAttributes
     public function set(Model $model, string $key, mixed $value, array $attributes): mixed
     {
         if (is_null($value)) return null;
-        if (is_null($model->getOriginal($key))) return $value->value;
+        if (is_null($model->getOriginal($key))) return ($value instanceof SettingType) ? $value->value : (int)$value;
 
         return $model->getOriginal($key)->canBeChangedTo($value)
             ? $value->value
