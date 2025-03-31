@@ -33,6 +33,14 @@ class GlobalHelperTest extends TestCase
         $this->assertSame(50, settings('system.name1', 50));
     }
 
+    public function test_global_helper_returns_default_value_when_settings_key_missing_and_default_value_null_is_set(): void
+    {
+        Settings::refreshCache();
+        $this->expectsDatabaseQueryCount(0);
+
+        $this->assertSame(null, settings('system.name1', null));
+    }
+
     public function test_global_helper_throws_exception_when_settings_key_missing_and_default_value_is_not_set(): void
     {
         Settings::refreshCache();
@@ -41,5 +49,6 @@ class GlobalHelperTest extends TestCase
 
         $this->assertSame(50, settings('system.name1'));
     }
+
 
 }
