@@ -49,4 +49,12 @@ enum SettingType: int
             default => $value,
         };
     }
+
+    public function isBoolean(): bool
+    {
+        return match ($this) {
+            self::ON_OFF, self::YES_NO => true,
+            default => false,
+        };
+    }
 }
