@@ -2,6 +2,8 @@
 
 namespace XGrz\Settings\Tests\Feature;
 
+use Illuminate\Support\Facades\Config;
+use XGrz\Settings\Enums\KeyNaming;
 use XGrz\Settings\Enums\SettingType;
 use XGrz\Settings\Helpers\InitBaseSettings;
 use XGrz\Settings\Helpers\SettingEntry;
@@ -159,6 +161,25 @@ class SettingModifyTest extends TestCase
         $this->assertDatabaseHas(SettingsConfig::getDatabaseTableName(), [
             'id' => $setting->id,
             'setting_type' => SettingType::FLOAT
+        ]);
+    }
+
+    public function test_key_unchanged_after_key_generator_naming_change_in_config()
+    {
+        Setting::truncate();
+        Config::set('app-settings.key_name_generator', KeyNaming::CAMEL_CASE);
+        Setting::create(['prefix' => 'system ABC', 'suffix' => 'name ABC', 'setting_type' => SettingType::STRING]);
+        $this->assertDatabaseHas(SettingsConfig::getDatabaseTableName(), [
+            'key' => 'systemABC.nameABC',
+            'value' => null,
+        ]);
+
+        Config::set('app-settings.key_name_generator', KeyNaming::SNAKE_CASE);
+        $setting = Setting::where('key', 'systemABC.nameABC')->first();
+        $setting->update(['value' => 'new value']);
+        $this->assertDatabaseHas(SettingsConfig::getDatabaseTableName(), [
+            'key' => 'systemABC.nameABC',
+            'value' => 'new value',
         ]);
     }
 

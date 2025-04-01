@@ -29,6 +29,7 @@ cache system instead of a database cache.
 2. Edit the configuration file in your `config/app-settings` folder:
     - Customize your database table name
     - Set the cache key
+   - Select [key generator convention](docs/key_generator.md)
     - Define the cache timeout
 
 3. The last key in the `app-settings` config file is `initial`. This is very useful during development. You can
