@@ -12,74 +12,74 @@ class Entry
     private ?string $description = null;
     private int|float|string|null $value = null;
 
-    private function __construct(?Type $type = null, ?string $description = null, int|float|string|bool|null $value = null)
+    private function __construct(int|float|string|bool|null $value = null, ?Type $type = null, ?string $description = null)
     {
         $this
-            ->settingType($type)
+            ->type($type)
             ->description($description)
             ->value($value);
     }
 
-    public static function make(?Type $type = null, ?string $description = null, int|float|string|bool|null $value = null): Entry
+    public static function make(int|float|string|bool|null $value = null, ?Type $type = null, ?string $description = null): Entry
     {
-        return new self($type, $description, $value);
+        return new self($value, $type, $description);
+    }
+
+    public function appendKey(string $partialKey): static
+    {
+        $this->key[] = $partialKey;
+        return $this;
     }
 
     public function fill(array $data): static
     {
         if (array_key_exists('description', $data)) $this->description($data['description']);
         if (array_key_exists('value', $data)) $this->value($data['value']);
-        if (array_key_exists('settingType', $data)) $this->settingType($data['suffix']);
+        if (array_key_exists('settingType', $data)) $this->type($data['suffix']);
         return $this;
     }
 
-    public function settingType(?Type $settingType): static
+    public function type(?Type $settingType): static
     {
-        if (!empty($this->type)) return $this;
-
         $this->type = $settingType;
-
         return $this;
     }
 
     public function description(?string $description): static
     {
-        if (!empty($this->description)) return $this;
-
         $this->description = $description;
-
         return $this;
     }
 
     public function value(float|int|string|bool|null $value): static
     {
         $this->value = $value;
-
         return $this;
     }
 
     private function getKey(): string
     {
-        return join('.', $this->key);
+        return SettingsConfig::getKeyGeneratorType()
+            ->generateKey($this->key);
     }
 
     /**
      * @throws DetectValueTypeException
      */
-    public function getDefinition(): array
+    public function toArray(): array
     {
         return [
             'key' => $this->getKey(),
             'description' => $this->description,
             'value' => $this->value,
-            'type' => $this->type ?? self::detectSettingType($this->value, $this->getKey()),
+            'type' => $this->type ?? self::detectType($this->value, $this->getKey()),
         ];
     }
 
     /**
      * @throws DetectValueTypeException
      */
-    public static function detectSettingType(mixed $value, string $keyName): Type
+    public static function detectType(mixed $value, string $keyName): Type
     {
         if (gettype($value) === 'boolean') return Type::ON_OFF;
         if (is_float($value)) return Type::FLOAT;
