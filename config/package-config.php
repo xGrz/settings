@@ -2,7 +2,7 @@
 
 
 use XGrz\Settings\Enums\KeyNaming;
-use XGrz\Settings\Enums\SettingType;
+use XGrz\Settings\Enums\Type;
 
 return [
     /**
@@ -37,17 +37,17 @@ return [
     'definitions' => [
         'system' => [
             // define using SettingEntry helper
-            'seller_address_name' => XGrz\Settings\Helpers\SettingEntry::make()
+            'seller_address_name' => XGrz\Settings\Helpers\Entry::make()
                 ->value('Laravel Corporation')
                 ->description('Company address: name'),
 
-            // prefix is discovered as 'system', suffix as 'seller_address_name'
-            'seller_address_city' => XGrz\Settings\Helpers\SettingEntry::make()
+            // prefixes are discovered as 'system', suffixes as 'seller_address_name'
+            'seller_address_city' => XGrz\Settings\Helpers\Entry::make()
                 ->description('Company address: city')
                 ->value('Warsaw'),
 
             // make parameters works too
-            'seller_address_street' => XGrz\Settings\Helpers\SettingEntry::make(description: 'Company address: street and number', value: 'Willow Street 2002'),
+            'seller_address_street' => XGrz\Settings\Helpers\Entry::make(description: 'Company address: street and number', value: 'Willow Street 2002'),
         ],
 
         'pageLength' => [
@@ -62,16 +62,16 @@ return [
             ],
         ],
         // top level setting entry helper. Prefix and suffix are required.
-        XGrz\Settings\Helpers\SettingEntry::make()
+        XGrz\Settings\Helpers\Entry::make()
             ->value('Laravel settings package')
             ->description('Some system name')
             ->prefix('system')
             ->suffix('name')
-            ->settingType(SettingType::INTEGER),
-        XGrz\Settings\Helpers\SettingEntry::make()
+            ->settingType(Type::INTEGER),
+        XGrz\Settings\Helpers\Entry::make()
             ->prefix('system')
             ->suffix('yes_no')
-            ->settingType(SettingType::YES_NO),
+            ->settingType(Type::YES_NO),
     ],
 
 ];

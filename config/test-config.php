@@ -1,7 +1,7 @@
 <?php
 
-use XGrz\Settings\Enums\SettingType;
-use XGrz\Settings\Helpers\SettingEntry as Entry;
+use XGrz\Settings\Enums\Type;
+use XGrz\Settings\Helpers\Entry as Entry;
 
 return [
     'database_table' => 'application_settings',
@@ -42,11 +42,11 @@ return [
             ->description('Page length2')
             ->prefix('system')
             ->suffix('name')
-            ->settingType(SettingType::INTEGER),
+            ->settingType(Type::INTEGER),
         Entry::make()
             ->prefix('system')
             ->suffix('yes_no')
-            ->settingType(SettingType::YES_NO),
+            ->settingType(Type::YES_NO),
     ],
 
 ];

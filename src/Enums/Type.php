@@ -2,7 +2,7 @@
 
 namespace XGrz\Settings\Enums;
 
-enum SettingType: int
+enum Type: int
 {
     case ON_OFF = 1;
     case YES_NO = 2;
@@ -35,12 +35,12 @@ enum SettingType: int
         };
     }
 
-    public function canBeChangedTo(SettingType $settingType): bool
+    public function canBeChangedTo(Type $settingType): bool
     {
         return in_array($settingType, $this->allowedChanges());
     }
 
-    public function castValueOnSet(mixed $value): mixed
+    public function castValue(mixed $value): mixed
     {
         return match ($this) {
             self::ON_OFF, self::YES_NO => str($value)->toBoolean(),

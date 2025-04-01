@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use XGrz\Settings\Helpers\SettingsConfig;
 
@@ -14,34 +13,18 @@ return new class extends Migration {
         Schema::create(SettingsConfig::getDatabaseTableName(), function (Blueprint $table) {
             $table->id();
 
-            $table->string('prefix'); // slug prefix
-
-            $table->string('suffix'); // slug suffix
-
-            $table->unique(['prefix', 'suffix']);
-
-            if (DB::getDriverName() !== 'sqlite') {
-                $table->string('key')
-                    ->index()
-                    ->virtualAs("CONCAT(`prefix`, '.', `suffix`)")
-                    ->unique();
-            }
+            $table->string('key')->unique();
 
             $table->string('description')
                 ->nullable();
 
-            $table->integer('setting_type');
+            $table->integer('type');
 
             $table->text('value')
                 ->nullable();
 
             $table->timestamps();
         });
-
-        if (DB::getDriverName() === 'sqlite') {
-            DB::statement('ALTER TABLE ' . SettingsConfig::getDatabaseTableName() . ' ADD COLUMN key TEXT GENERATED ALWAYS AS (prefix || "." || suffix) VIRTUAL');
-        }
-
 
     }
 

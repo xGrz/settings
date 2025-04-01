@@ -3,10 +3,6 @@
 namespace XGrz\Settings;
 
 use Illuminate\Support\ServiceProvider;
-use XGrz\Settings\Console\Commands\SettingsInitCommand;
-use XGrz\Settings\Console\Commands\SettingsPublishConfigCommand;
-use XGrz\Settings\Console\Commands\SettingsPublishLangCommand;
-use XGrz\Settings\Console\Commands\SettingsUpdateKeysCommand;
 use XGrz\Settings\Facades\Settings;
 
 class SettingsServiceProvider extends ServiceProvider
@@ -14,9 +10,9 @@ class SettingsServiceProvider extends ServiceProvider
 
     public function register(): void
     {
-        $this->app->singleton(Settings::class, function ($app) {
-            return new Settings();
-        });
+//        $this->app->singleton(Settings::class, function ($app) {
+//            return new Settings();
+//        });
     }
 
     public function boot(): void
@@ -28,10 +24,6 @@ class SettingsServiceProvider extends ServiceProvider
         $this->loadTranslationsFrom(__DIR__ . '/../lang', 'settings');
 
         $this->commands([
-            SettingsInitCommand::class,
-            SettingsPublishConfigCommand::class,
-            SettingsPublishLangCommand::class,
-            SettingsUpdateKeysCommand::class,
         ]);
 
         $this->publishes(
@@ -44,7 +36,6 @@ class SettingsServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../lang' => $this->app->langPath('vendor/settings')
         ], 'settings-lang');
-
 
 
     }

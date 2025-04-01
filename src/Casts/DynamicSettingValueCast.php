@@ -10,14 +10,14 @@ class DynamicSettingValueCast implements CastsAttributes
     public function get(Model $model, string $key, mixed $value, array $attributes): mixed
     {
         if (is_null($value)) return null;
-        if (empty($model->setting_type)) return $value;
-        return $model->setting_type->castValueOnSet($value);
+        if (empty($model->type)) return $value;
+        return $model->type->castValue($value);
     }
 
     public function set(Model $model, string $key, mixed $value, array $attributes): mixed
     {
         if (is_null($value)) return null;
-        if (empty($model->setting_type)) return $value;
-        return $model->setting_type->castValueOnSet($value);
+        if (empty($model->type)) return $value;
+        return $model->type->castValue($value);
     }
 }
