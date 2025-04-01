@@ -15,7 +15,7 @@ class SettingEntryTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->entry = SettingEntry::make(SettingType::YES_NO, 'System Settings', 'app name', 'Application name', 'Laravel Settings', '\\App\\Console\\');
+        $this->entry = SettingEntry::make(SettingType::YES_NO, 'System Settings', 'app name', 'Application name', 'Laravel Settings');
     }
 
     public function test_definition_has_prefix()
