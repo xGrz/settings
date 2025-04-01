@@ -3,6 +3,8 @@
 namespace XGrz\Settings\Helpers;
 
 use Illuminate\Database\UniqueConstraintViolationException;
+use Illuminate\Support\Facades\Log;
+use Throwable;
 use XGrz\Settings\Exceptions\DetectValueTypeException;
 use XGrz\Settings\Exceptions\DuplicatedKeyException;
 use XGrz\Settings\Models\Setting;
@@ -75,7 +77,10 @@ class InitBaseSettings
             try {
                 Setting::create($setting->getDefinition());
             } catch (UniqueConstraintViolationException $exception) {
-                throw new DuplicatedKeyException('Duplicated key: ' . $setting->getDefinition()['prefix'] . $setting->getDefinition()['suffix']);
+                Log::debug($setting->getDefinition()['prefix'] . '.' . $setting->getDefinition()['suffix'] . ' already exists. No action performed.', $setting->getDefinition());
+                continue;
+            } catch (Throwable $exception) {
+                Log::debug($setting->getDefinition()['prefix'] . '.' . $setting->getDefinition()['suffix'] . ' key not created. See log for details.', $setting->getDefinition());
             }
         }
     }
