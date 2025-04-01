@@ -4,6 +4,7 @@ namespace XGrz\Settings\Casts;
 
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
+use XGrz\Settings\Helpers\SettingsConfig;
 
 class KeyNameCast implements CastsAttributes
 {
@@ -12,11 +13,9 @@ class KeyNameCast implements CastsAttributes
         return $value;
     }
 
-    public function set(?Model $model, string $key, mixed $value, array $attributes): mixed
+    public function set(?Model $model, string $key, mixed $value, array $attributes): string
     {
-        return str($value)
-            ->replaceMatches('/[^\w\s\-]/u', '')
-            ->camel()
-            ->toString();
+        return SettingsConfig::getKeyGeneratorType()
+            ->generateKey($value);
     }
 }

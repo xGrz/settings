@@ -24,7 +24,7 @@ class SettingsConfig
     public static function getKeyGeneratorType(): KeyNaming
     {
         $default = KeyNaming::CAMEL_CASE;
-        $naming = config('app-settings.preferred_key_type', $default);
+        $naming = config('app-settings.key_name_generator', $default);
         if ($naming instanceof KeyNaming) return $naming;
 
         return KeyNaming::tryFrom($naming) ?? $default;

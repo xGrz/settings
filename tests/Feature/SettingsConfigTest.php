@@ -58,7 +58,7 @@ class SettingsConfigTest extends TestCase
 
     public function test_can_receive_default_key_generator_type()
     {
-        config(['app-settings.preferred_key_type' => null]);
+        config(['app-settings.key_name_generator' => null]);
 
         $this->assertSame(
             KeyNaming::CAMEL_CASE,
@@ -68,7 +68,7 @@ class SettingsConfigTest extends TestCase
 
     public function test_can_receive_key_generator_type_from_config()
     {
-        config(['app-settings.preferred_key_type' => KeyNaming::SNAKE_CASE->value]);
+        config(['app-settings.key_name_generator' => KeyNaming::SNAKE_CASE->value]);
 
         $this->assertSame(
             KeyNaming::SNAKE_CASE,
@@ -78,7 +78,7 @@ class SettingsConfigTest extends TestCase
 
     public function test_invalid_key_generator_type_resolves_to_default()
     {
-        config(['app-settings.preferred_key_type' => 'invalidType']);
+        config(['app-settings.key_name_generator' => 'invalidType']);
 
         $this->assertSame(
             KeyNaming::CAMEL_CASE,
@@ -88,7 +88,7 @@ class SettingsConfigTest extends TestCase
 
     public function test_can_receive_overridden_key_generator_type()
     {
-        config(['app-settings.preferred_key_type' => KeyNaming::SNAKE_CASE]);
+        config(['app-settings.key_name_generator' => KeyNaming::SNAKE_CASE]);
 
         $this->assertSame(
             KeyNaming::SNAKE_CASE,

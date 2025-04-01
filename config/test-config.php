@@ -23,7 +23,7 @@ return [
         'key' => 'app-settings-test'
     ],
 
-    'preferred_key_type' => 'camel',
+    'key_name_generator' => 'camel',
 
     'initial' => [
         'system' => [

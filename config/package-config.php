@@ -31,7 +31,7 @@ return [
      * snake_case
      * kebab-case
      */
-    'preferred_key_type' => KeyNaming::CAMEL_CASE,
+    'key_name_generator' => KeyNaming::CAMEL_CASE,
 
     'initial' => [
         'system' => [
