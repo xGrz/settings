@@ -2,7 +2,6 @@
 
 namespace XGrz\Settings\Tests\Unit;
 
-use XGrz\Settings\Enums\SettingType;
 use XGrz\Settings\Enums\Type;
 use XGrz\Settings\Tests\TestCase;
 
