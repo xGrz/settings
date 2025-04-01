@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use XGrz\Settings\Console\Commands\SettingsInitCommand;
 use XGrz\Settings\Console\Commands\SettingsPublishConfigCommand;
 use XGrz\Settings\Console\Commands\SettingsPublishLangCommand;
+use XGrz\Settings\Console\Commands\SettingsUpdateKeysCommand;
 use XGrz\Settings\Facades\Settings;
 
 class SettingsServiceProvider extends ServiceProvider
@@ -30,6 +31,7 @@ class SettingsServiceProvider extends ServiceProvider
             SettingsInitCommand::class,
             SettingsPublishConfigCommand::class,
             SettingsPublishLangCommand::class,
+            SettingsUpdateKeysCommand::class,
         ]);
 
         $this->publishes(
