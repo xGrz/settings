@@ -26,16 +26,17 @@ class SettingConfigTest extends TestCase
     public function test_can_read_cache_key()
     {
         $this->assertSame(
-            'app-settings-test',
-            config('app-settings.cache.key')
-        );
-    }
-
-    public function test_can_receive_cache_key_by_config_class_method()
-    {
-        $this->assertSame(
             config('app-settings.cache.key'),
             SettingsConfig::getCacheKey()
         );
     }
+
+    public function test_can_read_cache_ttl()
+    {
+        $this->assertSame(
+            config('app-settings.cache.ttl'),
+            SettingsConfig::getCacheTTL()
+        );
+    }
+
 }

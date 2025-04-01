@@ -2,6 +2,7 @@
 
 namespace XGrz\Settings\Helpers;
 
+use XGrz\Settings\Casts\DynamicSettingValueCast;
 use XGrz\Settings\Enums\Type;
 use XGrz\Settings\Exceptions\UnresolvableValueTypeException;
 
@@ -60,12 +61,14 @@ class Entry
      */
     public function toArray(): array
     {
-        return [
+        $definition = [
             'key' => $this->getKey(),
             'description' => $this->description,
-            'value' => $this->value,
             'type' => $this->type ?? self::detectTypeFromValue($this->value, $this->getKey()),
         ];
+
+        $definition['value'] = DynamicSettingValueCast::format($this->value, $this->type);
+        return $definition;
     }
 
     /**

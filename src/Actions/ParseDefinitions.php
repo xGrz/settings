@@ -4,8 +4,17 @@ namespace XGrz\Settings\Actions;
 
 use XGrz\Settings\Helpers\Entry;
 
+/**
+ * A utility class for parsing and managing application configuration definitions.
+ *
+ * This class processes configuration entries, organizes them into a structured format,
+ * and allows for retrieving the definitions as either raw data or an array format.
+ */
 class ParseDefinitions
 {
+    /**
+     * @var array<int, Entry>
+     */
     private array $definitions = [];
 
     public static function make(): ParseDefinitions
@@ -48,5 +57,10 @@ class ParseDefinitions
     {
         return collect($this->definitions)->map(fn(Entry $entry) => $entry->toArray())->toArray();
     }
+
+//    private function formatValues()
+//    {
+//        return true;
+//    }
 
 }
