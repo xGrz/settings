@@ -33,7 +33,7 @@ return [
         ],
         'pageWidth' => [
             'user_defaults' => Entry::make(value: 1024, description: 'Page width description'),
-            'global_defaults' => Entry::make(),
+            'global_defaults' => Entry::make(value: 2048),
         ],
     ],
 ];

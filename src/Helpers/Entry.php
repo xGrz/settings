@@ -3,7 +3,7 @@
 namespace XGrz\Settings\Helpers;
 
 use XGrz\Settings\Enums\Type;
-use XGrz\Settings\Exceptions\DetectValueTypeException;
+use XGrz\Settings\Exceptions\UnresolvableValueTypeException;
 
 class Entry
 {
@@ -28,14 +28,6 @@ class Entry
     public function appendKey(string $partialKey): static
     {
         $this->key[] = $partialKey;
-        return $this;
-    }
-
-    public function fill(array $data): static
-    {
-        if (array_key_exists('description', $data)) $this->description($data['description']);
-        if (array_key_exists('value', $data)) $this->value($data['value']);
-        if (array_key_exists('settingType', $data)) $this->type($data['suffix']);
         return $this;
     }
 
@@ -64,7 +56,7 @@ class Entry
     }
 
     /**
-     * @throws DetectValueTypeException
+     * @throws UnresolvableValueTypeException
      */
     public function toArray(): array
     {
@@ -72,16 +64,16 @@ class Entry
             'key' => $this->getKey(),
             'description' => $this->description,
             'value' => $this->value,
-            'type' => $this->type ?? self::detectType($this->value, $this->getKey()),
+            'type' => $this->type ?? self::detectTypeFromValue($this->value, $this->getKey()),
         ];
     }
 
     /**
-     * @throws DetectValueTypeException
+     * @throws UnresolvableValueTypeException
      */
-    public static function detectType(mixed $value, string $keyName): Type
+    public static function detectTypeFromValue(mixed $value, string $keyName): Type
     {
-        if (gettype($value) === 'boolean') return Type::ON_OFF;
+        if (gettype($value) === 'boolean') return Type::YES_NO;
         if (is_float($value)) return Type::FLOAT;
         if (is_int($value)) return Type::INTEGER;
         if (is_string($value)) return str($value)->length() > 200 ? Type::TEXT : Type::STRING;
@@ -91,6 +83,18 @@ class Entry
         $message = str('Could not detect setting type by its value [' . $value . ']')
             ->when($keyName, fn($message) => $message->append(' for [')->append($keyName)->append(']'));
 
-        throw new DetectValueTypeException($message);
+        throw new UnresolvableValueTypeException($message);
+    }
+
+    /**
+     * @throws UnresolvableValueTypeException
+     */
+    public function detectType(bool $force = false): ?Type
+    {
+        $type = (!empty($this->type) && !$force)
+            ? $this->type
+            : self::detectTypeFromValue($this->value, $this->getKey());
+        $this->type($type);
+        return $this->type;
     }
 }
