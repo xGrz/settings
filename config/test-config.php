@@ -23,6 +23,8 @@ return [
         'key' => 'app-settings-test'
     ],
 
+    'preferred_key_type' => 'camel',
+
     'initial' => [
         'system' => [
             'seller_address_name' => Entry::make()

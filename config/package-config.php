@@ -1,5 +1,7 @@
 <?php
 
+
+use XGrz\Settings\Enums\KeyNaming;
 use XGrz\Settings\Enums\SettingType;
 use XGrz\Settings\Helpers\SettingEntry as Entry;
 
@@ -22,6 +24,14 @@ return [
         /* Cache key to store data. Change only when you have a conflict with other modules */
         'key' => 'settings'
     ],
+
+    /*
+     * Select key generation convention
+     * camelCase // default
+     * snake_case
+     * kebab-case
+     */
+    'preferred_key_type' => KeyNaming::CAMEL_CASE,
 
     'initial' => [
         'system' => [
