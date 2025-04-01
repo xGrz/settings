@@ -19,7 +19,6 @@ class SettingFactory extends Factory
             'description' => $this->faker->text(),
             'setting_type' => fake()->randomElements(SettingType::class),
             'value' => $this->faker->word(),
-            'context' => $this->faker->word(),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];

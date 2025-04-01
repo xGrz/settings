@@ -7,16 +7,20 @@
 
 # *Settings* Package for Laravel
 
-## Compatibility
+The Settings package for Laravel was created to facilitate easy management of global application settings in both
+development and production environments. Here are the main functions and features of the package:
 
-This package has been tested with:
+## Key Features
 
-- Laravel 10.x, 11.x, 12.x
-- PHP 8.1, 8.2, 8.3, 8.4 (PHP <8.1 is not supported)
-- MySQL, SQLite databases
+1. **Application Settings Management** - the package allows storing and easy management of global application
+   configuration
+2. **File-Based Configuration** - definition of keys, types, and default values takes place in a configuration file
+3. **Type Validation** - the package ensures proper data types are maintained (as defined in config)
+4. **Performance** - utilization of caching mechanism (Redis or File recommended) to limit database queries
+5. **Naming Standardization** - automatic formatting of keys according to the chosen convention (camel case, kebab case,
+   or snake case)
+6. **Keys** - `prefix.suffix` naming convention for all settings keys
 
-Please note that for performance reasons, this package uses caching. It is recommended to use Redis or a file-based
-cache system instead of a database cache.
 
 ## Installation
 
@@ -107,3 +111,13 @@ Allowed type changes:
 
 You can delete key and create new one if you need to change setting_type to other types. 
 
+## Compatibility
+
+This package has been tested with:
+
+- Laravel 10.x, 11.x, 12.x
+- PHP 8.1-8.4
+- MySQL, SQLite databases
+
+Please note that for performance reasons, this package uses caching. It is recommended to use Redis or a file-based
+cache system instead of a database cache.

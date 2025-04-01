@@ -28,7 +28,7 @@ class InitBaseSettings
 
     private function getInitialConfig(): void
     {
-        $this->baseConfig = config('app-settings.initial', []);
+        $this->baseConfig = config('app-settings.definitions', []);
     }
 
     public static function make(): InitBaseSettings

@@ -3,67 +3,72 @@
 
 use XGrz\Settings\Enums\KeyNaming;
 use XGrz\Settings\Enums\SettingType;
-use XGrz\Settings\Helpers\SettingEntry as Entry;
 
 return [
-    /*
+    /**
      * Database table name. Configure this before migration is fired
      */
-    'database_table' => 'app_settings',
+    'database_table' => env('APPLICATION_SETTINGS_TABLE_NAME', 'app_settings'),
 
-    /*
+    /**
      * Cache configuration
      */
     'cache' => [
-        /*
+        /**
          * Set cache timeout for settings (in seconds)
-         * You can set false to disable cache
          */
-        'ttl' => 86400,
+        'ttl' => env('APPLICATION_SETTINGS_CACHE_TTL', 86400),
 
-        /* Cache key to store data. Change only when you have a conflict with other modules */
-        'key' => 'settings'
+        /** Cache key to store data. Change only when you have a conflict with other packages */
+        'key' => env('APPLICATION_SETTINGS_CACHE_KEY', 'settings'),
     ],
 
-    /*
-     * Select key generation convention
-     * camelCase // default
-     * snake_case
-     * kebab-case
+    /**
+     * Select key generation convention KeyNaming (enum) or string can be set
+     * - camelCase // default
+     * - snake_case
+     * - kebab-case
      */
     'key_name_generator' => KeyNaming::CAMEL_CASE,
 
-    'initial' => [
+    /**
+     * Definitions of settings
+     */
+    'definitions' => [
         'system' => [
-            'seller_address_name' => Entry::make()
+            // define using SettingEntry helper
+            'seller_address_name' => XGrz\Settings\Helpers\SettingEntry::make()
                 ->value('Laravel Corporation')
-                ->description('Seller name'),
+                ->description('Company address: name'),
 
-            'seller_address_city' => Entry::make()
+            // prefix is discovered as 'system', suffix as 'seller_address_name'
+            'seller_address_city' => XGrz\Settings\Helpers\SettingEntry::make()
+                ->description('Company address: city')
                 ->value('Warsaw'),
 
-            'seller_address_postal_code' => Entry::make(value: '00-950'),
-
-            'seller_address_street' => Entry::make(value: '1st Street'),
-            'seller_address_number' => Entry::make(value: '200/1'),
+            // make parameters works too
+            'seller_address_street' => XGrz\Settings\Helpers\SettingEntry::make(description: 'Company address: street and number', value: 'Willow Street 2002'),
         ],
+
         'pageLength' => [
-            'default' => '10',
+            // creates 'pageLength.default' setting with integer data type and initial value = 10 without description.
+            'default' => 10,
         ],
         'pageWidth' => [
+            // direct attach setting props [setting_type, description, value]
             'user_defaults' => [
                 'description' => 'Page width description',
                 'value' => 1024,
             ],
         ],
-        Entry::make()
-            ->value('12')
-            ->description('Page length2')
-            ->context('settings')
+        // top level setting entry helper. Prefix and suffix are required.
+        XGrz\Settings\Helpers\SettingEntry::make()
+            ->value('Laravel settings package')
+            ->description('Some system name')
             ->prefix('system')
             ->suffix('name')
             ->settingType(SettingType::INTEGER),
-        Entry::make()
+        XGrz\Settings\Helpers\SettingEntry::make()
             ->prefix('system')
             ->suffix('yes_no')
             ->settingType(SettingType::YES_NO),

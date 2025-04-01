@@ -4,28 +4,17 @@ use XGrz\Settings\Enums\SettingType;
 use XGrz\Settings\Helpers\SettingEntry as Entry;
 
 return [
-    /*
-     * Database table name. Configure this before migration is fired
-     */
     'database_table' => 'application_settings',
 
-    /*
-     * Cache configuration
-     */
     'cache' => [
-        /*
-         * Set cache timeout for settings (in seconds)
-         * You can set false to disable cache
-         */
-        'ttl' => 10,
+        'ttl' => 5,
 
-        /* Cache key to store data. Change only when you have a conflict with other modules */
-        'key' => 'app-settings-test'
+        'key' => 'app-settings-test',
     ],
 
     'key_name_generator' => 'camel',
 
-    'initial' => [
+    'definitions' => [
         'system' => [
             'seller_address_name' => Entry::make()
                 ->value('Laravel Corporation')
@@ -51,7 +40,6 @@ return [
         Entry::make()
             ->value('12')
             ->description('Page length2')
-            ->context('settings')
             ->prefix('system')
             ->suffix('name')
             ->settingType(SettingType::INTEGER),

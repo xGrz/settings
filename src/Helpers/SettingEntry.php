@@ -12,23 +12,20 @@ class SettingEntry
     private ?SettingType $settingType = null;
     private ?string $description = null;
     private int|float|string|null $value = null;
-    private ?string $context = null;
 
-
-    private function __construct(?SettingType $settingType = null, ?string $prefix = null, ?string $suffix = null, ?string $description = null, int|float|string|bool|null $value = null, ?string $context = null)
+    private function __construct(?SettingType $settingType = null, ?string $prefix = null, ?string $suffix = null, ?string $description = null, int|float|string|bool|null $value = null)
     {
         $this
             ->settingType($settingType)
             ->prefix($prefix)
             ->suffix($suffix)
             ->description($description)
-            ->value($value)
-            ->context($context);
+            ->value($value);
     }
 
-    public static function make(?SettingType $settingType = null, ?string $prefix = null, ?string $suffix = null, ?string $description = null, int|float|string|bool|null $value = null, ?string $context = null): SettingEntry
+    public static function make(?SettingType $settingType = null, ?string $prefix = null, ?string $suffix = null, ?string $description = null, int|float|string|bool|null $value = null): SettingEntry
     {
-        return new self($settingType, $prefix, $suffix, $description, $value, $context);
+        return new self($settingType, $prefix, $suffix, $description, $value);
     }
 
     public function fill(array $data): static
@@ -37,7 +34,6 @@ class SettingEntry
         if (array_key_exists('suffix', $data)) $this->suffix($data['suffix']);
         if (array_key_exists('description', $data)) $this->description($data['description']);
         if (array_key_exists('value', $data)) $this->value($data['value']);
-        if (array_key_exists('context', $data)) $this->context($data['context']);
         if (array_key_exists('settingType', $data)) $this->settingType($data['suffix']);
         return $this;
     }
@@ -83,15 +79,6 @@ class SettingEntry
         return $this;
     }
 
-    public function context(?string $context): static
-    {
-        if (!empty($this->context)) return $this;
-
-        $this->context = $context;
-
-        return $this;
-    }
-
     /**
      * @throws DetectValueTypeException
      */
@@ -103,7 +90,6 @@ class SettingEntry
             'description' => $this->description,
             'value' => $this->value,
             'setting_type' => $this->settingType ?? self::detectSettingType($this->value, $this->prefix, $this->suffix),
-            'context' => $this->context,
         ];
     }
 

@@ -42,8 +42,7 @@ class SettingsConfigTest extends TestCase
 
     public function test_can_read_cache_ttl()
     {
-        $this->assertSame(
-            10,
+        $this->assertSame(5,
             config('app-settings.cache.ttl')
         );
     }

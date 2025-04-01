@@ -43,14 +43,14 @@ class SettingEntryTest extends TestCase
         $this->assertArrayHasKey('description', $this->entry->getDefinition());
     }
 
-    public function test_definition_has_context()
-    {
-        $this->assertArrayHasKey('context', $this->entry->getDefinition());
-    }
-
     public function test_definition_array_returns_all_props()
     {
-        $this->assertCount(6, $this->entry->getDefinition());
+        $this->assertCount(5, $this->entry->getDefinition());
+        $this->assertArrayHasKey('prefix', $this->entry->getDefinition());
+        $this->assertArrayHasKey('suffix', $this->entry->getDefinition());
+        $this->assertArrayHasKey('description', $this->entry->getDefinition());
+        $this->assertArrayHasKey('value', $this->entry->getDefinition());
+        $this->assertArrayHasKey('setting_type', $this->entry->getDefinition());
     }
 
     public function test_setting_entry_converts_prefix_to_camel_case()

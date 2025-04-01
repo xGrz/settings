@@ -35,8 +35,6 @@ return new class extends Migration {
             $table->text('value')
                 ->nullable();
 
-            $table->string('context')->nullable();
-
             $table->timestamps();
         });
 
