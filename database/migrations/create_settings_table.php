@@ -6,8 +6,6 @@ use Illuminate\Support\Facades\Schema;
 use XGrz\Settings\Helpers\SettingsConfig;
 
 return new class extends Migration {
-
-
     public function up(): void
     {
         Schema::create(SettingsConfig::getDatabaseTableName(), function (Blueprint $table) {
@@ -27,7 +25,6 @@ return new class extends Migration {
         });
 
     }
-
 
     public function down(): void
     {

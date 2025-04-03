@@ -7,7 +7,6 @@ use XGrz\Settings\Tests\TestCase;
 
 class TypeEnumTest extends TestCase
 {
-
     public function test_setting_type_text_returns_localized_label()
     {
         $type = Type::TEXT;
@@ -57,6 +56,4 @@ class TypeEnumTest extends TestCase
         $this->assertFalse(Type::INTEGER->isBoolean());
         $this->assertFalse(Type::FLOAT->isBoolean());
     }
-
-
 }

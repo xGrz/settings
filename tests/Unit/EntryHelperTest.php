@@ -4,8 +4,8 @@ namespace XGrz\Settings\Tests\Unit;
 
 use Illuminate\Support\Facades\Config;
 use XGrz\Settings\Enums\Type;
-use XGrz\Settings\Helpers\Entry;
 use XGrz\Settings\Tests\TestCase;
+use XGrz\Settings\ValueObjects\Entry;
 
 class EntryHelperTest extends TestCase
 {
@@ -75,4 +75,22 @@ class EntryHelperTest extends TestCase
         $this->assertSame('system-name.testing-environment', $entry->toArray()['key']);
     }
 
+    public function test_it_generates_keys_from_array()
+    {
+        Config::set('app-settings.key_name_generator', 'kebab-case');
+        $entry = Entry::make('testValue', Type::INTEGER, 'Some description')
+            ->appendKey(['systemName', 'testing_environment']);
+
+        $this->assertSame('system-name.testing-environment', $entry->toArray()['key']);
+    }
+
+    public function test_it_generates_keys_from_array_and_append_key()
+    {
+        Config::set('app-settings.key_name_generator', 'kebab-case');
+        $entry = Entry::make('testValue', Type::INTEGER, 'Some description')
+            ->appendKey(['systemName', 'testing_environment'])
+            ->appendKey('has_testing');
+
+        $this->assertSame('system-name.testing-environment.has-testing', $entry->toArray()['key']);
+    }
 }

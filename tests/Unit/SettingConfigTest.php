@@ -38,5 +38,4 @@ class SettingConfigTest extends TestCase
             SettingsConfig::getCacheTTL()
         );
     }
-
 }

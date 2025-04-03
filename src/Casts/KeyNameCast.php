@@ -10,7 +10,7 @@ class KeyNameCast implements CastsAttributes
 {
     public function get(?Model $model, string $key, mixed $value, array $attributes): mixed
     {
-        return $value;
+        return trim($value);
     }
 
     public function set(?Model $model, string $key, mixed $value, array $attributes): string

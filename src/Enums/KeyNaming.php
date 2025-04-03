@@ -14,21 +14,24 @@ enum KeyNaming: string
         foreach ($keyNames as $index => $name) {
             $keyNames[$index] = self::formatKey($name);
         }
-        return join('.', $keyNames);
+
+        return trim(implode('.', $keyNames));
     }
 
     private static function explodeKeyName(array|string $keyName): array
     {
         $partials = [];
-        if (is_string($keyName)) $keyName = [$keyName];
+        if (is_string($keyName)) {
+            $keyName = [$keyName];
+        }
         foreach ($keyName as $partial) {
             foreach (explode('.', $partial) as $part) {
                 $partials[] = $part;
             }
         }
+
         return $partials;
     }
-
 
     private function formatKey(string|array $keyName): string
     {
@@ -36,11 +39,11 @@ enum KeyNaming: string
             ->replaceMatches('/[^a-zA-Z0-9]/u', ' ')
             ->replaceMatches('/\s+/', ' ')
             ->trim();
+
         return match ($this) {
             self::CAMEL_CASE => $keyName->camel(),
             self::SNAKE_CASE => $keyName->snake(),
             self::KEBAB_CASE => $keyName->kebab(),
         };
     }
-
 }

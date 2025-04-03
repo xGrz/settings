@@ -16,14 +16,13 @@ use XGrz\Settings\Helpers\SettingsConfig;
  */
 class Setting extends Model
 {
-
-    protected $guarded = ['id', 'key'];
+    protected $guarded = ['id'];
 
     protected $casts = [
         'key' => 'string',
         'description' => 'string',
         'type' => Type::class,
-        'value' => DynamicSettingValueCast::class
+        'value' => DynamicSettingValueCast::class,
     ];
 
     public function getTable(): string
@@ -40,4 +39,11 @@ class Setting extends Model
         };
     }
 
+    public function refreshKey()
+    {
+        $this->key = SettingsConfig::getKeyGeneratorType()->generateKey($this->key);
+        $this->save();
+
+        return $this;
+    }
 }
