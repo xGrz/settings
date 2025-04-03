@@ -5,9 +5,9 @@ namespace XGrz\Settings\Console\Commands;
 use Illuminate\Console\Command;
 use XGrz\Settings\Helpers\DefinitionsHelper;
 
-class SettingsUpdateCommand extends Command
+class SettingsStatusCommand extends Command
 {
-    protected $signature = 'settings:update';
+    protected $signature = 'settings:status';
 
     protected $description = 'View settings configuration status';
 

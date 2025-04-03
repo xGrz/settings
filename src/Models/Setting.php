@@ -39,7 +39,7 @@ class Setting extends Model
         };
     }
 
-    public function refreshKey()
+    public function refreshKey(): static
     {
         $this->key = SettingsConfig::getKeyGeneratorType()->generateKey($this->key);
         $this->save();

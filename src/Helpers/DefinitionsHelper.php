@@ -82,10 +82,8 @@ class DefinitionsHelper
         return ['Key', 'Description', 'DefinedType', 'StoredType', 'Operation'];
     }
 
-    public function toListing(): array
+    public function toListing(): Collection
     {
-        dd($this->settings->toArray());
-
         return $this->settings
             ->map(fn(SettingItem $setting) => [
                 'key' => $setting->key,
@@ -93,7 +91,49 @@ class DefinitionsHelper
                 'definedType' => $setting->definedType?->name ?? '<fg=gray>---</>',
                 'storedType' => $setting->storedType?->name ?? '<fg=gray>---</>',
                 'operation' => $setting->operation->commandLineLabel(),
-            ])
-            ->toArray();
+            ]);
+    }
+
+    public function updatable(bool $asTableRows = false): Collection
+    {
+        return $this
+            ->settings
+            ->filter(fn(SettingItem $setting) => $setting->shouldUpdate())
+            ->when($asTableRows, fn(Collection $settings) => $this->formatTableContent($settings));
+    }
+
+    public function creatable(bool $asTableRows = false)
+    {
+        return $this
+            ->settings
+            ->filter(fn(SettingItem $setting) => $setting->shouldCreate())
+            ->when($asTableRows, fn(Collection $settings) => $this->formatTableContent($settings));
+    }
+
+    public function deletable(bool $asTableRows = false)
+    {
+        return $this
+            ->settings
+            ->filter(fn(SettingItem $setting) => $setting->shouldDelete())
+            ->when($asTableRows, fn(Collection $settings) => $this->formatTableContent($settings));
+    }
+
+    public function synchronizable(bool $asTableRows = false): Collection
+    {
+        return $this
+            ->settings
+            ->filter(fn(SettingItem $setting) => $setting->shouldUpdate() || $setting->shouldCreate() || $setting->shouldDelete())
+            ->when($asTableRows, fn(Collection $settings) => $this->formatTableContent($settings));
+    }
+
+    public function formatTableContent(Collection $settingItems): Collection
+    {
+        return $settingItems->map(fn(SettingItem $setting) => [
+            'key' => $setting->key,
+            'description' => $setting->definedDescription ?? $setting->storedDescription ?? '<fg=gray>Not defined</>',
+            'definedType' => $setting->definedType?->name ?? '<fg=gray>---</>',
+            'storedType' => $setting->storedType?->name ?? '<fg=gray>---</>',
+            'operation' => $setting->operation->commandLineLabel(),
+        ]);
     }
 }

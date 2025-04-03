@@ -12,7 +12,7 @@ class Entry
 
     private ?string $description = null;
 
-    private int|float|string|null $value = null;
+    private bool|int|float|string|null $value = null;
 
     private function __construct(int|float|string|bool|null $value = null, ?Type $type = null, ?string $description = null)
     {
@@ -53,14 +53,11 @@ class Entry
      */
     public function toArray(): array
     {
-        $definition = [
+        return [
             'description' => $this->getDescription(),
             'type' => $this->getType(),
+            'value' => $this->getValue(),
         ];
-
-        $definition['value'] = DynamicSettingValueCast::format($this->value, $this->type);
-
-        return $definition;
     }
 
     /**
@@ -68,7 +65,7 @@ class Entry
      */
     private function detectTypeFromValue(): Type
     {
-        if (gettype($this->value) === 'boolean') {
+        if (is_bool($this->value)) {
             return Type::YES_NO;
         }
         if (is_float($this->value)) {
@@ -89,7 +86,11 @@ class Entry
      */
     public function getType(): ?Type
     {
-        return !is_null($this->type) ? $this->type : self::detectTypeFromValue();
+        if (!$this->type instanceof Type) {
+            $this->type = self::detectTypeFromValue();
+        }
+
+        return $this->type;
     }
 
     public function getDescription(): ?string
@@ -97,8 +98,10 @@ class Entry
         return $this->description;
     }
 
-    public function getValue(): float|int|string|null
+    public function getValue(): float|int|string|null|bool
     {
-        return DynamicSettingValueCast::format($this->getValue(), $this->getType());
+        $type = $this->getType();
+
+        return DynamicSettingValueCast::format($this->value, $type);
     }
 }

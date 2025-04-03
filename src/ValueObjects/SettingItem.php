@@ -67,7 +67,7 @@ class SettingItem
             return false;
         }
 
-        return $this->storedValue->canBeChangedTo($this->definedType); // todo check for data loss
+        return $this->storedType->canBeChangedTo($this->definedType); // todo check for data loss
     }
 
     public function shouldUpdate(): bool

@@ -4,7 +4,8 @@ namespace XGrz\Settings;
 
 use Illuminate\Support\ServiceProvider;
 use XGrz\Settings\Console\Commands\SettingsFormatKeysCommand;
-use XGrz\Settings\Console\Commands\SettingsUpdateCommand;
+use XGrz\Settings\Console\Commands\SettingsStatusCommand;
+use XGrz\Settings\Console\Commands\SettingsSyncCommand;
 use XGrz\Settings\Facades\Settings;
 
 class SettingsServiceProvider extends ServiceProvider
@@ -25,7 +26,8 @@ class SettingsServiceProvider extends ServiceProvider
         $this->loadTranslationsFrom(__DIR__ . '/../lang', 'settings');
 
         $this->commands([
-            SettingsUpdateCommand::class,
+            SettingsStatusCommand::class,
+            SettingsSyncCommand::class,
             SettingsFormatKeysCommand::class,
         ]);
 
