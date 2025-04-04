@@ -8,14 +8,15 @@ use XGrz\Settings\Console\Commands\SettingsPublishConfigCommand;
 use XGrz\Settings\Console\Commands\SettingsResetCommand;
 use XGrz\Settings\Console\Commands\SettingsStatusCommand;
 use XGrz\Settings\Console\Commands\SettingsSyncCommand;
+use XGrz\Settings\Facades\Settings;
 
 class SettingsServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        //        $this->app->singleton(Settings::class, function ($app) {
-        //            return new Settings();
-        //        });
+        $this->app->singleton(Settings::class, function ($app) {
+            return new Settings();
+        });
     }
 
     public function boot(): void

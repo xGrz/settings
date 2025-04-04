@@ -19,7 +19,7 @@ class SettingsResetCommand extends Command
     {
         Setting::truncate();
 
-        if (!$this->confirm('Do you want to reset all settings?', false)) {
+        if (!$this->confirm('Are you sure you want to reset all settings?', false)) {
             $this->warn('Aborted. No changes were made.');
             $this->newLine();
 
@@ -29,7 +29,7 @@ class SettingsResetCommand extends Command
         $helper = new DefinitionsHelper;
         progress(
             label: 'Reset settings...',
-            steps: $helper->synchronizable(),
+            steps: $helper->synchronizable(), //todo: prawdopodobnie zwraca gówno.
             callback: function ($setting, $progress) {
                 Sleep::for(100)->millisecond();
                 $progress

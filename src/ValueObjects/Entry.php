@@ -5,6 +5,7 @@ namespace XGrz\Settings\ValueObjects;
 use XGrz\Settings\Casts\DynamicSettingValueCast;
 use XGrz\Settings\Enums\Type;
 use XGrz\Settings\Exceptions\UnresolvableValueTypeException;
+use XGrz\Settings\Helpers\DetectValueType;
 
 class Entry
 {
@@ -60,26 +61,7 @@ class Entry
         ];
     }
 
-    /**
-     * @throws UnresolvableValueTypeException
-     */
-    private function detectTypeFromValue(): Type
-    {
-        if (is_bool($this->value)) {
-            return Type::YES_NO;
-        }
-        if (is_float($this->value)) {
-            return Type::FLOAT;
-        }
-        if (is_int($this->value)) {
-            return Type::INTEGER;
-        }
-        if (is_string($this->value)) {
-            return str($this->value)->length() > 200 ? Type::TEXT : Type::STRING;
-        }
 
-        throw new UnresolvableValueTypeException('Could not detect setting type by its value [null]');
-    }
 
     /**
      * @throws UnresolvableValueTypeException
@@ -87,7 +69,7 @@ class Entry
     public function getType(): ?Type
     {
         if (!$this->type instanceof Type) {
-            $this->type = self::detectTypeFromValue();
+            $this->type = DetectValueType::make($this->value);
         }
 
         return $this->type;

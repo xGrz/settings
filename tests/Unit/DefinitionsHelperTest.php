@@ -6,6 +6,7 @@ use Exception;
 use File;
 use Illuminate\Support\Collection;
 use XGrz\Settings\Helpers\DefinitionsHelper;
+use XGrz\Settings\Models\Setting;
 use XGrz\Settings\Tests\TestCase;
 
 class DefinitionsHelperTest extends TestCase
@@ -38,5 +39,14 @@ class DefinitionsHelperTest extends TestCase
     {
         $helper = new DefinitionsHelper;
         $this->assertGreaterThan(2, $helper->heading());
+    }
+
+    public function test_returns_updatable_definitions()
+    {
+        Setting::truncate();
+        $this->artisan('settings:publish-config');
+        $helper = new DefinitionsHelper;
+
+        dd($helper->updatable(), $helper->toListing(), $helper->creatable(), $helper->deletable());
     }
 }

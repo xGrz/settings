@@ -75,4 +75,6 @@ class SettingItemTest extends TestCase
         $settingItem = $this->createSettingItem(definition: ['storedType' => Type::FLOAT, 'definedType' => Type::INTEGER]);
         $this->assertNotSame(Operation::UPDATE, $settingItem->getOperationType());
     }
+
+
 }

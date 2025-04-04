@@ -40,7 +40,7 @@ enum Type: int
         return in_array($settingType, $this->allowedChanges());
     }
 
-    public function castValue(mixed $value): mixed
+    public function castValue(mixed $value): string|int|bool|float
     {
         return match ($this) {
             self::ON_OFF, self::YES_NO => (bool)$value,
