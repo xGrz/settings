@@ -35,7 +35,7 @@ class SettingsSyncCommand extends Command
         progress(
             label: 'Synchronizing settings...',
             steps: $helper->synchronizable(),
-            callback: function ($setting, $progress) use ($helper) {
+            callback: function ($setting, $progress) {
                 Sleep::for(100)->millisecond();
                 $progress
                     ->label('Synchronizing ' . $setting->key)

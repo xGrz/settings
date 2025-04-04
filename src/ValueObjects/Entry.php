@@ -78,7 +78,7 @@ class Entry
             return str($this->value)->length() > 200 ? Type::TEXT : Type::STRING;
         }
 
-        throw new UnresolvableValueTypeException('Could not detect setting type by its value [' . is_null($this->value) ? 'null' : $this->value . ']');
+        throw new UnresolvableValueTypeException('Could not detect setting type by its value [null]');
     }
 
     /**

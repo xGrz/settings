@@ -37,7 +37,7 @@ class DefinitionsHelperTest extends TestCase
     public function test_helper_can_list_definitions_heading()
     {
         $helper = new DefinitionsHelper;
-        $this->assertIsArray($helper->heading());
+        $this->assertGreaterThan(2, $helper->heading());
     }
 
 

@@ -28,7 +28,7 @@ class SettingsResetCommand extends Command
         progress(
             label: 'Reset settings...',
             steps: $helper->synchronizable(),
-            callback: function ($setting, $progress) use ($helper) {
+            callback: function ($setting, $progress) {
                 Sleep::for(100)->millisecond();
                 $progress
                     ->label('Creating ' . $setting->key)

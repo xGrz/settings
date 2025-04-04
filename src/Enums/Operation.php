@@ -13,10 +13,11 @@ enum Operation: string
     public function commandLineLabel(): string
     {
         return match ($this) {
-            self::CREATE => self::getLabel('green'),
-            self::UPDATE => self::getLabel('yellow'),
-            self::DELETE => self::getLabel('red'),
+            self::CREATE => self::getLabel('cyan'),
+            self::UPDATE => self::getLabel('green'),
+            self::DELETE => self::getLabel('yellow'),
             self::UNCHANGED => self::getLabel('gray'),
+            self::FORCE_UPDATE => self::getLabel('red'),
         };
     }
 

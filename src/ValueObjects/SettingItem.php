@@ -40,94 +40,91 @@ class SettingItem
                 $this->$key = null;
             }
         }
-        if ($this->shouldCreate()) {
-            $this->operation = Operation::CREATE;
-        }
-        if ($this->shouldUpdate()) {
-            $this->operation = Operation::UPDATE;
-        }
-        if ($this->canForceUpdate()) {
+        $this->detectOperationType();
+    }
 
-        }
-        if ($this->shouldDelete()) {
-            $this->operation = Operation::DELETE;
-        }
-        if (!isset($this->operation)) {
+    private function detectOperationType(): void
+    {
+        if (isset($this->definedType) && isset($this->storedType) && $this->storedType === $this->definedType) {
             $this->operation = Operation::UNCHANGED;
+            return;
         }
+
+        if (isset($this->definedType) && !isset($this->storedType)) {
+            $this->operation = Operation::CREATE;
+            return;
+        }
+
+        if (!isset($this->definedType) && isset($this->storedType)) {
+            $this->operation = Operation::DELETE;
+            return;
+        }
+
+        if ($this->storedType->canBeChangedTo($this->definedType)) {
+            $this->operation = Operation::UPDATE;
+            return;
+        }
+
+
+        $this->operation = Operation::FORCE_UPDATE;
     }
 
-    private function isTypeMatch(): bool
+
+    public function getOperationType(): Operation
     {
-        return $this->definedType !== null
-            && $this->storedType !== null
-            && $this->definedType === $this->storedType;
+        return $this->operation;
     }
 
-    private function canChangeType(): bool
+    public function create(): bool
     {
-        return (bool)$this->storedType?->canBeChangedTo($this->definedType);
-    }
-
-    private function canForceUpdate(): bool
-    {
-        if (!$this->shouldUpdate()) return false;
-
-    }
-
-    public function shouldUpdate(): bool
-    {
-        if ($this->isTypeMatch()) return false;
-        return $this->canChangeType();
-    }
-
-    public function shouldCreate(): bool
-    {
-        return is_null($this->storedValue)
-            && is_null($this->storedDescription)
-            && is_null($this->storedType);
-    }
-
-    public function shouldDelete(): bool
-    {
-        return is_null($this->definedValue)
-            && is_null($this->definedDescription)
-            && is_null($this->definedType);
-    }
-
-    public function update(): void
-    {
-        if (!$this->shouldUpdate()) return;
-        Setting::where('key', $this->key)
-            ->first()
-            ->update([
-                'type' => $this->definedType,
-            ]);
-    }
-
-    public function create(): void
-    {
-        if (!$this->shouldCreate()) return;
+        if ($this->getOperationType() !== Operation::CREATE) return false;
         Setting::create([
             'key' => $this->key,
             'type' => $this->definedType,
             'value' => $this->definedValue,
             'description' => $this->definedDescription,
         ]);
+        return true;
     }
 
-    public function delete(): void
+    public function update(): bool
     {
-        if (!$this->shouldDelete()) return;
+        if ($this->getOperationType() !== Operation::UPDATE) return false;
+        Setting::where('key', $this->key)
+            ->first()
+            ->update([
+                'type' => $this->definedType,
+            ]);
+
+        return true;
+    }
+
+    public function forceUpdate(): bool
+    {
+        if ($this->getOperationType() !== Operation::FORCE_UPDATE) return false;
+        Setting::where('key', $this->key)
+            ->first()
+            ->update([
+                'type' => $this->definedType,
+            ]);
+        return true;
+    }
+
+    public function delete(): bool
+    {
+        if ($this->getOperationType() !== Operation::DELETE) return false;
         Setting::where('key', $this->key)
             ->first()
             ->delete();
+        return true;
     }
 
-    public function sync(): void
+    public function sync(bool $forced = false): void
     {
         $this->create();
         $this->update();
+        if ($forced) $this->forceUpdate();
         $this->delete();
+
     }
 }
