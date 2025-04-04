@@ -3,11 +3,13 @@
 namespace XGrz\Settings\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Sleep;
 use XGrz\Settings\Helpers\DefinitionsHelper;
+use function Laravel\Prompts\progress;
 
 class SettingsSyncCommand extends Command
 {
-    protected $signature = 'settings:update';
+    protected $signature = 'settings:sync';
 
     protected $description = 'View settings configuration status';
 
@@ -15,7 +17,9 @@ class SettingsSyncCommand extends Command
     {
         $helper = new DefinitionsHelper;
         if ($helper->synchronizable()->count() === 0) {
-            $this->warn('No settings to sync.');
+            $this->newLine();
+            $this->warn('All settings are up to date.');
+            $this->newLine();
 
             return;
         }
@@ -28,5 +32,23 @@ class SettingsSyncCommand extends Command
             return;
         }
 
+        progress(
+            label: 'Synchronizing settings...',
+            steps: $helper->synchronizable(),
+            callback: function ($setting, $progress) use ($helper) {
+                Sleep::for(100)->millisecond();
+                $progress
+                    ->label('Synchronizing ' . $setting->key)
+                    ->hint('Synchronized ' . $setting->key);
+
+                return $setting->sync();
+
+            },
+            hint: 'Waiting for settings to be synchronized...'
+        );
+
+        $this->newLine();
+        $this->info('Settings synchronized successfully.');
+        $this->newLine();
     }
 }

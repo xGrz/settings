@@ -26,9 +26,12 @@ class DefinitionsHelper
     /**
      * @throws Exception
      */
-    public function __construct()
+    public function __construct(array $definitions = [])
     {
-        $this->definedSettings = collect(Arr::dot(SettingsConfig::getRawSettingsDefinition()))
+        if (empty($definitions)) {
+            $definitions = SettingsConfig::getRawSettingsDefinition();
+        }
+        $this->definedSettings = collect(Arr::dot($definitions))
             ->filter(fn($value) => $value instanceof Entry)
             ->mapWithKeys(fn(Entry $value, $key) => [SettingsConfig::getKeyGeneratorType()->generateKey($key) => $value])
             ->sortKeys();
@@ -82,16 +85,11 @@ class DefinitionsHelper
         return ['Key', 'Description', 'DefinedType', 'StoredType', 'Operation'];
     }
 
-    public function toListing(): Collection
+    public function toListing(bool $asTableRows = true): Collection
     {
-        return $this->settings
-            ->map(fn(SettingItem $setting) => [
-                'key' => $setting->key,
-                'description' => $setting->definedDescription ?? $setting->storedDescription ?? '<fg=gray>Not defined</>',
-                'definedType' => $setting->definedType?->name ?? '<fg=gray>---</>',
-                'storedType' => $setting->storedType?->name ?? '<fg=gray>---</>',
-                'operation' => $setting->operation->commandLineLabel(),
-            ]);
+        return $this
+            ->settings
+            ->when($asTableRows, fn(Collection $settings) => $this->formatTableContent($settings));
     }
 
     public function updatable(bool $asTableRows = false): Collection

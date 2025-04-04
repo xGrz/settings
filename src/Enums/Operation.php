@@ -6,8 +6,9 @@ enum Operation: string
 {
     case CREATE = 'create';
     case UPDATE = 'update';
+    case FORCE_UPDATE = 'force_update';
     case DELETE = 'delete';
-    case SKIP = 'skip';
+    case UNCHANGED = 'unchanged';
 
     public function commandLineLabel(): string
     {
@@ -15,7 +16,7 @@ enum Operation: string
             self::CREATE => self::getLabel('green'),
             self::UPDATE => self::getLabel('yellow'),
             self::DELETE => self::getLabel('red'),
-            self::SKIP => self::getLabel('cyan'),
+            self::UNCHANGED => self::getLabel('gray'),
         };
     }
 

@@ -35,7 +35,7 @@ enum Type: int
         };
     }
 
-    public function canBeChangedTo(Type $settingType): bool
+    public function canBeChangedTo(?Type $settingType): bool
     {
         return in_array($settingType, $this->allowedChanges());
     }

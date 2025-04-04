@@ -46,11 +46,14 @@ class SettingItem
         if ($this->shouldUpdate()) {
             $this->operation = Operation::UPDATE;
         }
+        if ($this->canForceUpdate()) {
+
+        }
         if ($this->shouldDelete()) {
             $this->operation = Operation::DELETE;
         }
         if (!isset($this->operation)) {
-            $this->operation = Operation::SKIP;
+            $this->operation = Operation::UNCHANGED;
         }
     }
 
@@ -63,15 +66,18 @@ class SettingItem
 
     private function canChangeType(): bool
     {
-        if (!self::isTypeMatch()) {
-            return false;
-        }
+        return (bool)$this->storedType?->canBeChangedTo($this->definedType);
+    }
 
-        return $this->storedType->canBeChangedTo($this->definedType); // todo check for data loss
+    private function canForceUpdate(): bool
+    {
+        if (!$this->shouldUpdate()) return false;
+
     }
 
     public function shouldUpdate(): bool
     {
+        if ($this->isTypeMatch()) return false;
         return $this->canChangeType();
     }
 
@@ -91,6 +97,7 @@ class SettingItem
 
     public function update(): void
     {
+        if (!$this->shouldUpdate()) return;
         Setting::where('key', $this->key)
             ->first()
             ->update([
@@ -100,6 +107,7 @@ class SettingItem
 
     public function create(): void
     {
+        if (!$this->shouldCreate()) return;
         Setting::create([
             'key' => $this->key,
             'type' => $this->definedType,
@@ -110,8 +118,16 @@ class SettingItem
 
     public function delete(): void
     {
+        if (!$this->shouldDelete()) return;
         Setting::where('key', $this->key)
             ->first()
             ->delete();
+    }
+
+    public function sync(): void
+    {
+        $this->create();
+        $this->update();
+        $this->delete();
     }
 }
