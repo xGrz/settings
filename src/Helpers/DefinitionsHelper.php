@@ -5,23 +5,18 @@ namespace XGrz\Settings\Helpers;
 use Exception;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use XGrz\Settings\Enums\Operation;
 use XGrz\Settings\Models\Setting;
 use XGrz\Settings\ValueObjects\Entry;
 use XGrz\Settings\ValueObjects\SettingItem;
 
 class DefinitionsHelper
 {
-    /**
-     * @var Collection<string, Entry>
-     */
-    private readonly Collection $definedSettings;
+    private Collection $definedSettings;
 
-    /**
-     * @var Collection<string, Setting>
-     */
-    private readonly Collection $storedSettings;
+    private Collection $storedSettings;
 
-    private readonly Collection $settings;
+    private Collection $settings;
 
     /**
      * @throws Exception
@@ -47,32 +42,36 @@ class DefinitionsHelper
     private function buildSettingItemsList(): Collection
     {
         // prepare definitions
-        $definitions = collect($this->definedSettings->map(fn(Entry $entry) => [
+        $definitions = collect($this->definedSettings->map(fn(Entry $entry): array => [
             'definedDescription' => $entry->getDescription(),
             'definedType' => $entry->getType(),
             'definedValue' => $entry->getValue(),
         ]));
 
         // prepare stored settings
-        $stored = $this->storedSettings->map(fn(Setting $setting) => [
+        $stored = $this->storedSettings->map(fn(Setting $setting): array => [
             'storedDescription' => $setting->description,
             'storedType' => $setting->type,
             'storedValue' => $setting->value,
         ]);
 
-        // marge stored into definitions
-        $settings = $definitions->mapWithKeys(fn($definition, $key) => [
-            $key => array_merge($definition, $stored->get($key, [])),
-        ]);
+        // merge stored into definitions
+        $settings = [];
+        foreach ($definitions as $key => $definition) {
+            $settings[$key] = $stored->get($key, []);
+        }
 
-        // fill stored not found in definitions
-        $stored->each(function ($setting, $key) use ($settings) {
-            if (!$settings->has($key)) {
-                $settings->put($key, $setting);
+        foreach ($stored as $key => $setting) {
+            if (array_key_exists($key, $settings)) {
+                $settings[$key] = $setting;
             }
-        });
+        }
 
-        return $settings->transform(fn($setting, $key) => SettingItem::make($setting, $key));
+        $output = [];
+        foreach ($settings as $key => $definition) {
+            $output[$key] = SettingItem::make($definition, $key);
+        }
+        return collect($output);
     }
 
     public function toArray(): array
@@ -96,7 +95,7 @@ class DefinitionsHelper
     {
         return $this
             ->settings
-            ->filter(fn(SettingItem $setting) => $setting->shouldUpdate())
+            ->filter(fn(SettingItem $setting) => $setting->operation === Operation::UPDATE)
             ->when($asTableRows, fn(Collection $settings) => $this->formatTableContent($settings));
     }
 
@@ -104,7 +103,7 @@ class DefinitionsHelper
     {
         return $this
             ->settings
-            ->filter(fn(SettingItem $setting) => $setting->shouldCreate())
+            ->filter(fn(SettingItem $setting) => $setting->operation === Operation::CREATE)
             ->when($asTableRows, fn(Collection $settings) => $this->formatTableContent($settings));
     }
 
@@ -112,7 +111,7 @@ class DefinitionsHelper
     {
         return $this
             ->settings
-            ->filter(fn(SettingItem $setting) => $setting->shouldDelete())
+            ->filter(fn(SettingItem $setting) => $setting->operation === Operation::DELETE)
             ->when($asTableRows, fn(Collection $settings) => $this->formatTableContent($settings));
     }
 
@@ -120,7 +119,7 @@ class DefinitionsHelper
     {
         return $this
             ->settings
-            ->filter(fn(SettingItem $setting) => $setting->shouldUpdate() || $setting->shouldCreate() || $setting->shouldDelete())
+            ->filter(fn(SettingItem $setting) => in_array($setting->operation, [Operation::CREATE, Operation::UPDATE, Operation::DELETE], true))
             ->when($asTableRows, fn(Collection $settings) => $this->formatTableContent($settings));
     }
 
@@ -129,8 +128,8 @@ class DefinitionsHelper
         return $settingItems->map(fn(SettingItem $setting) => [
             'key' => $setting->key,
             'description' => $setting->definedDescription ?? $setting->storedDescription ?? '<fg=gray>Not defined</>',
-            'definedType' => $setting->definedType?->name ?? '<fg=gray>---</>',
-            'storedType' => $setting->storedType?->name ?? '<fg=gray>---</>',
+            'definedType' => $setting->definedType->name ?? '<fg=gray>---</>',
+            'storedType' => $setting->storedType->name ?? '<fg=gray>---</>',
             'operation' => $setting->operation->commandLineLabel(),
         ]);
     }
