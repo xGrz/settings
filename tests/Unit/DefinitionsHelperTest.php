@@ -30,7 +30,7 @@ class DefinitionsHelperTest extends TestCase
     public function test_helper_can_list_definitions()
     {
         $helper = new DefinitionsHelper;
-        $this->assertInstanceOf(Collection::class, $helper->toListing());
+        $this->assertInstanceOf(Collection::class, $helper->toListing(true));
         $this->assertGreaterThanOrEqual(2, $helper->toListing()->count());
     }
 

@@ -3,7 +3,7 @@
   <component name="LaravelPint">
     <laravel_pint_settings>
       <LaravelPintConfiguration tool_path="$PROJECT_DIR$/vendor/bin/pint" />
-      <laravel_pint_by_interpreter asDefaultInterpreter="true" interpreter_id="cb06832a-c1e5-4d33-a8f1-88fa166282ef" tool_path="$PROJECT_DIR$/vendor/bin/pint">
+      <laravel_pint_by_interpreter asDefaultInterpreter="true" interpreter_id="cb06832a-c1e5-4d33-a8f1-88fa166282ef" tool_path="\\wsl$\Debian\home\grzesiek\www\packages\settings\vendor\bin\pint">
         <option name="timeout" value="30000" />
       </laravel_pint_by_interpreter>
     </laravel_pint_settings>
@@ -32,6 +32,9 @@
     <phpcs_settings>
       <phpcs_by_interpreter asDefaultInterpreter="true" interpreter_id="cb06832a-c1e5-4d33-a8f1-88fa166282ef" timeout="30000" />
     </phpcs_settings>
+  </component>
+  <component name="PhpExternalFormatter">
+    <option name="externalFormatter" value="LARAVEL_PINT" />
   </component>
   <component name="PhpIncludePathManager">
     <include_path>
@@ -247,10 +250,11 @@
   <component name="PhpStan">
     <PhpStan_settings>
       <PhpStanConfiguration tool_path="$PROJECT_DIR$/vendor/bin/phpstan" />
-      <phpstan_by_interpreter asDefaultInterpreter="true" interpreter_id="cb06832a-c1e5-4d33-a8f1-88fa166282ef" tool_path="\\wsl$\Debian\home\grzesiek\dev\settings\vendor\bin\phpstan" timeout="60000" />
+      <phpstan_by_interpreter asDefaultInterpreter="true" interpreter_id="cb06832a-c1e5-4d33-a8f1-88fa166282ef" tool_path="\\wsl$\Debian\home\grzesiek\www\packages\settings\vendor\bin\phpstan" timeout="60000" />
     </PhpStan_settings>
   </component>
   <component name="PhpStanOptionsConfiguration">
+    <option name="level" value="5" />
     <option name="transferred" value="true" />
   </component>
   <component name="PhpUnit">

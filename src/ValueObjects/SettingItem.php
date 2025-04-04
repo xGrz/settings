@@ -56,7 +56,7 @@ class SettingItem
             return Operation::DELETE;
         }
 
-        if ($this->storedType->canBeChangedTo($this->definedType)) {
+        if (isset($this->definedType) && isset($this->storedType) && $this->storedType->canBeChangedTo($this->definedType)) {
             return Operation::UPDATE;
         }
 
