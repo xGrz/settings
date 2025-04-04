@@ -41,9 +41,10 @@ class Setting extends Model
 
     public function refreshKey(): static
     {
-        $this->key = SettingsConfig::getKeyGeneratorType()->generateKey($this->key);
+        $this->setAttribute('key', SettingsConfig::getKeyGeneratorType()->generateKey($this->key));
         $this->save();
 
         return $this;
     }
+
 }
