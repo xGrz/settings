@@ -32,41 +32,35 @@ class SettingItem
     private function __construct(array $setting, string $key)
     {
         $this->key = $key;
-        $keys = ['definedType', 'storedType', 'definedValue', 'storedValue', 'definedDescription', 'storedDescription'];
-        foreach ($keys as $key) {
-            if (array_key_exists($key, $setting)) {
-                $this->$key = $setting[$key];
-            } else {
-                $this->$key = null;
-            }
-        }
-        $this->detectOperationType();
+        $this->definedType = $setting['definedType'] ?? null;
+        $this->storedType = $setting['storedType'] ?? null;
+        $this->definedValue = $setting['definedValue'] ?? null;
+        $this->storedValue = $setting['storedValue'] ?? null;
+        $this->definedDescription = $setting['definedDescription'] ?? null;
+        $this->storedDescription = $setting['storedDescription'] ?? null;
+
+        $this->operation = $this->detectOperationType();
     }
 
-    private function detectOperationType(): void
+    private function detectOperationType(): Operation
     {
         if (isset($this->definedType) && isset($this->storedType) && $this->storedType === $this->definedType) {
-            $this->operation = Operation::UNCHANGED;
-            return;
+            return Operation::UNCHANGED;
         }
 
         if (isset($this->definedType) && !isset($this->storedType)) {
-            $this->operation = Operation::CREATE;
-            return;
+            return Operation::CREATE;
         }
 
         if (!isset($this->definedType) && isset($this->storedType)) {
-            $this->operation = Operation::DELETE;
-            return;
+            return Operation::DELETE;
         }
 
         if ($this->storedType->canBeChangedTo($this->definedType)) {
-            $this->operation = Operation::UPDATE;
-            return;
+            return Operation::UPDATE;
         }
 
-
-        $this->operation = Operation::FORCE_UPDATE;
+        return Operation::FORCE_UPDATE;
     }
 
 
