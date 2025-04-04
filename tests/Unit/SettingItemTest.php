@@ -9,8 +9,6 @@ use XGrz\Settings\ValueObjects\SettingItem;
 
 class SettingItemTest extends TestCase
 {
-
-
     private function createSettingItem(?string $keyName = null, array $definition = [])
     {
         $settings = [
@@ -25,6 +23,7 @@ class SettingItemTest extends TestCase
         foreach ($definition as $key => $value) {
             $settings[$key] = $value;
         }
+
         return SettingItem::make($settings, $keyName ?? 'test_key');
     }
 
@@ -53,13 +52,13 @@ class SettingItemTest extends TestCase
         $this->assertNotEquals(Operation::UPDATE, $settingItem->getOperationType());
     }
 
-    public function test_setting_item_detects_it_should_be_updated_when_type_changes_from_onOff_to_yesNo()
+    public function test_setting_item_detects_it_should_be_updated_when_type_changes_from_on_off_to_yes_no()
     {
         $settingItem = $this->createSettingItem(definition: ['storedType' => Type::ON_OFF, 'definedType' => Type::YES_NO]);
         $this->assertSame(Operation::UPDATE, $settingItem->getOperationType());
     }
 
-    public function test_setting_item_detects_it_should_be_updated_when_type_changes_from_yesNo_to_onOff()
+    public function test_setting_item_detects_it_should_be_updated_when_type_changes_from_yes_no_to_on_off()
     {
         $settingItem = $this->createSettingItem(definition: ['storedType' => Type::YES_NO, 'definedType' => Type::ON_OFF]);
         $this->assertSame(Operation::UPDATE, $settingItem->getOperationType());
@@ -76,6 +75,4 @@ class SettingItemTest extends TestCase
         $settingItem = $this->createSettingItem(definition: ['storedType' => Type::FLOAT, 'definedType' => Type::INTEGER]);
         $this->assertNotSame(Operation::UPDATE, $settingItem->getOperationType());
     }
-
-
 }

@@ -21,6 +21,7 @@ class SettingsResetCommand extends Command
         if (!$this->confirm('Do you want to reset all settings?', false)) {
             $this->warn('Aborted. No changes were made.');
             $this->newLine();
+
             return;
         }
 

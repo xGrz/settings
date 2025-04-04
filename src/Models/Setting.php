@@ -46,5 +46,4 @@ class Setting extends Model
 
         return $this;
     }
-
 }

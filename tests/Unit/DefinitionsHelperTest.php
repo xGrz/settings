@@ -39,6 +39,4 @@ class DefinitionsHelperTest extends TestCase
         $helper = new DefinitionsHelper;
         $this->assertGreaterThan(2, $helper->heading());
     }
-
-
 }

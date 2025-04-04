@@ -63,7 +63,6 @@ class SettingItem
         return Operation::FORCE_UPDATE;
     }
 
-
     public function getOperationType(): Operation
     {
         return $this->operation;
@@ -71,19 +70,24 @@ class SettingItem
 
     public function create(): bool
     {
-        if ($this->getOperationType() !== Operation::CREATE) return false;
+        if ($this->getOperationType() !== Operation::CREATE) {
+            return false;
+        }
         Setting::create([
             'key' => $this->key,
             'type' => $this->definedType,
             'value' => $this->definedValue,
             'description' => $this->definedDescription,
         ]);
+
         return true;
     }
 
     public function update(): bool
     {
-        if ($this->getOperationType() !== Operation::UPDATE) return false;
+        if ($this->getOperationType() !== Operation::UPDATE) {
+            return false;
+        }
         Setting::where('key', $this->key)
             ->first()
             ->update([
@@ -95,21 +99,27 @@ class SettingItem
 
     public function forceUpdate(): bool
     {
-        if ($this->getOperationType() !== Operation::FORCE_UPDATE) return false;
+        if ($this->getOperationType() !== Operation::FORCE_UPDATE) {
+            return false;
+        }
         Setting::where('key', $this->key)
             ->first()
             ->update([
                 'type' => $this->definedType,
             ]);
+
         return true;
     }
 
     public function delete(): bool
     {
-        if ($this->getOperationType() !== Operation::DELETE) return false;
+        if ($this->getOperationType() !== Operation::DELETE) {
+            return false;
+        }
         Setting::where('key', $this->key)
             ->first()
             ->delete();
+
         return true;
     }
 
@@ -117,7 +127,9 @@ class SettingItem
     {
         $this->create();
         $this->update();
-        if ($forced) $this->forceUpdate();
+        if ($forced) {
+            $this->forceUpdate();
+        }
         $this->delete();
 
     }

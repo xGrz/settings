@@ -31,7 +31,7 @@ class SettingsServiceProvider extends ServiceProvider
             SettingsSyncCommand::class,
             SettingsFormatKeysCommand::class,
             SettingsResetCommand::class,
-            SettingsPublishConfigCommand::class
+            SettingsPublishConfigCommand::class,
         ]);
 
         $this->publishes(

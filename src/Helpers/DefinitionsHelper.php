@@ -71,6 +71,7 @@ class DefinitionsHelper
         foreach ($settings as $key => $definition) {
             $output[$key] = SettingItem::make($definition, $key);
         }
+
         return collect($output);
     }
 
