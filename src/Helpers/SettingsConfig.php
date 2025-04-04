@@ -3,6 +3,7 @@
 namespace XGrz\Settings\Helpers;
 
 use Exception;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
 use XGrz\Settings\Enums\KeyNaming;
 
@@ -26,7 +27,7 @@ class SettingsConfig
     public static function getKeyGeneratorType(): KeyNaming
     {
         $default = KeyNaming::CAMEL_CASE;
-        $naming = config('app-settings.key_name_generator', $default);
+        $naming = Config::get('app-settings.key_name_generator', $default);
         if ($naming instanceof KeyNaming) {
             return $naming;
         }

@@ -5,6 +5,7 @@ namespace XGrz\Settings\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Sleep;
 use XGrz\Settings\Helpers\DefinitionsHelper;
+
 use function Laravel\Prompts\progress;
 
 class SettingsSyncCommand extends Command

@@ -5,13 +5,12 @@ namespace XGrz\Settings\Casts;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
 use XGrz\Settings\Enums\Type;
-use XGrz\Settings\Models\Setting;
 
 class DynamicSettingValueCast implements CastsAttributes
 {
     public function get(Model $model, string $key, mixed $value, array $attributes): mixed
     {
-        if (!$model instanceof Setting) {
+        if (!isset($model->type)) {
             return $value;
         }
 
@@ -20,7 +19,7 @@ class DynamicSettingValueCast implements CastsAttributes
 
     public function set(Model $model, string $key, mixed $value, array $attributes): mixed
     {
-        if (!$model instanceof Setting) {
+        if (!isset($model->type)) {
             return $value;
         }
 

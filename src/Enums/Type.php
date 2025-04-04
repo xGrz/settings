@@ -46,7 +46,7 @@ enum Type: int
             self::ON_OFF, self::YES_NO => (bool)$value,
             self::INTEGER => str($value)->toInteger(),
             self::FLOAT => str($value)->replace(',', '.')->toFloat(),
-            default => $value,
+            self::STRING, self::TEXT => str($value)->toString(),
         };
     }
 

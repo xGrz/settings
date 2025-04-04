@@ -8,6 +8,9 @@
       </laravel_pint_by_interpreter>
     </laravel_pint_settings>
   </component>
+  <component name="LaravelPintOptionsConfiguration">
+    <option name="reformatOnlyUncommittedFiles" value="true" />
+  </component>
   <component name="MessDetector">
     <phpmd_settings>
       <phpmd_by_interpreter asDefaultInterpreter="true" interpreter_id="cb06832a-c1e5-4d33-a8f1-88fa166282ef" timeout="30000" />
