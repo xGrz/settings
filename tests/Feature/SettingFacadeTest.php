@@ -11,8 +11,8 @@ class SettingFacadeTest extends TestCase
     {
         $this->artisan('settings:publish-config');
         $this->artisan('settings:reset')
-            ->expectsConfirmation('Are you sure you want to reset all settings?', true);
+            ->expectsConfirmation('Are you sure you want to reset all settings?', 'yes');
 
-        dd(Setting::count());
+        $this->assertEquals(8, Setting::count());  //fix this
     }
 }

@@ -35,15 +35,4 @@ class SettingsConfig
         return KeyNaming::tryFrom($naming) ?? $default;
     }
 
-    /**
-     * @throws Exception
-     */
-    public static function getRawSettingsDefinition(): array
-    {
-        if (!File::exists(base_path('settings/definitions.php'))) {
-            throw new Exception('Settings definitions file not found. Have you run `php artisan settings:publish`?');
-        }
-
-        return include base_path('settings/definitions.php');
-    }
 }

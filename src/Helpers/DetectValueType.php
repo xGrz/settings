@@ -25,6 +25,10 @@ class DetectValueType
             return str($value)->length() > 200 ? Type::TEXT : Type::STRING;
         }
 
-        throw new UnresolvableValueTypeException('Could not detect setting type by its value [' . is_null($value) ? 'null' : $value . ']');
+        if (is_object($value)) {
+            throw new UnresolvableValueTypeException('Could not detect setting type by its value [ object given ]');
+        }
+
+        throw new UnresolvableValueTypeException('Could not detect setting type by its value [null]');
     }
 }

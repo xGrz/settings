@@ -29,7 +29,7 @@ class SettingsResetCommand extends Command
         $helper = new DefinitionsHelper;
         progress(
             label: 'Reset settings...',
-            steps: $helper->synchronizable(), //todo: prawdopodobnie zwraca gówno.
+            steps: $helper->synchronizable(),
             callback: function ($setting, $progress) {
                 Sleep::for(100)->millisecond();
                 $progress

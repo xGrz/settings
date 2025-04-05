@@ -5,6 +5,7 @@ namespace XGrz\Settings\Helpers;
 use Exception;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use XGrz\Settings\Actions\GetRawDefinitions;
 use XGrz\Settings\Enums\Operation;
 use XGrz\Settings\Models\Setting;
 use XGrz\Settings\ValueObjects\Entry;
@@ -23,10 +24,7 @@ class DefinitionsHelper
      */
     public function __construct(array $definitions = [])
     {
-        if (empty($definitions)) {
-            $definitions = SettingsConfig::getRawSettingsDefinition();
-        }
-        $this->definedSettings = collect(Arr::dot($definitions))
+        $this->definedSettings = collect(Arr::dot(empty($definitions) ? GetRawDefinitions::make() : $definitions))
             ->filter(fn($value) => $value instanceof Entry)
             ->mapWithKeys(fn(Entry $value, $key) => [SettingsConfig::getKeyGeneratorType()->generateKey($key) => $value])
             ->sortKeys();
@@ -55,17 +53,21 @@ class DefinitionsHelper
             'storedValue' => $setting->value,
         ]);
 
+
         // merge stored into definitions
         $settings = [];
         foreach ($definitions as $key => $definition) {
-            $settings[$key] = $stored->get($key, []);
+            $settings[$key] = $definition;
         }
 
         foreach ($stored as $key => $setting) {
             if (array_key_exists($key, $settings)) {
+                $settings[$key] = array_merge($setting, $settings[$key]);
+            } else {
                 $settings[$key] = $setting;
             }
         }
+
 
         $output = [];
         foreach ($settings as $key => $definition) {
