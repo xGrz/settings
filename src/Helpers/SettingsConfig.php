@@ -2,9 +2,7 @@
 
 namespace XGrz\Settings\Helpers;
 
-use Exception;
 use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\File;
 use XGrz\Settings\Enums\KeyNaming;
 
 class SettingsConfig
@@ -34,5 +32,4 @@ class SettingsConfig
 
         return KeyNaming::tryFrom($naming) ?? $default;
     }
-
 }

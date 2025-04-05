@@ -3,7 +3,6 @@
 namespace XGrz\Settings\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
-use Illuminate\Database\Eloquent\Model;
 use XGrz\Settings\Casts\DynamicSettingValueCast;
 use XGrz\Settings\Enums\Type;
 use XGrz\Settings\Models\Setting;
@@ -12,7 +11,7 @@ class DynamicSettingValueCastTest extends TestCase
 {
     public function test_assigning_integer_value_to_model_is_casted_correctly()
     {
-        $setting = new Setting();
+        $setting = new Setting;
         $setting->type = Type::INTEGER;
         $setting->value = '123';
 
@@ -22,7 +21,7 @@ class DynamicSettingValueCastTest extends TestCase
 
     public function test_assigning_float_value_to_model_is_casted_correctly()
     {
-        $setting = new Setting();
+        $setting = new Setting;
         $setting->type = Type::FLOAT;
         $setting->value = '123.12';
 
@@ -30,9 +29,9 @@ class DynamicSettingValueCastTest extends TestCase
         $this->assertIsFloat($setting->value);
     }
 
-    public function test_assigning_bool_value_yesNo_to_model_is_casted_correctly()
+    public function test_assigning_bool_value_yes_no_to_model_is_casted_correctly()
     {
-        $setting = new Setting();
+        $setting = new Setting;
         $setting->type = Type::YES_NO;
 
         $setting->value = '1';
@@ -42,9 +41,9 @@ class DynamicSettingValueCastTest extends TestCase
         $this->assertIsBool($setting->value);
     }
 
-    public function test_assigning_bool_value_onOff_to_model_is_casted_correctly()
+    public function test_assigning_bool_value_on_off_to_model_is_casted_correctly()
     {
-        $setting = new Setting();
+        $setting = new Setting;
         $setting->type = Type::ON_OFF;
 
         $setting->value = '1';
@@ -56,8 +55,8 @@ class DynamicSettingValueCastTest extends TestCase
 
     public function test_set_dynamic_cast_value()
     {
-        $setting = new Setting();
-        $cast = new DynamicSettingValueCast();
+        $setting = new Setting;
+        $cast = new DynamicSettingValueCast;
 
         $setting->type = Type::FLOAT;
         $casted = $cast->set($setting, 'value', '123', []);
@@ -66,8 +65,8 @@ class DynamicSettingValueCastTest extends TestCase
 
     public function test_get_dynamic_cast_value()
     {
-        $setting = new Setting();
-        $cast = new DynamicSettingValueCast();
+        $setting = new Setting;
+        $cast = new DynamicSettingValueCast;
 
         $setting->type = Type::FLOAT;
         $casted = $cast->get($setting, 'value', '123', []);
@@ -94,13 +93,13 @@ class DynamicSettingValueCastTest extends TestCase
         $this->assertSame(123.1, DynamicSettingValueCast::format('123.1', Type::FLOAT));
     }
 
-    public function test_format_yesNo_type()
+    public function test_format_yes_no_type()
     {
         $this->assertSame(true, DynamicSettingValueCast::format('1', Type::YES_NO));
         $this->assertSame(false, DynamicSettingValueCast::format('0', Type::YES_NO));
     }
 
-    public function test_format_onOffs_type()
+    public function test_format_on_offs_type()
     {
         $this->assertSame(true, DynamicSettingValueCast::format('1', Type::ON_OFF));
         $this->assertSame(false, DynamicSettingValueCast::format('0', Type::ON_OFF));
@@ -118,11 +117,9 @@ class DynamicSettingValueCastTest extends TestCase
 
     public function test_cast_returns_original_value_when_model_type_missing()
     {
-        $setting = new Setting();
+        $setting = new Setting;
         $setting->value = '123';
 
         $this->assertSame('123', $setting->value);
     }
-
-
 }

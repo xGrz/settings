@@ -31,8 +31,6 @@ class SettingItemsBuilder
     }
 
     /**
-     * @param array $definitions
-     * @param array $stored
      * @return Collection<string, SettingItem>
      */
     private static function mergeSettingItems(array $definitions, array $stored): Collection
@@ -50,7 +48,6 @@ class SettingItemsBuilder
                 : $setting;
         }
 
-
         // convert to array od SettingItems
         $output = [];
         foreach ($settings as $key => $definition) {
@@ -59,6 +56,4 @@ class SettingItemsBuilder
 
         return collect($output);
     }
-
-
 }

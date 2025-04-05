@@ -5,10 +5,8 @@ namespace XGrz\Settings\Tests\Unit;
 use Exception;
 use File;
 use Illuminate\Support\Collection;
-use XGrz\Settings\Actions\GetSettingsDefinitions;
 use XGrz\Settings\Exceptions\ConfigFileNotFoundException;
 use XGrz\Settings\Helpers\DefinitionsHelper;
-use XGrz\Settings\Helpers\SettingsConfig;
 use XGrz\Settings\Models\Setting;
 use XGrz\Settings\Tests\TestCase;
 
@@ -51,7 +49,6 @@ class DefinitionsHelperTest extends TestCase
     {
         Setting::truncate();
         $this->artisan('settings:publish-config');
-
 
         // dd($helper->creatable()); // todo: mock creatable
 

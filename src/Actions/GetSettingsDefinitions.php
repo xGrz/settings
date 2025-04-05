@@ -13,7 +13,7 @@ class GetSettingsDefinitions
 {
     /**
      * This action returns raw array for defined settings
-     * @return array
+     *
      * @throws ConfigFileNotFoundException
      */
     public static function raw(): array
@@ -22,12 +22,11 @@ class GetSettingsDefinitions
             ? include base_path('settings/definitions.php')
             : throw new ConfigFileNotFoundException('Settings definitions file not found. Have you run `php artisan settings:publish`?');
 
-
     }
 
     /**
-     * @param array $definitions
      * @return Collection<string, Entry>
+     *
      * @throws ConfigFileNotFoundException
      */
     public static function asCollection(array $definitions = []): Collection

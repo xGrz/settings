@@ -7,7 +7,6 @@ use XGrz\Settings\Models\Setting;
 
 class GetStoredSettings
 {
-
     private static function getFromDatabase()
     {
         return Setting::query()

@@ -12,7 +12,6 @@ use XGrz\Settings\Models\Setting;
  */
 class Settings
 {
-
     private array $settings = [];
 
     public function __construct()
@@ -40,6 +39,7 @@ class Settings
         if (empty($this->settings)) {
             $this->load();
         }
+
         return $this->settings;
     }
 
@@ -49,7 +49,9 @@ class Settings
     public static function get(string $key)
     {
         $settings = self::all();
-        if (array_key_exists($key, $settings)) return $settings[$key];
+        if (array_key_exists($key, $settings)) {
+            return $settings[$key];
+        }
         if (str($key)->endsWith('.')) {
             $key = str($key)->replaceEnd('.', '')->toString();
             $multiple = [];
@@ -61,11 +63,12 @@ class Settings
                     }
                 }
             }
-            if (!empty($multiple)) return $multiple;
+            if (!empty($multiple)) {
+                return $multiple;
+            }
         }
 
         throw new SettingKeyNotFoundException('Setting key "' . $key . '" not found');
-
     }
 
     public static function all(): array

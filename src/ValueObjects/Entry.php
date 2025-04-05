@@ -61,8 +61,6 @@ class Entry
         ];
     }
 
-
-
     /**
      * @throws UnresolvableValueTypeException
      */

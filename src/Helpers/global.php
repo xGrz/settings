@@ -7,9 +7,10 @@ if (!function_exists('settings')) {
 
     /**
      * @param mixed ...$params
-     * - (string $keyName) - search for setting key name
-     * - (mixed $defaultValue) - default value when setting key is missing
+     *                            - (string $keyName) - search for setting key name
+     *                            - (mixed $defaultValue) - default value when setting key is missing
      * @return int|float|bool|string|null
+     *
      * @throws SettingKeyNotFoundException
      * @throws Throwable
      */

@@ -11,6 +11,7 @@ class CastValueToType
         if (is_null($type)) {
             return $value;
         }
+
         return $type->castValue($value);
     }
 }
