@@ -2,9 +2,9 @@
 
 namespace XGrz\Settings\ValueObjects;
 
-use XGrz\Settings\Casts\DynamicSettingValueCast;
 use XGrz\Settings\Enums\Type;
 use XGrz\Settings\Exceptions\UnresolvableValueTypeException;
+use XGrz\Settings\Helpers\CastValueToType;
 use XGrz\Settings\Helpers\DetectValueType;
 
 class Entry
@@ -82,6 +82,6 @@ class Entry
     {
         $type = $this->getType();
 
-        return DynamicSettingValueCast::format($this->value, $type);
+        return CastValueToType::make($this->value, $type);
     }
 }

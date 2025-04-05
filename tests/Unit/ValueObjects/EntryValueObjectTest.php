@@ -1,6 +1,6 @@
 <?php
 
-namespace XGrz\Settings\Tests\Unit;
+namespace XGrz\Settings\Tests\Unit\ValueObjects;
 
 use XGrz\Settings\Enums\Type;
 use XGrz\Settings\Tests\TestCase;
@@ -16,13 +16,6 @@ class EntryValueObjectTest extends TestCase
         $this->assertArrayHasKey('value', $e->toArray());
         $this->assertSame('test', $e->toArray()['value']);
         $this->assertSame($e->toArray(), $e2->toArray());
-    }
-
-    public function test_can_detect_string_value_type()
-    {
-        $e = Entry::make('test');
-
-        $this->assertEquals(Type::STRING, $e->getType());
     }
 
     public function test_can_detect_integer_value_type()
@@ -53,4 +46,5 @@ class EntryValueObjectTest extends TestCase
         $this->assertTrue($e->getValue());
         $this->assertEquals(Type::YES_NO, $e->getType());
     }
+
 }

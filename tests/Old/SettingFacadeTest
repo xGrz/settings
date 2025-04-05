@@ -1,5 +1,7 @@
 <?php
 
+namespace XGrz\Settings\Tests\Old;
+
 use XGrz\Settings\Models\Setting;
 use XGrz\Settings\Tests\TestCase;
 

@@ -4,6 +4,7 @@ namespace XGrz\Settings\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use XGrz\Settings\Casts\DynamicSettingValueCast;
+use XGrz\Settings\Casts\KeyNameCast;
 use XGrz\Settings\Enums\Type;
 use XGrz\Settings\Helpers\SettingsConfig;
 
@@ -19,7 +20,7 @@ class Setting extends Model
     protected $guarded = ['id'];
 
     protected $casts = [
-        'key' => 'string',
+        'key' => KeyNameCast::class,
         'description' => 'string',
         'type' => Type::class,
         'value' => DynamicSettingValueCast::class,

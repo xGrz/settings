@@ -1,6 +1,6 @@
 <?php
 
-namespace XGrz\Settings\Tests\Unit;
+namespace XGrz\Settings\Tests\Unit\Casts;
 
 use Illuminate\Support\Facades\Config;
 use XGrz\Settings\Casts\KeyNameCast;
@@ -9,7 +9,7 @@ use XGrz\Settings\Tests\TestCase;
 
 class KeyNameCastTest extends TestCase
 {
-    public function test_get_casted_key_name()
+    public function test_get_casted_key_name_should_trim_value()
     {
         $cast = (new KeyNameCast)->get(null, 'key', '  some value  ', []);
         $this->assertSame('some value', $cast);

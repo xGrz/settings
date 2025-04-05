@@ -1,10 +1,12 @@
 <?php
 
-namespace XGrz\Settings\Tests\Unit;
+
+namespace XGrz\Settings\Tests\Unit\Casts;
 
 use PHPUnit\Framework\TestCase;
 use XGrz\Settings\Casts\DynamicSettingValueCast;
 use XGrz\Settings\Enums\Type;
+use XGrz\Settings\Helpers\CastValueToType;
 use XGrz\Settings\Models\Setting;
 
 class DynamicSettingValueCastTest extends TestCase
@@ -75,44 +77,44 @@ class DynamicSettingValueCastTest extends TestCase
 
     public function test_format_text_type()
     {
-        $this->assertSame('123', DynamicSettingValueCast::format(123, Type::TEXT));
+        $this->assertSame('123', CastValueToType::make(123, Type::TEXT));
     }
 
     public function test_format_string_type()
     {
-        $this->assertSame('123', DynamicSettingValueCast::format(123, Type::STRING));
+        $this->assertSame('123', CastValueToType::make(123, Type::STRING));
     }
 
     public function test_format_integer_type()
     {
-        $this->assertSame(123, DynamicSettingValueCast::format('123', Type::INTEGER));
+        $this->assertSame(123, CastValueToType::make('123', Type::INTEGER));
     }
 
     public function test_format_float_type()
     {
-        $this->assertSame(123.1, DynamicSettingValueCast::format('123.1', Type::FLOAT));
+        $this->assertSame(123.1, CastValueToType::make('123.1', Type::FLOAT));
     }
 
     public function test_format_yes_no_type()
     {
-        $this->assertSame(true, DynamicSettingValueCast::format('1', Type::YES_NO));
-        $this->assertSame(false, DynamicSettingValueCast::format('0', Type::YES_NO));
+        $this->assertSame(true, CastValueToType::make('1', Type::YES_NO));
+        $this->assertSame(false, CastValueToType::make('0', Type::YES_NO));
     }
 
     public function test_format_on_offs_type()
     {
-        $this->assertSame(true, DynamicSettingValueCast::format('1', Type::ON_OFF));
-        $this->assertSame(false, DynamicSettingValueCast::format('0', Type::ON_OFF));
+        $this->assertSame(true, CastValueToType::make('1', Type::ON_OFF));
+        $this->assertSame(false, CastValueToType::make('0', Type::ON_OFF));
     }
 
     public function test_format_unchanged_when_type_is_null()
     {
-        $this->assertSame(123, DynamicSettingValueCast::format(123, null));
+        $this->assertSame(123, CastValueToType::make(123, null));
     }
 
     public function test_format_unchanged_when_value_is_null()
     {
-        $this->assertNull(DynamicSettingValueCast::format(null, Type::ON_OFF));
+        $this->assertNull(CastValueToType::make(null, Type::ON_OFF));
     }
 
     public function test_cast_returns_original_value_when_model_type_missing()
