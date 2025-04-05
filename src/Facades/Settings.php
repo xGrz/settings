@@ -49,8 +49,23 @@ class Settings
     public static function get(string $key)
     {
         $settings = self::all();
-        throw_if(!array_key_exists($key, $settings), new SettingKeyNotFoundException('Setting key "' . $key . '" not found'));
-        return $settings[$key];
+        if (array_key_exists($key, $settings)) return $settings[$key];
+        if (str($key)->endsWith('.')) {
+            $key = str($key)->replaceEnd('.', '')->toString();
+            $multiple = [];
+            foreach ($settings as $keyName => $value) {
+                if (str($keyName)->startsWith($key)) {
+                    $partialKey = str($keyName)->replaceStart($key, '')->replaceStart('.', '')->toString();
+                    if (!empty($partialKey)) {
+                        $multiple[$partialKey] = $value;
+                    }
+                }
+            }
+            if (!empty($multiple)) return $multiple;
+        }
+
+        throw new SettingKeyNotFoundException('Setting key "' . $key . '" not found');
+
     }
 
     public static function all(): array

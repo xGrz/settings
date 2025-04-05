@@ -3,20 +3,15 @@
 namespace XGrz\Settings\Helpers;
 
 use Exception;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use XGrz\Settings\Actions\GetRawDefinitions;
+use XGrz\Settings\Actions\GetSettingsDefinitions;
+use XGrz\Settings\Actions\GetStoredSettings;
+use XGrz\Settings\Actions\SettingItemsBuilder;
 use XGrz\Settings\Enums\Operation;
-use XGrz\Settings\Models\Setting;
-use XGrz\Settings\ValueObjects\Entry;
 use XGrz\Settings\ValueObjects\SettingItem;
 
 class DefinitionsHelper
 {
-    private Collection $definedSettings;
-
-    private Collection $storedSettings;
-
     private Collection $settings;
 
     /**
@@ -24,57 +19,10 @@ class DefinitionsHelper
      */
     public function __construct(array $definitions = [])
     {
-        $this->definedSettings = collect(Arr::dot(empty($definitions) ? GetRawDefinitions::make() : $definitions))
-            ->filter(fn($value) => $value instanceof Entry)
-            ->mapWithKeys(fn(Entry $value, $key) => [SettingsConfig::getKeyGeneratorType()->generateKey($key) => $value])
-            ->sortKeys();
-
-        $this->storedSettings = collect(Setting::orderBy('key')->get())
-            ->mapWithKeys(function (Setting $setting) {
-                return [$setting->key => $setting];
-            });
-
-        $this->settings = self::buildSettingItemsList();
-    }
-
-    private function buildSettingItemsList(): Collection
-    {
-        // prepare definitions
-        $definitions = collect($this->definedSettings->map(fn(Entry $entry): array => [
-            'definedDescription' => $entry->getDescription(),
-            'definedType' => $entry->getType(),
-            'definedValue' => $entry->getValue(),
-        ]));
-
-        // prepare stored settings
-        $stored = $this->storedSettings->map(fn(Setting $setting): array => [
-            'storedDescription' => $setting->description,
-            'storedType' => $setting->type,
-            'storedValue' => $setting->value,
-        ]);
-
-
-        // merge stored into definitions
-        $settings = [];
-        foreach ($definitions as $key => $definition) {
-            $settings[$key] = $definition;
-        }
-
-        foreach ($stored as $key => $setting) {
-            if (array_key_exists($key, $settings)) {
-                $settings[$key] = array_merge($setting, $settings[$key]);
-            } else {
-                $settings[$key] = $setting;
-            }
-        }
-
-
-        $output = [];
-        foreach ($settings as $key => $definition) {
-            $output[$key] = SettingItem::make($definition, $key);
-        }
-
-        return collect($output);
+        $this->settings = SettingItemsBuilder::make(
+            GetSettingsDefinitions::asCollection($definitions),
+            GetStoredSettings::asCollection()
+        );
     }
 
     public function toArray(): array

@@ -5,6 +5,8 @@ namespace XGrz\Settings\Tests\Unit;
 use Exception;
 use File;
 use Illuminate\Support\Collection;
+use XGrz\Settings\Actions\GetSettingsDefinitions;
+use XGrz\Settings\Exceptions\ConfigFileNotFoundException;
 use XGrz\Settings\Helpers\DefinitionsHelper;
 use XGrz\Settings\Helpers\SettingsConfig;
 use XGrz\Settings\Models\Setting;
@@ -12,13 +14,6 @@ use XGrz\Settings\Tests\TestCase;
 
 class DefinitionsHelperTest extends TestCase
 {
-//    private function setupSettings()
-//    {
-//        File::delete(base_path('settings/definitions.php'));
-//        Setting::truncate();
-//        $this->artisan('settings:publish-config');
-//    }
-
     public function test_throws_exception_when_definitions_file_is_missing()
     {
         File::delete(base_path('settings/definitions.php'));
@@ -49,13 +44,16 @@ class DefinitionsHelperTest extends TestCase
         $this->assertGreaterThan(2, $helper->heading());
     }
 
-//    public function test_returns_updatable_definitions()
-//    {
-//        Setting::truncate();
-//        $this->artisan('settings:publish-config');
-//        $definitions = SettingsConfig::getRawSettingsDefinition();
-//
-//        // dd($helper->creatable()); // todo: mock creatable
-//
-//    }
+    /**
+     * @throws ConfigFileNotFoundException
+     */
+    public function test_returns_updatable_definitions()
+    {
+        Setting::truncate();
+        $this->artisan('settings:publish-config');
+
+
+        // dd($helper->creatable()); // todo: mock creatable
+
+    }
 }

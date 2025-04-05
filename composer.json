@@ -1,58 +1,58 @@
 {
-    "name": "xgrz/settings",
-    "description": "Easy handling for app settings in laravel",
-    "license": "MIT",
-    "keywords": [
-        "laravel",
-        "settings"
-    ],
-    "autoload": {
-        "psr-4": {
-            "XGrz\\Settings\\": "src/",
-            "XGrz\\Settings\\Database\\Factories\\": "database/factories/"
-        },
-        "files": [
-            "src/Helpers/global.php"
-        ]
+  "name": "xgrz/settings",
+  "description": "Easy handling for app settings in laravel",
+  "license": "MIT",
+  "keywords": [
+    "laravel",
+    "settings"
+  ],
+  "autoload": {
+    "psr-4": {
+      "XGrz\\Settings\\": "src/",
+      "XGrz\\Settings\\Database\\Factories\\": "database/factories/"
     },
-    "autoload-dev": {
-        "psr-4": {
-            "XGrz\\Settings\\Tests\\": "tests/"
-        }
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "XGrz\\Settings\\SettingsServiceProvider"
-            ]
-        }
-    },
-    "authors": [
-        {
-            "name": "Grzegorz Byśkiniewicz",
-            "email": "grzesiek.byskiniewicz@gmail.com"
-        }
-    ],
-    "minimum-stability": "stable",
-    "prefer-stable": true,
-    "require": {
-        "php": "^8.1",
-        "illuminate/support": "^10.0 || ^11.0 || ^12.0"
-    },
-    "require-dev": {
-        "orchestra/testbench": "^8.0 || ^9.0 || ^10.0",
-        "phpunit/phpunit": "^10.0 || ^11.0",
-        "phpstan/phpstan": "^1.0 || ^2.0",
-        "larastan/larastan": "^2.0 || ^3.0",
-        "laravel/pint": "^1.21"
-    },
-    "scripts": {
-        "qtest": "phpunit --colors --testdox",
-        "qtestc": "phpunit --colors --testdox --coverage-text --coverage-html ./coverage",
-        "phpstan": "vendor/bin/phpstan --configuration=phpstan.neon --memory-limit=2G",
-        "test": [
-            "@phpstan",
-            "@qtestc"
-        ]
+    "files": [
+      "src/Helpers/global.php"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "XGrz\\Settings\\Tests\\": "tests/"
     }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "XGrz\\Settings\\SettingsServiceProvider"
+      ]
+    }
+  },
+  "authors": [
+    {
+      "name": "Grzegorz Byśkiniewicz",
+      "email": "grzesiek.byskiniewicz@gmail.com"
+    }
+  ],
+  "minimum-stability": "stable",
+  "prefer-stable": true,
+  "require": {
+    "php": "^8.1",
+    "illuminate/support": "^10.0 || ^11.0 || ^12.0"
+  },
+  "require-dev": {
+    "orchestra/testbench": "^8.0 || ^9.0 || ^10.0",
+    "phpunit/phpunit": "^10.0 || ^11.0",
+    "phpstan/phpstan": "^1.0 || ^2.0",
+    "larastan/larastan": "^2.0 || ^3.0",
+    "laravel/pint": "^1.21"
+  },
+  "scripts": {
+    "qtest": "phpunit --colors --testdox",
+    "qtestc": "phpunit --colors --testdox --coverage-text --coverage-html ./coverage",
+    "phpstan": "vendor/bin/phpstan --configuration=phpstan.neon --memory-limit=2G",
+    "test": [
+      "@phpstan",
+      "@qtestc"
+    ]
+  }
 }

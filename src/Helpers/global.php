@@ -13,10 +13,10 @@ if (!function_exists('settings')) {
      * @throws SettingKeyNotFoundException
      * @throws Throwable
      */
-    function settings(...$params): int|float|bool|null|string
+    function settings(...$params): int|float|bool|null|string|array
     {
         if (count($params) === 0) {
-            throw new SettingKeyNotFoundException('Please provide key name as a parameter');
+            throw new SettingKeyNotFoundException('Please provide keyName as a parameter');
         }
         $key = $params[0];
         try {
