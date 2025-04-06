@@ -4,6 +4,7 @@ namespace XGrz\Settings\ValueObjects;
 
 use XGrz\Settings\Enums\Operation;
 use XGrz\Settings\Enums\Type;
+use XGrz\Settings\Helpers\SettingsConfig;
 use XGrz\Settings\Models\Setting;
 
 class SettingItem
@@ -31,7 +32,7 @@ class SettingItem
 
     private function __construct(array $setting, string $key)
     {
-        $this->key = $key;
+        $this->key = SettingsConfig::getKeyGeneratorType()->generateKey($key);
         $this->definedType = $setting['definedType'] ?? null;
         $this->storedType = $setting['storedType'] ?? null;
         $this->definedValue = $setting['definedValue'] ?? null;
@@ -102,11 +103,11 @@ class SettingItem
         if ($this->getOperationType() !== Operation::FORCE_UPDATE) {
             return false;
         }
-        Setting::where('key', $this->key)
-            ->first()
-            ->update([
-                'type' => $this->definedType,
-            ]);
+        $setting = Setting::where('key', $this->key)->firstOrFail();
+        $setting->update([
+            'type' => $this->definedType,
+            'value' => $setting->value, // todo: force cast value to new type in observer
+        ]);
 
         return true;
     }
@@ -123,14 +124,15 @@ class SettingItem
         return true;
     }
 
-    public function sync(bool $forced = false): void
+    public function sync(bool $forced = false): bool
     {
-        $this->create();
-        $this->update();
+        $results[] = $this->create() ? 1 : 0;
+        $results[] = $this->update() ? 1 : 0;
         if ($forced) {
-            $this->forceUpdate();
+            $results[] = $this->forceUpdate() ? 1 : 0;
         }
-        $this->delete();
+        $results[] = $this->delete() ? 1 : 0;
+        return array_sum($results) > 0;
 
     }
 }
