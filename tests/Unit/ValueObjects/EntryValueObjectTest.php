@@ -46,5 +46,4 @@ class EntryValueObjectTest extends TestCase
         $this->assertTrue($e->getValue());
         $this->assertEquals(Type::YES_NO, $e->getType());
     }
-
 }

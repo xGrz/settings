@@ -51,7 +51,7 @@ class GetSettingsDefinitionsTest extends TestCase
         // Mock definitions
         $definitions = [
             'key1' => Entry::make('value1'),
-            'key2' => Entry::make('value2')
+            'key2' => Entry::make('value2'),
         ];
 
         $result = GetSettingsDefinitions::asCollection($definitions);
@@ -69,7 +69,7 @@ class GetSettingsDefinitionsTest extends TestCase
     {
         $definitions = [
             'group name.key first' => Entry::make('value1'),
-            'group name.key Last' => Entry::make('value2')
+            'group name.key Last' => Entry::make('value2'),
         ];
 
         Config::set('app-settings.key_name_generator', KeyNaming::CAMEL_CASE);
@@ -83,7 +83,6 @@ class GetSettingsDefinitionsTest extends TestCase
         Config::set('app-settings.key_name_generator', KeyNaming::KEBAB_CASE);
         $result = GetSettingsDefinitions::asCollection($definitions);
         $this->assertEquals('group-name.key-first', $result->keys()->first(), 'Key name should be kebabCased');
-
 
     }
 

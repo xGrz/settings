@@ -1,6 +1,5 @@
 <?php
 
-
 namespace XGrz\Settings\Tests\Unit\Casts;
 
 use PHPUnit\Framework\TestCase;

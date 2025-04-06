@@ -8,8 +8,7 @@
   ],
   "autoload": {
     "psr-4": {
-      "XGrz\\Settings\\": "src/",
-      "XGrz\\Settings\\Database\\Factories\\": "database/factories/"
+      "XGrz\\Settings\\": "src/"
     },
     "files": [
       "src/Helpers/global.php"
@@ -50,8 +49,10 @@
     "qtest": "phpunit --colors --testdox",
     "qtestc": "phpunit --colors --testdox --coverage-text --coverage-html ./coverage",
     "phpstan": "vendor/bin/phpstan --configuration=phpstan.neon --memory-limit=2G",
+    "pint": "vendor/bin/pint",
     "test": [
       "@phpstan",
+      "@pint",
       "@qtestc"
     ]
   }

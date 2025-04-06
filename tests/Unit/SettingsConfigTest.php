@@ -9,8 +9,7 @@ use XGrz\Settings\Tests\TestCase;
 
 class SettingsConfigTest extends TestCase
 {
-
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         Config::set('app-settings.database_table', 'application_settings-test');

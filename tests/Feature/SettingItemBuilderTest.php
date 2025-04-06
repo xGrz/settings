@@ -17,7 +17,7 @@ class SettingItemBuilderTest extends TestCase
     {
         $builder = SettingItemsBuilder::make(
             collect(['abc' => Entry::make(123, description: 'abc description')]),
-            collect(['abc' => (new Setting())->fill(['key' => 'abc', 'value' => 456, 'type' => Type::FLOAT, 'description' => 'stored description'])])
+            collect(['abc' => (new Setting)->fill(['key' => 'abc', 'value' => 456, 'type' => Type::FLOAT, 'description' => 'stored description'])])
         );
 
         $this->assertInstanceOf(Collection::class, $builder);
@@ -37,7 +37,7 @@ class SettingItemBuilderTest extends TestCase
     {
         $builder = SettingItemsBuilder::make(
             collect(),
-            collect(['abc' => (new Setting())->fill(['key' => 'abc', 'value' => 456, 'type' => Type::FLOAT, 'description' => 'stored description'])])
+            collect(['abc' => (new Setting)->fill(['key' => 'abc', 'value' => 456, 'type' => Type::FLOAT, 'description' => 'stored description'])])
         );
 
         $this->assertInstanceOf(Collection::class, $builder);

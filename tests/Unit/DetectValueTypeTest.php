@@ -48,7 +48,7 @@ class DetectValueTypeTest extends TestCase
     {
         $this->expectException(UnresolvableValueTypeException::class);
         $this->expectExceptionMessage('Could not detect setting type by its value [object] given.');
-        DetectValueType::make(new StdClass());
+        DetectValueType::make(new StdClass);
     }
 
     public function test_throws_exception_when_value_is_null()

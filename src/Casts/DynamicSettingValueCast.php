@@ -19,5 +19,4 @@ class DynamicSettingValueCast implements CastsAttributes
         /** @phpstan-ignore property.notFound */
         return CastValueToType::make($value, $model->type);
     }
-
 }

@@ -132,6 +132,7 @@ class SettingItem
             $results[] = $this->forceUpdate() ? 1 : 0;
         }
         $results[] = $this->delete() ? 1 : 0;
+
         return array_sum($results) > 0;
 
     }

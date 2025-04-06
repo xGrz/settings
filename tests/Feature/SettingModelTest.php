@@ -24,153 +24,150 @@ class SettingModelTest extends TestCase
     {
         $s = self::createSetting(Type::INTEGER);
 
-        $s->update(['value' => "124404"]);
+        $s->update(['value' => '124404']);
         $this->assertSame(124404, $s->value);
         $this->assertDatabaseHas(SettingsConfig::getDatabaseTableName(), [
             'id' => $s->id,
-            'value' => 124404
+            'value' => 124404,
         ]);
 
-        $s->update(['value' => "124405.20"]);
+        $s->update(['value' => '124405.20']);
         $this->assertSame(124405, $s->value);
         $this->assertDatabaseHas(SettingsConfig::getDatabaseTableName(), [
             'id' => $s->id,
-            'value' => 124405
+            'value' => 124405,
         ]);
 
-
-        $s->update(['value' => "124407.20"]);
+        $s->update(['value' => '124407.20']);
         $this->assertSame(124407, $s->value);
         $this->assertDatabaseHas(SettingsConfig::getDatabaseTableName(), [
             'id' => $s->id,
-            'value' => 124407
+            'value' => 124407,
         ]);
 
         $s->update(['value' => true]);
         $this->assertSame(1, $s->value);
         $this->assertDatabaseHas(SettingsConfig::getDatabaseTableName(), [
             'id' => $s->id,
-            'value' => 1
+            'value' => 1,
         ]);
-
 
         $s->update(['value' => false]);
         $this->assertSame(0, $s->value);
         $this->assertDatabaseHas(SettingsConfig::getDatabaseTableName(), [
             'id' => $s->id,
-            'value' => 0
+            'value' => 0,
         ]);
     }
 
     public function test_cast_value_to_float(): void
     {
         $s = self::createSetting(Type::FLOAT);
-        $s->update(['value' => "12.4404"]);
+        $s->update(['value' => '12.4404']);
         $this->assertSame(12.4404, $s->value);
         $this->assertDatabaseHas(SettingsConfig::getDatabaseTableName(), [
             'id' => $s->id,
-            'value' => 12.4404
+            'value' => 12.4404,
         ]);
 
-        $s->update(['value' => "12,12"]);
+        $s->update(['value' => '12,12']);
         $this->assertSame(12.12, $s->value);
         $this->assertDatabaseHas(SettingsConfig::getDatabaseTableName(), [
             'id' => $s->id,
-            'value' => 12.12
+            'value' => 12.12,
         ]);
 
-
-        $s->update(['value' => "12"]);
+        $s->update(['value' => '12']);
         $this->assertSame(12.0, $s->value);
         $this->assertDatabaseHas(SettingsConfig::getDatabaseTableName(), [
             'id' => $s->id,
-            'value' => 12
+            'value' => 12,
         ]);
     }
 
     public function test_cast_value_to_yes_no(): void
     {
         $s = self::createSetting(Type::YES_NO);
-        $s->update(['value' => "yes"]);
+        $s->update(['value' => 'yes']);
         $this->assertTrue($s->value);
         $this->assertDatabaseHas(SettingsConfig::getDatabaseTableName(), [
             'id' => $s->id,
-            'value' => 1
+            'value' => 1,
         ]);
 
         $s->update(['value' => true]);
         $this->assertTrue($s->value);
         $this->assertDatabaseHas(SettingsConfig::getDatabaseTableName(), [
             'id' => $s->id,
-            'value' => 1
+            'value' => 1,
         ]);
 
         $s->update(['value' => false]);
         $this->assertFalse($s->value);
         $this->assertDatabaseHas(SettingsConfig::getDatabaseTableName(), [
             'id' => $s->id,
-            'value' => 0
+            'value' => 0,
         ]);
 
         $s->update(['value' => 0]);
         $this->assertFalse($s->value);
         $this->assertDatabaseHas(SettingsConfig::getDatabaseTableName(), [
             'id' => $s->id,
-            'value' => 0
+            'value' => 0,
         ]);
     }
 
     public function test_cast_value_to_on_off(): void
     {
         $s = self::createSetting(Type::ON_OFF);
-        $s->update(['value' => "yes"]);
+        $s->update(['value' => 'yes']);
         $this->assertTrue($s->value);
         $this->assertDatabaseHas(SettingsConfig::getDatabaseTableName(), [
             'id' => $s->id,
-            'value' => 1
+            'value' => 1,
         ]);
 
         $s->update(['value' => true]);
         $this->assertTrue($s->value);
         $this->assertDatabaseHas(SettingsConfig::getDatabaseTableName(), [
             'id' => $s->id,
-            'value' => 1
+            'value' => 1,
         ]);
 
         $s->update(['value' => false]);
         $this->assertFalse($s->value);
         $this->assertDatabaseHas(SettingsConfig::getDatabaseTableName(), [
             'id' => $s->id,
-            'value' => 0
+            'value' => 0,
         ]);
 
         $s->update(['value' => 0]);
         $this->assertFalse($s->value);
         $this->assertDatabaseHas(SettingsConfig::getDatabaseTableName(), [
             'id' => $s->id,
-            'value' => 0
+            'value' => 0,
         ]);
     }
 
     public function test_cast_value_to_string(): void
     {
         $s = self::createSetting(Type::STRING);
-        $s->update(['value' => "test"]);
+        $s->update(['value' => 'test']);
         $this->assertSame('test', $s->value);
         $this->assertDatabaseHas(SettingsConfig::getDatabaseTableName(), [
             'id' => $s->id,
-            'value' => "test"
+            'value' => 'test',
         ]);
     }
 
     public function test_cast_value_to_text(): void
     {
         $s = self::createSetting(Type::TEXT);
-        $s->update(['value' => "test-long-text"]);
+        $s->update(['value' => 'test-long-text']);
         $this->assertSame('test-long-text', $s->value);
         $this->assertDatabaseHas(SettingsConfig::getDatabaseTableName(), [
             'id' => $s->id,
-            'value' => "test-long-text"
+            'value' => 'test-long-text',
         ]);
     }
 
@@ -181,7 +178,7 @@ class SettingModelTest extends TestCase
         $this->assertNull($s->value);
         $this->assertDatabaseHas(SettingsConfig::getDatabaseTableName(), [
             'id' => $s->id,
-            'value' => null
+            'value' => null,
         ]);
     }
 
@@ -192,7 +189,7 @@ class SettingModelTest extends TestCase
         $this->assertNull($s->value);
         $this->assertDatabaseHas(SettingsConfig::getDatabaseTableName(), [
             'id' => $s->id,
-            'value' => null
+            'value' => null,
         ]);
     }
 
@@ -203,7 +200,7 @@ class SettingModelTest extends TestCase
         $this->assertNull($s->value);
         $this->assertDatabaseHas(SettingsConfig::getDatabaseTableName(), [
             'id' => $s->id,
-            'value' => null
+            'value' => null,
         ]);
     }
 
@@ -214,7 +211,7 @@ class SettingModelTest extends TestCase
         $this->assertNull($s->value);
         $this->assertDatabaseHas(SettingsConfig::getDatabaseTableName(), [
             'id' => $s->id,
-            'value' => null
+            'value' => null,
         ]);
     }
 
@@ -225,7 +222,7 @@ class SettingModelTest extends TestCase
         $this->assertNull($s->value);
         $this->assertDatabaseHas(SettingsConfig::getDatabaseTableName(), [
             'id' => $s->id,
-            'value' => null
+            'value' => null,
         ]);
 
     }
@@ -237,14 +234,14 @@ class SettingModelTest extends TestCase
         $this->assertNull($s->value);
         $this->assertDatabaseHas(SettingsConfig::getDatabaseTableName(), [
             'id' => $s->id,
-            'value' => null
+            'value' => null,
         ]);
 
     }
 
     public function test_model_return_localized_label_when_on(): void
     {
-        $setting = new Setting();
+        $setting = new Setting;
         $setting->type = Type::ON_OFF;
         $setting->value = true;
 
@@ -257,7 +254,7 @@ class SettingModelTest extends TestCase
 
     public function test_model_return_localized_label_when_off(): void
     {
-        $setting = new Setting();
+        $setting = new Setting;
         $setting->type = Type::ON_OFF;
         $setting->value = false;
 
@@ -270,7 +267,7 @@ class SettingModelTest extends TestCase
 
     public function test_model_return_localized_label_when_yes(): void
     {
-        $setting = new Setting();
+        $setting = new Setting;
         $setting->type = Type::YES_NO;
         $setting->value = true;
 
@@ -283,7 +280,7 @@ class SettingModelTest extends TestCase
 
     public function test_model_return_localized_label_when_no(): void
     {
-        $setting = new Setting();
+        $setting = new Setting;
         $setting->type = Type::YES_NO;
         $setting->value = false;
 
@@ -296,7 +293,7 @@ class SettingModelTest extends TestCase
 
     public function test_model_return_pure_value_label_when_setting_is_not_boolean_type(): void
     {
-        $setting = new Setting();
+        $setting = new Setting;
         $setting->type = Type::INTEGER;
         $setting->value = 200;
 
@@ -334,23 +331,22 @@ class SettingModelTest extends TestCase
 
     public function test_model_has_boolean_value()
     {
-        $setting = (new Setting())->fill(['type' => Type::ON_OFF]);
+        $setting = (new Setting)->fill(['type' => Type::ON_OFF]);
         $this->assertTrue($setting->isBoolean());
 
-        $setting = (new Setting())->fill(['type' => Type::YES_NO]);
+        $setting = (new Setting)->fill(['type' => Type::YES_NO]);
         $this->assertTrue($setting->isBoolean());
 
-        $setting = (new Setting())->fill(['type' => Type::INTEGER]);
+        $setting = (new Setting)->fill(['type' => Type::INTEGER]);
         $this->assertFalse($setting->isBoolean());
 
-        $setting = (new Setting())->fill(['type' => Type::FLOAT]);
+        $setting = (new Setting)->fill(['type' => Type::FLOAT]);
         $this->assertFalse($setting->isBoolean());
 
-        $setting = (new Setting())->fill(['type' => Type::STRING]);
+        $setting = (new Setting)->fill(['type' => Type::STRING]);
         $this->assertFalse($setting->isBoolean());
 
-        $setting = (new Setting())->fill(['type' => Type::TEXT]);
+        $setting = (new Setting)->fill(['type' => Type::TEXT]);
         $this->assertFalse($setting->isBoolean());
     }
-
 }

@@ -35,6 +35,7 @@ class SettingItemTest extends TestCase
     {
         Setting::truncate();
         Config::set('app-settings.key_name_generator', KeyNaming::SNAKE_CASE);
+
         return $this->createSettingItem(
             keyName: $keyName,
             definition: [
@@ -226,7 +227,7 @@ class SettingItemTest extends TestCase
         $this->assertFalse($settingItem->delete());
     }
 
-    public function test_setting_is_forceUpdated_in_database()
+    public function test_setting_is_force_updated_in_database()
     {
         $settingItem = $this->prepareForceUpdatableSettingItem();
         $this->assertSame(Operation::FORCE_UPDATE, $settingItem->getOperationType());
@@ -239,7 +240,7 @@ class SettingItemTest extends TestCase
         ]);
     }
 
-    public function test_setting_is_not_forceUpdated_when_operation_is_not_detected_as_forceUpdate()
+    public function test_setting_is_not_force_updated_when_operation_is_not_detected_as_force_update()
     {
         $settingItem = self::prepareCreatableSettingItem();
         $this->assertNotSame(Operation::FORCE_UPDATE, $settingItem->getOperationType());
@@ -289,7 +290,7 @@ class SettingItemTest extends TestCase
         ]);
     }
 
-    public function test_setting_is_forceUpdated_in_database_when_forced_flag_on()
+    public function test_setting_is_force_updated_in_database_when_forced_flag_on()
     {
         $settingItem = self::prepareForceUpdatableSettingItem();
         $this->expectsDatabaseQueryCount(3);
@@ -301,12 +302,10 @@ class SettingItemTest extends TestCase
         ]);
     }
 
-    public function test_setting_is_not_forceUpdated_in_database_when_forced_flag_off()
+    public function test_setting_is_not_force_updated_in_database_when_forced_flag_off()
     {
         $settingItem = self::prepareForceUpdatableSettingItem();
         $this->expectsDatabaseQueryCount(0);
         $this->assertFalse($settingItem->sync(false));
     }
-
-
 }

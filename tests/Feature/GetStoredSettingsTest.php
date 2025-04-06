@@ -35,6 +35,5 @@ class GetStoredSettingsTest extends TestCase
         $this->assertEquals(Setting::where('key', 'setting.abc')->first(), $result->first());
         $this->assertEquals(Setting::where('key', 'setting.int')->first(), $result->last());
 
-
     }
 }
