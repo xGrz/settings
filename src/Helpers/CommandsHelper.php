@@ -10,7 +10,7 @@ use XGrz\Settings\Actions\SettingItemsBuilder;
 use XGrz\Settings\Enums\Operation;
 use XGrz\Settings\ValueObjects\SettingItem;
 
-class DefinitionsHelper
+class CommandsHelper
 {
     private Collection $settings;
 

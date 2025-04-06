@@ -4,8 +4,7 @@ namespace XGrz\Settings\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Sleep;
-use XGrz\Settings\Helpers\DefinitionsHelper;
-
+use XGrz\Settings\Helpers\CommandsHelper;
 use function Laravel\Prompts\progress;
 
 class SettingsSyncCommand extends Command
@@ -16,7 +15,7 @@ class SettingsSyncCommand extends Command
 
     public function handle(): void
     {
-        $helper = new DefinitionsHelper;
+        $helper = new CommandsHelper;
         if ($helper->synchronizable()->count() === 0) {
             $this->newLine();
             $this->warn('All settings are up to date.');

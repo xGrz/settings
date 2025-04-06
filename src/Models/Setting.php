@@ -47,4 +47,9 @@ class Setting extends Model
 
         return $this;
     }
+
+    public function isBoolean(): bool
+    {
+        return $this->type->isBoolean();
+    }
 }

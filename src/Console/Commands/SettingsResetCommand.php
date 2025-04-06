@@ -4,9 +4,8 @@ namespace XGrz\Settings\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Sleep;
-use XGrz\Settings\Helpers\DefinitionsHelper;
+use XGrz\Settings\Helpers\CommandsHelper;
 use XGrz\Settings\Models\Setting;
-
 use function Laravel\Prompts\progress;
 
 class SettingsResetCommand extends Command
@@ -26,7 +25,7 @@ class SettingsResetCommand extends Command
             return;
         }
 
-        $helper = new DefinitionsHelper;
+        $helper = new CommandsHelper;
         progress(
             label: 'Reset settings...',
             steps: $helper->synchronizable(),

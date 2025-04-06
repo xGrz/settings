@@ -3,7 +3,7 @@
 namespace XGrz\Settings\Console\Commands;
 
 use Illuminate\Console\Command;
-use XGrz\Settings\Helpers\DefinitionsHelper;
+use XGrz\Settings\Helpers\CommandsHelper;
 
 class SettingsStatusCommand extends Command
 {
@@ -13,7 +13,7 @@ class SettingsStatusCommand extends Command
 
     public function handle(): void
     {
-        $helper = new DefinitionsHelper;
+        $helper = new CommandsHelper;
         $this->table($helper->heading(), $helper->toListing());
     }
 }
