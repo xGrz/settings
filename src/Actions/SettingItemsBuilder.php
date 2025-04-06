@@ -9,25 +9,32 @@ use XGrz\Settings\ValueObjects\SettingItem;
 
 class SettingItemsBuilder
 {
-    public static function make(Collection $definitions, Collection $stored)
+    /**
+     * @param Collection<string, Entry> $definitions
+     * @param Collection<string, Setting> $stored
+     * @return Collection<string, SettingItem>
+     */
+    public static function make(Collection $definitions, Collection $stored): Collection
     {
-        $definitions->transform(function (Entry $entry) {
-            return [
-                'definedDescription' => $entry->getDescription(),
-                'definedType' => $entry->getType(),
-                'definedValue' => $entry->getValue(),
-            ];
-        });
+        $definitionItems = $definitions
+            ->map(function (Entry $entry) {
+                return [
+                    'definedDescription' => $entry->getDescription(),
+                    'definedType' => $entry->getType(),
+                    'definedValue' => $entry->getValue(),
+                ];
+            })->toArray();
 
-        $stored->transform(function (Setting $setting) {
-            return [
-                'storedDescription' => $setting->description,
-                'storedType' => $setting->type,
-                'storedValue' => $setting->value,
-            ];
-        });
+        $storedItems = $stored
+            ->map(function (Setting $setting) {
+                return [
+                    'storedDescription' => $setting->description,
+                    'storedType' => $setting->type,
+                    'storedValue' => $setting->value,
+                ];
+            })->toArray();
 
-        return self::mergeSettingItems($definitions->toArray(), $stored->toArray());
+        return self::mergeSettingItems($definitionItems, $storedItems);
     }
 
     /**
@@ -37,9 +44,7 @@ class SettingItemsBuilder
     {
         $settings = [];
         foreach ($definitions as $key => $definition) {
-            $settings[$key] = array_key_exists($key, $settings)
-                ? array_merge($definition, $settings[$key])
-                : $definition;
+            $settings[$key] = $definition;
         }
 
         foreach ($stored as $key => $setting) {
