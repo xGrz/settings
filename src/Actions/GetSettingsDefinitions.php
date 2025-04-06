@@ -29,9 +29,9 @@ class GetSettingsDefinitions
      *
      * @throws ConfigFileNotFoundException
      */
-    public static function asCollection(array $definitions = []): Collection
+    public static function asCollection(?array $definitions = null): Collection
     {
-        return collect(Arr::dot(empty($definitions) ? self::raw() : $definitions))
+        return collect(Arr::dot($definitions ?? self::raw()))
             ->filter(fn($value) => $value instanceof Entry)
             ->mapWithKeys(fn(Entry $value, $key) => [SettingsConfig::getKeyGeneratorType()->generateKey($key) => $value])
             ->sortKeys();
