@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Sleep;
 use XGrz\Settings\Helpers\CommandsHelper;
 use XGrz\Settings\Models\Setting;
+
 use function Laravel\Prompts\progress;
 
 class SettingsResetCommand extends Command

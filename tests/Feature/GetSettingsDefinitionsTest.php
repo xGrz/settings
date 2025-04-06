@@ -5,9 +5,9 @@ namespace XGrz\Settings\Tests\Feature;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
-use XGrz\Settings\Actions\GetSettingsDefinitions;
 use XGrz\Settings\Enums\KeyNaming;
 use XGrz\Settings\Exceptions\ConfigFileNotFoundException;
+use XGrz\Settings\Helpers\Builder\GetSettingsDefinitions;
 use XGrz\Settings\Tests\TestCase;
 use XGrz\Settings\ValueObjects\Entry;
 

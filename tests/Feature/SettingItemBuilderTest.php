@@ -3,9 +3,9 @@
 namespace XGrz\Settings\Tests\Feature;
 
 use Illuminate\Support\Collection;
-use XGrz\Settings\Actions\SettingItemsBuilder;
 use XGrz\Settings\Enums\Operation;
 use XGrz\Settings\Enums\Type;
+use XGrz\Settings\Helpers\Builder\SettingItemsBuilder;
 use XGrz\Settings\Models\Setting;
 use XGrz\Settings\Tests\TestCase;
 use XGrz\Settings\ValueObjects\Entry;

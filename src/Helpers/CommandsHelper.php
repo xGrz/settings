@@ -4,10 +4,10 @@ namespace XGrz\Settings\Helpers;
 
 use Exception;
 use Illuminate\Support\Collection;
-use XGrz\Settings\Actions\GetSettingsDefinitions;
-use XGrz\Settings\Actions\GetStoredSettings;
-use XGrz\Settings\Actions\SettingItemsBuilder;
 use XGrz\Settings\Enums\Operation;
+use XGrz\Settings\Helpers\Builder\GetSettingsDefinitions;
+use XGrz\Settings\Helpers\Builder\GetStoredSettings;
+use XGrz\Settings\Helpers\Builder\SettingItemsBuilder;
 use XGrz\Settings\ValueObjects\SettingItem;
 
 class CommandsHelper

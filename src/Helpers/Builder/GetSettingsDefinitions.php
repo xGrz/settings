@@ -1,6 +1,6 @@
 <?php
 
-namespace XGrz\Settings\Actions;
+namespace XGrz\Settings\Helpers\Builder;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;

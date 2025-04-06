@@ -25,10 +25,5 @@ abstract class TestCase extends Orchestra
 
     protected function defineEnvironment($app): void
     {
-        // Setup default database to use sqlite :memory:
-        //        tap($app['config'], function (Repository $config) {
-        //            $defaultConfig = include __DIR__ . '/../config/test-config.php';
-        //            $config->set('app-settings', $defaultConfig);
-        //        });
     }
 }

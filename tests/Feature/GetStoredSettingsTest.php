@@ -3,8 +3,8 @@
 namespace XGrz\Settings\Tests\Feature;
 
 use Illuminate\Support\Collection;
-use XGrz\Settings\Actions\GetStoredSettings;
 use XGrz\Settings\Enums\Type;
+use XGrz\Settings\Helpers\Builder\GetStoredSettings;
 use XGrz\Settings\Models\Setting;
 use XGrz\Settings\Tests\TestCase;
 
