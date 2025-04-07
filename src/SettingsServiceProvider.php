@@ -15,7 +15,7 @@ class SettingsServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        $this->app->singleton(Settings::class, function ($app) {
+        $this->app->singleton(Settings::class, function($app) {
             return new Settings;
         });
     }
@@ -48,6 +48,5 @@ class SettingsServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../lang' => $this->app->langPath('vendor/settings'),
         ], 'settings-lang');
-
     }
 }

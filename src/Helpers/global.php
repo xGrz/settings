@@ -3,8 +3,7 @@
 use XGrz\Settings\Exceptions\SettingKeyNotFoundException;
 use XGrz\Settings\Facades\Settings;
 
-if (!function_exists('settings')) {
-
+if (! function_exists('settings')) {
     /**
      * @param mixed ...$params
      *                            - (string $keyName) - search for setting key name
@@ -29,5 +28,4 @@ if (!function_exists('settings')) {
             throw $ex;
         }
     }
-
 }

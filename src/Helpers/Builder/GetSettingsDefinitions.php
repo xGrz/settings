@@ -21,7 +21,6 @@ class GetSettingsDefinitions
         return File::exists(base_path('settings/definitions.php'))
             ? include base_path('settings/definitions.php')
             : throw new ConfigFileNotFoundException('Settings definitions file not found. Have you run `php artisan settings:publish`?');
-
     }
 
     /**
@@ -29,7 +28,7 @@ class GetSettingsDefinitions
      *
      * @throws ConfigFileNotFoundException
      */
-    public static function asCollection(?array $definitions = null): Collection
+    public static function asCollection(?array $definitions = NULL): Collection
     {
         return collect(Arr::dot($definitions ?? self::raw()))
             ->filter(fn($value) => $value instanceof Entry)

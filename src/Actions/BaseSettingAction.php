@@ -2,7 +2,6 @@
 
 namespace XGrz\Settings\Actions;
 
-
 use Illuminate\Support\Collection;
 use Illuminate\Support\Sleep;
 use Laravel\Prompts\Progress;
@@ -17,13 +16,14 @@ use function Laravel\Prompts\progress;
 
 abstract class BaseSettingAction implements SettingActionInterface
 {
-    protected ?Operation $operation = null;
+    protected ?Operation $operation = NULL;
+
     protected readonly Collection $settings;
 
     /**
      * @throws ConfigFileNotFoundException
      */
-    private function __construct(?array $definitions = null)
+    final private function __construct(?array $definitions = NULL)
     {
         $this->settings = SettingItemsBuilder::make(
             GetSettingsDefinitions::asCollection($definitions ?? GetSettingsDefinitions::raw()),
@@ -34,40 +34,50 @@ abstract class BaseSettingAction implements SettingActionInterface
     /**
      * @throws ConfigFileNotFoundException
      */
-    public static function make(?array $definitions = null): static
+    final public static function make(?array $definitions = NULL): static
     {
         return new static($definitions);
     }
 
     protected function getSelectedSettings(): Collection
     {
-        if ($this->operation === null) return $this->settings;
+        if ($this->operation === NULL) {
+            return $this->settings;
+        }
+
         return $this->settings->filter(fn(SettingItem $setting) => $setting->operation === $this->operation);
     }
 
     public function execute(): int
     {
-        if ($this->getSelectedSettings()->isEmpty()) return 0;
+        if ($this->getSelectedSettings()->isEmpty()) {
+            return 0;
+        }
 
         $counter = 0;
         foreach ($this->getSelectedSettings() as $item) {
             $item->store();
             $counter++;
         }
+
         return $counter;
     }
 
     public function executeWithProgress(): Progress|array
     {
-        if ($this->getSelectedSettings()->isEmpty()) return [];
+        if ($this->getSelectedSettings()->isEmpty()) {
+            return [];
+        }
+
         return progress(
-            label: $this->operation?->name ?? 'Processing settings sync',
+            label: $this->operation->name ?? 'Processing settings sync',
             steps: $this->getSelectedSettings(),
-            callback: function ($setting, $progress) {
+            callback: function($setting, $progress) {
                 Sleep::for(100)->millisecond();
                 $progress
                     ->label('Processing ' . $setting->key)
                     ->hint('Processed ' . $setting->key);
+
                 return $setting->store();
             }
         );
@@ -88,5 +98,4 @@ abstract class BaseSettingAction implements SettingActionInterface
             'operation' => $setting->operation->commandLineLabel(),
         ]);
     }
-
 }

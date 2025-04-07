@@ -6,5 +6,4 @@ use XGrz\Settings\Interfaces\SettingActionInterface;
 
 class ListSettingsAction extends BaseSettingAction implements SettingActionInterface
 {
-
 }

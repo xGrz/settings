@@ -15,20 +15,13 @@ class GetSettingsDefinitionsTest extends TestCase
 {
     public function test_raw_returns_definitions_file_content()
     {
-        // Mock the File facade
-        File::shouldReceive('exists')
-            ->with(base_path('settings/definitions.php'))
-            ->andReturn(true);
-
-        // Mock the file include
-        File::shouldReceive('getRequire')
-            ->with(base_path('settings/definitions.php'))
-            ->andReturn(['key' => 'value']);
-
+        $this->artisan('settings:publish-config')
+            ->assertExitCode(0);
         $result = GetSettingsDefinitions::raw();
 
         // Assert that the returned content matches the mocked content
         $this->assertEquals(include base_path('settings/definitions.php'), $result);
+        File::delete(base_path('settings/definitions.php'));
     }
 
     public function test_raw_throws_exception_when_definitions_file_is_missing()

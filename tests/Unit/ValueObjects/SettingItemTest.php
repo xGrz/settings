@@ -39,9 +39,9 @@ class SettingItemTest extends TestCase
         return $this->createSettingItem(
             keyName: $keyName,
             definition: [
-                'storedType' => null,
-                'storedValue' => null,
-                'storedDescription' => null,
+                'storedType' => NULL,
+                'storedValue' => NULL,
+                'storedDescription' => NULL,
             ]);
     }
 
@@ -52,10 +52,10 @@ class SettingItemTest extends TestCase
             'definedType' => Type::STRING,
             'definedValue' => 'example',
             'definedDescription' => 'A test description',
-            'storedType' => null,
-            'storedValue' => null,
-            'storedDescription' => null,
-        ])->create();
+            'storedType' => NULL,
+            'storedValue' => NULL,
+            'storedDescription' => NULL,
+        ])->store();
 
         return $this->createSettingItem($keyName, [
             'definedType' => Type::TEXT,
@@ -74,9 +74,9 @@ class SettingItemTest extends TestCase
         Setting::create(['key' => $keyName, 'type' => Type::STRING, 'value' => 'example', 'description' => 'A test description']);
 
         return $this->createSettingItem($keyName, [
-            'definedType' => null,
-            'definedValue' => null,
-            'definedDescription' => null,
+            'definedType' => NULL,
+            'definedValue' => NULL,
+            'definedDescription' => NULL,
             'storedType' => Type::STRING,
             'storedValue' => 'example',
             'storedDescription' => 'A test description',
@@ -91,10 +91,10 @@ class SettingItemTest extends TestCase
             'definedType' => Type::STRING,
             'definedValue' => 'example',
             'definedDescription' => 'A test description',
-            'storedType' => null,
-            'storedValue' => null,
-            'storedDescription' => null,
-        ])->create();
+            'storedType' => NULL,
+            'storedValue' => NULL,
+            'storedDescription' => NULL,
+        ])->store();
 
         return $this->createSettingItem($keyName, [
             'definedType' => Type::ON_OFF,
@@ -115,14 +115,14 @@ class SettingItemTest extends TestCase
     public function test_setting_item_operation_detects_it_should_be_created()
     {
         Config::set('app-settings.key_name_generator', KeyNaming::SNAKE_CASE);
-        $settingItem = $this->createSettingItem(definition: ['storedType' => null, 'storedValue' => null, 'storedDescription' => null]);
+        $settingItem = $this->createSettingItem(definition: ['storedType' => NULL, 'storedValue' => NULL, 'storedDescription' => NULL]);
         $this->assertEquals('test_key', $settingItem->key);
         $this->assertSame(Operation::CREATE, $settingItem->getOperationType());
     }
 
     public function test_setting_item_operation_detects_it_should_be_deleted()
     {
-        $settingItem = $this->createSettingItem(definition: ['definedType' => null, 'definedValue' => null, 'definedDescription' => null]);
+        $settingItem = $this->createSettingItem(definition: ['definedType' => NULL, 'definedValue' => NULL, 'definedDescription' => NULL]);
         $this->assertSame(Operation::DELETE, $settingItem->getOperationType());
     }
 
@@ -170,7 +170,10 @@ class SettingItemTest extends TestCase
         $settingItem = self::prepareCreatableSettingItem();
 
         $this->assertSame(Operation::CREATE, $settingItem->getOperationType());
-        $this->assertTrue($settingItem->create());
+        $this->assertDatabaseMissing(SettingsConfig::getDatabaseTableName(), [
+            'key' => $settingItem->key,
+        ]);
+        $this->assertTrue($settingItem->store());
         $this->assertDatabaseHas(SettingsConfig::getDatabaseTableName(), [
             'key' => $settingItem->key,
             'type' => $settingItem->definedType,
@@ -181,18 +184,19 @@ class SettingItemTest extends TestCase
 
     public function test_setting_is_not_created_when_operation_is_not_detected_as_create()
     {
-        $settingItem = self::prepareUpdatableSettingItem();
+        $settingItem = self::createSettingItem();
         $this->assertNotSame(Operation::CREATE, $settingItem->getOperationType());
         $this->expectsDatabaseQueryCount(0);
-        $this->assertFalse($settingItem->create());
+        $this->assertFalse($settingItem->store());
     }
 
     public function test_setting_is_updated_in_database()
     {
         $settingItem = self::prepareUpdatableSettingItem();
         $this->assertSame(Operation::UPDATE, $settingItem->getOperationType());
-        $this->expectsDatabaseQueryCount(3); // select and update item as separate queries. Last query is database row check
-        $this->assertTrue($settingItem->update());
+
+        $this->expectsDatabaseQueryCount(4); // select, update, refresh cache, database check
+        $this->assertTrue($settingItem->store());
         $this->assertDatabaseHas(SettingsConfig::getDatabaseTableName(), [
             'key' => $settingItem->key,
             'type' => Type::TEXT,
@@ -201,10 +205,10 @@ class SettingItemTest extends TestCase
 
     public function test_setting_is_not_updated_when_operation_is_not_detected_as_update()
     {
-        $settingItem = self::prepareCreatableSettingItem();
+        $settingItem = self::createSettingItem();
         $this->assertNotSame(Operation::UPDATE, $settingItem->getOperationType());
         $this->expectsDatabaseQueryCount(0);
-        $this->assertFalse($settingItem->update());
+        $this->assertFalse($settingItem->store());
     }
 
     public function test_setting_is_deleted_from_database()
@@ -212,27 +216,26 @@ class SettingItemTest extends TestCase
         $settingItem = self::prepareDeletableSettingItem();
         $this->assertSame(Operation::DELETE, $settingItem->getOperationType());
         $this->expectsDatabaseQueryCount(3);  // select and delete item as separate queries. Last query is database row check
-        $this->assertTrue($settingItem->delete());
+        $this->assertTrue($settingItem->store());
         $this->assertDatabaseMissing(SettingsConfig::getDatabaseTableName(), [
             'key' => $settingItem->key,
         ]);
-
     }
 
     public function test_setting_is_not_deleted_when_operation_is_not_detected_as_delete()
     {
-        $settingItem = $this->prepareUpdatableSettingItem();
+        $settingItem = self::createSettingItem();
         $this->assertNotSame(Operation::DELETE, $settingItem->getOperationType());
         $this->expectsDatabaseQueryCount(0);
-        $this->assertFalse($settingItem->delete());
+        $this->assertFalse($settingItem->store());
     }
 
     public function test_setting_is_force_updated_in_database()
     {
-        $settingItem = $this->prepareForceUpdatableSettingItem();
+        $settingItem = self::prepareForceUpdatableSettingItem();
         $this->assertSame(Operation::FORCE_UPDATE, $settingItem->getOperationType());
-        $this->expectsDatabaseQueryCount(3);  // select and update item as separate queries. Last query is database row check
-        $this->assertTrue($settingItem->forceUpdate());
+        $this->expectsDatabaseQueryCount(4); // select, update, refresh cache, database check
+        $this->assertTrue($settingItem->store());
         $this->assertDatabaseHas(SettingsConfig::getDatabaseTableName(), [
             'key' => $settingItem->key,
             'type' => Type::ON_OFF,
@@ -242,70 +245,9 @@ class SettingItemTest extends TestCase
 
     public function test_setting_is_not_force_updated_when_operation_is_not_detected_as_force_update()
     {
-        $settingItem = self::prepareCreatableSettingItem();
+        $settingItem = self::createSettingItem();
         $this->assertNotSame(Operation::FORCE_UPDATE, $settingItem->getOperationType());
         $this->expectsDatabaseQueryCount(0);
-        $this->assertFalse($settingItem->forceUpdate());
-    }
-
-    public function test_setting_is_not_synced_to_database_when_unchanged()
-    {
-        $settingItemUnchanged = self::createSettingItem();
-        $this->expectsDatabaseQueryCount(0);
-        $this->assertFalse($settingItemUnchanged->sync());
-    }
-
-    public function test_setting_is_created_in_database_on_sync()
-    {
-        $settingItem = self::prepareCreatableSettingItem();
-
-        $this->expectsDatabaseQueryCount(2);
-        $this->assertTrue($settingItem->sync());
-        $this->assertDatabaseHas(SettingsConfig::getDatabaseTableName(), [
-            'key' => $settingItem->key,
-            'type' => $settingItem->definedType,
-            'value' => $settingItem->definedValue,
-            'description' => $settingItem->definedDescription,
-        ]);
-    }
-
-    public function test_setting_is_updated_in_database_on_sync()
-    {
-        $settingItem = self::prepareUpdatableSettingItem();
-        $this->expectsDatabaseQueryCount(3);
-        $this->assertTrue($settingItem->sync());
-        $this->assertDatabaseHas(SettingsConfig::getDatabaseTableName(), [
-            'key' => $settingItem->key,
-            'type' => Type::TEXT,
-        ]);
-    }
-
-    public function test_setting_is_deleted_from_database_on_sync()
-    {
-        $settingItem = self::prepareDeletableSettingItem();
-        $this->expectsDatabaseQueryCount(3);
-        $this->assertTrue($settingItem->sync());
-        $this->assertDatabaseMissing(SettingsConfig::getDatabaseTableName(), [
-            'key' => $settingItem->key,
-        ]);
-    }
-
-    public function test_setting_is_force_updated_in_database_when_forced_flag_on()
-    {
-        $settingItem = self::prepareForceUpdatableSettingItem();
-        $this->expectsDatabaseQueryCount(3);
-        $this->assertTrue($settingItem->sync(true));
-        $this->assertDatabaseHas(SettingsConfig::getDatabaseTableName(), [
-            'key' => $settingItem->key,
-            'type' => Type::ON_OFF,
-            'value' => true,
-        ]);
-    }
-
-    public function test_setting_is_not_force_updated_in_database_when_forced_flag_off()
-    {
-        $settingItem = self::prepareForceUpdatableSettingItem();
-        $this->expectsDatabaseQueryCount(0);
-        $this->assertFalse($settingItem->sync(false));
+        $this->assertFalse($settingItem->store());
     }
 }

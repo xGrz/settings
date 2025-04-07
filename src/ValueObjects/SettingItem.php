@@ -33,12 +33,12 @@ class SettingItem
     private function __construct(array $setting, string $key)
     {
         $this->key = SettingsConfig::getKeyGeneratorType()->generateKey($key);
-        $this->definedType = $setting['definedType'] ?? null;
-        $this->storedType = $setting['storedType'] ?? null;
-        $this->definedValue = $setting['definedValue'] ?? null;
-        $this->storedValue = $setting['storedValue'] ?? null;
-        $this->definedDescription = $setting['definedDescription'] ?? null;
-        $this->storedDescription = $setting['storedDescription'] ?? null;
+        $this->definedType = $setting['definedType'] ?? NULL;
+        $this->storedType = $setting['storedType'] ?? NULL;
+        $this->definedValue = $setting['definedValue'] ?? NULL;
+        $this->storedValue = $setting['storedValue'] ?? NULL;
+        $this->definedDescription = $setting['definedDescription'] ?? NULL;
+        $this->storedDescription = $setting['storedDescription'] ?? NULL;
 
         $this->operation = $this->detectOperationType();
     }
@@ -49,11 +49,11 @@ class SettingItem
             return Operation::UNCHANGED;
         }
 
-        if (isset($this->definedType) && !isset($this->storedType)) {
+        if (isset($this->definedType) && ! isset($this->storedType)) {
             return Operation::CREATE;
         }
 
-        if (!isset($this->definedType) && isset($this->storedType)) {
+        if (! isset($this->definedType) && isset($this->storedType)) {
             return Operation::DELETE;
         }
 

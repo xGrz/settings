@@ -10,14 +10,14 @@ use XGrz\Settings\ValueObjects\SettingItem;
 class SettingItemsBuilder
 {
     /**
-     * @param Collection<string, Entry> $definitions
+     * @param Collection<string, Entry>   $definitions
      * @param Collection<string, Setting> $stored
      * @return Collection<string, SettingItem>
      */
     public static function make(Collection $definitions, Collection $stored): Collection
     {
         $definitionItems = $definitions
-            ->map(function (Entry $entry) {
+            ->map(function(Entry $entry) {
                 return [
                     'definedDescription' => $entry->getDescription(),
                     'definedType' => $entry->getType(),
@@ -26,7 +26,7 @@ class SettingItemsBuilder
             })->toArray();
 
         $storedItems = $stored
-            ->map(function (Setting $setting) {
+            ->map(function(Setting $setting) {
                 return [
                     'storedDescription' => $setting->description,
                     'storedType' => $setting->type,

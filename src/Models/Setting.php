@@ -2,22 +2,25 @@
 
 namespace XGrz\Settings\Models;
 
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use XGrz\Settings\Casts\DynamicSettingValueCast;
 use XGrz\Settings\Casts\KeyNameCast;
 use XGrz\Settings\Enums\Type;
 use XGrz\Settings\Helpers\SettingsConfig;
+use XGrz\Settings\Observers\SettingObserver;
 
 /**
- * @property-read int $id
+ * @property-read int    $id
  * @property-read string $key
- * @property ?string $description
- * @property Type $type
- * @property mixed $value
+ * @property ?string     $description
+ * @property Type        $type
+ * @property mixed       $value
  * @property-read Carbon $created_at
  * @property-read Carbon $updated_at
  */
+#[ObservedBy(SettingObserver::class)]
 class Setting extends Model
 {
     protected $guarded = ['id'];
@@ -34,8 +37,14 @@ class Setting extends Model
         return SettingsConfig::getDatabaseTableName();
     }
 
+    public function isBoolean(): bool
+    {
+        return $this->type->isBoolean();
+    }
+
     public function getLabel(): mixed
     {
+        if (! $this->isBoolean()) return false;
         return match ($this->type) {
             Type::YES_NO => $this->value ? __('settings::label.yes') : __('settings::label.no'),
             Type::ON_OFF => $this->value ? __('settings::label.on') : __('settings::label.off'),
@@ -51,8 +60,4 @@ class Setting extends Model
         return $this;
     }
 
-    public function isBoolean(): bool
-    {
-        return $this->type->isBoolean();
-    }
 }

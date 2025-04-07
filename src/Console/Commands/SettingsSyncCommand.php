@@ -22,7 +22,7 @@ class SettingsSyncCommand extends Command
 
         $this->table($action->getTableHeading(), $action->getTableBody());
 
-        if (!$this->confirm('Do you want to sync settings?', true)) {
+        if (! $this->confirm('Do you want to sync settings?', true)) {
             $this->warn('Aborted. No changes were made.');
 
             return;

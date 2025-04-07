@@ -14,7 +14,6 @@ class SettingShowCommand extends Command
 
     public function handle(): void
     {
-
         Setting::orderBy('key')->get()->pluck('key', 'id')->toArray();
 
         $selectedSetting = search(
@@ -35,15 +34,16 @@ class SettingShowCommand extends Command
 
     private function formatValue(mixed $value): string
     {
+        if (is_bool($value)) {
+            return $value === true ? '<fg=green>true</>' : '<fg=red>false</>';
+        }
         if (empty($value)) {
             return '<fg=gray>empty</>';
-        }
-        if (is_bool($value)) {
-            return $value ? '<fg=green>true</>' : '<fg=red>false</>';
         }
         if (is_int($value) || is_float($value)) {
             return '<fg=green>' . $value . '</>';
         }
+
         return str($value)
             ->limit(40)
             ->prepend('<fg=bright-cyan>')

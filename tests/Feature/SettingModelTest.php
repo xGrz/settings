@@ -174,69 +174,67 @@ class SettingModelTest extends TestCase
     public function test_can_store_null_on_integer()
     {
         $s = self::createSetting(Type::INTEGER);
-        $s->update(['value' => null]);
+        $s->update(['value' => NULL]);
         $this->assertNull($s->value);
         $this->assertDatabaseHas(SettingsConfig::getDatabaseTableName(), [
             'id' => $s->id,
-            'value' => null,
+            'value' => NULL,
         ]);
     }
 
     public function test_can_store_null_on_float()
     {
         $s = self::createSetting(Type::FLOAT);
-        $s->update(['value' => null]);
+        $s->update(['value' => NULL]);
         $this->assertNull($s->value);
         $this->assertDatabaseHas(SettingsConfig::getDatabaseTableName(), [
             'id' => $s->id,
-            'value' => null,
+            'value' => NULL,
         ]);
     }
 
     public function test_can_store_null_on_yes_no()
     {
         $s = self::createSetting(Type::YES_NO);
-        $s->update(['value' => null]);
+        $s->update(['value' => NULL]);
         $this->assertNull($s->value);
         $this->assertDatabaseHas(SettingsConfig::getDatabaseTableName(), [
             'id' => $s->id,
-            'value' => null,
+            'value' => NULL,
         ]);
     }
 
     public function test_can_store_null_on_on_off()
     {
         $s = self::createSetting(Type::ON_OFF);
-        $s->update(['value' => null]);
+        $s->update(['value' => NULL]);
         $this->assertNull($s->value);
         $this->assertDatabaseHas(SettingsConfig::getDatabaseTableName(), [
             'id' => $s->id,
-            'value' => null,
+            'value' => NULL,
         ]);
     }
 
     public function test_can_store_null_on_on_string()
     {
         $s = self::createSetting(Type::STRING);
-        $s->update(['value' => null]);
+        $s->update(['value' => NULL]);
         $this->assertNull($s->value);
         $this->assertDatabaseHas(SettingsConfig::getDatabaseTableName(), [
             'id' => $s->id,
-            'value' => null,
+            'value' => NULL,
         ]);
-
     }
 
     public function test_can_store_null_on_on_text()
     {
         $s = self::createSetting(Type::TEXT);
-        $s->update(['value' => null]);
+        $s->update(['value' => NULL]);
         $this->assertNull($s->value);
         $this->assertDatabaseHas(SettingsConfig::getDatabaseTableName(), [
             'id' => $s->id,
-            'value' => null,
+            'value' => NULL,
         ]);
-
     }
 
     public function test_model_return_localized_label_when_on(): void
@@ -291,14 +289,13 @@ class SettingModelTest extends TestCase
         $this->assertEquals('Nie', $setting->getLabel());
     }
 
-    public function test_model_return_pure_value_label_when_setting_is_not_boolean_type(): void
+    public function test_model_returns_false_flag_label_when_is_boolean_type()
     {
-        $setting = new Setting;
-        $setting->type = Type::INTEGER;
-        $setting->value = 200;
+        $setting = (new Setting)->fill(['type' => Type::STRING, 'value' => 'abc']);
+        $this->assertFalse($setting->getLabel());
 
-        $this->assertSame(200, $setting->getLabel());
-
+        $setting = (new Setting)->fill(['type' => Type::INTEGER, 'value' => 123]);
+        $this->assertFalse($setting->getLabel());
     }
 
     public function test_model_refresh_key()
@@ -349,4 +346,5 @@ class SettingModelTest extends TestCase
         $setting = (new Setting)->fill(['type' => Type::TEXT]);
         $this->assertFalse($setting->isBoolean());
     }
+
 }

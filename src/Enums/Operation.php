@@ -23,7 +23,7 @@ enum Operation: string
 
     public function getLabel(?string $color = null): string
     {
-        if (!$color) {
+        if (! $color) {
             return $this->name;
         }
 

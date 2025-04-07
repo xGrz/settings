@@ -9,13 +9,13 @@ use XGrz\Settings\Helpers\DetectValueType;
 
 class Entry
 {
-    private ?Type $type = null;
+    private ?Type $type = NULL;
 
-    private ?string $description = null;
+    private ?string $description = NULL;
 
-    private bool|int|float|string|null $value = null;
+    private bool|int|float|string|null $value = NULL;
 
-    private function __construct(int|float|string|bool|null $value = null, ?Type $type = null, ?string $description = null)
+    private function __construct(int|float|string|bool|null $value = NULL, ?Type $type = NULL, ?string $description = NULL)
     {
         $this
             ->type($type)
@@ -23,7 +23,7 @@ class Entry
             ->value($value);
     }
 
-    public static function make(int|float|string|bool|null $value = null, ?Type $type = null, ?string $description = null): Entry
+    public static function make(int|float|string|bool|null $value = NULL, ?Type $type = NULL, ?string $description = NULL): Entry
     {
         return new self($value, $type, $description);
     }
@@ -66,7 +66,7 @@ class Entry
      */
     public function getType(): ?Type
     {
-        if (!$this->type instanceof Type) {
+        if (! $this->type instanceof Type) {
             $this->type = DetectValueType::make($this->value);
         }
 

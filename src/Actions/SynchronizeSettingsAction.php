@@ -8,7 +8,7 @@ use XGrz\Settings\Interfaces\SettingActionInterface;
 
 class SynchronizeSettingsAction extends BaseSettingAction implements SettingActionInterface
 {
-    protected ?Operation $operation = null;
+    protected ?Operation $operation = NULL;
 
     protected function getSelectedSettings(): Collection
     {

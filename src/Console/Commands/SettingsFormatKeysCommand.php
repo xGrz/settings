@@ -15,13 +15,13 @@ class SettingsFormatKeysCommand extends Command
     public function handle(): void
     {
         $type = Config::get('app-settings.key_name_generator')->name;
-        if (!$this->confirm('Are you sure you want to regenerate keys with ' . $type . '?')) {
+        if (! $this->confirm('Are you sure you want to regenerate keys with ' . $type . '?')) {
             $this->warn('Aborted. No changes were made.');
 
             return;
         }
 
-        Setting::all()->each(function (Setting $setting) {
+        Setting::all()->each(function(Setting $setting) {
             $setting->refreshKey();
         });
 

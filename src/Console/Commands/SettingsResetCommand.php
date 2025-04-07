@@ -14,7 +14,7 @@ class SettingsResetCommand extends Command
 
     public function handle(): void
     {
-        if (!$this->confirm('Are you sure you want to reset all settings?', false)) {
+        if (! $this->confirm('Are you sure you want to reset all settings?', false)) {
             $this->warn('Aborted. No changes were made.');
             $this->newLine();
 
