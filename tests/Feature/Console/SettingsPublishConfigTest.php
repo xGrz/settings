@@ -22,8 +22,9 @@ class SettingsPublishConfigTest extends TestCase
 
         $this->assertFileExists(config_path('app-settings.php'), 'Config file was not published.');
         $this->assertFileEquals(
-            __DIR__ . '/../../../../config/package-config.php',
-            config_path('app-settings.php'), 'Config file was not published correctly (file content not equal).'
+            __DIR__ . '/../../../config/package-config.php',
+            config_path('app-settings.php'),
+            'Config file was not published correctly (file content not equal).'
         );
     }
 
@@ -34,8 +35,9 @@ class SettingsPublishConfigTest extends TestCase
 
         $this->assertFileExists(base_path('settings/definitions.php'), 'Definitions file was not published.');
         $this->assertFileEquals(
-            __DIR__ . '/../../../../settings/definitions.php',
-            base_path('settings/definitions.php'), 'Definitions file was not published correctly (file content not equal).'
+            __DIR__ . '/../../../settings/definitions.php',
+            base_path('settings/definitions.php'),
+            'Definitions file was not published correctly (file content not equal).'
         );
     }
 }
