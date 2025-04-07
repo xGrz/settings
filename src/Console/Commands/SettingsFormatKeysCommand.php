@@ -24,5 +24,8 @@ class SettingsFormatKeysCommand extends Command
         Setting::all()->each(function (Setting $setting) {
             $setting->refreshKey();
         });
+
+        $this->call('settings:status');
+        $this->info('Done');
     }
 }

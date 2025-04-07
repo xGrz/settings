@@ -2,6 +2,10 @@
 
 namespace XGrz\Settings\Actions;
 
-class ForceUpdateSettingsAction
+use XGrz\Settings\Enums\Operation;
+use XGrz\Settings\Interfaces\SettingActionInterface;
+
+class ForceUpdateSettingsAction extends BaseSettingAction implements SettingActionInterface
 {
+    protected ?Operation $operation = Operation::FORCE_UPDATE;
 }

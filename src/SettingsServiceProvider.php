@@ -4,6 +4,7 @@ namespace XGrz\Settings;
 
 use Illuminate\Support\ServiceProvider;
 use XGrz\Settings\Console\Commands\SettingsFormatKeysCommand;
+use XGrz\Settings\Console\Commands\SettingShowCommand;
 use XGrz\Settings\Console\Commands\SettingsPublishConfigCommand;
 use XGrz\Settings\Console\Commands\SettingsResetCommand;
 use XGrz\Settings\Console\Commands\SettingsStatusCommand;
@@ -33,6 +34,7 @@ class SettingsServiceProvider extends ServiceProvider
             SettingsFormatKeysCommand::class,
             SettingsResetCommand::class,
             SettingsPublishConfigCommand::class,
+            SettingShowCommand::class,
         ]);
 
         $this->publishes(

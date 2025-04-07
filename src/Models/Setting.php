@@ -3,6 +3,7 @@
 namespace XGrz\Settings\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 use XGrz\Settings\Casts\DynamicSettingValueCast;
 use XGrz\Settings\Casts\KeyNameCast;
 use XGrz\Settings\Enums\Type;
@@ -14,6 +15,8 @@ use XGrz\Settings\Helpers\SettingsConfig;
  * @property ?string $description
  * @property Type $type
  * @property mixed $value
+ * @property-read Carbon $created_at
+ * @property-read Carbon $updated_at
  */
 class Setting extends Model
 {

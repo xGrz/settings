@@ -69,11 +69,19 @@ class SettingItem
         return $this->operation;
     }
 
-    public function create(): bool
+    public function store(): bool
     {
-        if ($this->getOperationType() !== Operation::CREATE) {
-            return false;
-        }
+        return match ($this->getOperationType()) {
+            Operation::CREATE => $this->operationCreate(),
+            Operation::UPDATE => $this->operationUpdate(),
+            Operation::FORCE_UPDATE => $this->operationForceUpdate(),
+            Operation::DELETE => $this->operationDelete(),
+            Operation::UNCHANGED => false,
+        };
+    }
+
+    private function operationCreate(): bool
+    {
         Setting::create([
             'key' => $this->key,
             'type' => $this->definedType,
@@ -84,11 +92,8 @@ class SettingItem
         return true;
     }
 
-    public function update(): bool
+    private function operationUpdate(): bool
     {
-        if ($this->getOperationType() !== Operation::UPDATE) {
-            return false;
-        }
         Setting::where('key', $this->key)
             ->first()
             ->update([
@@ -98,11 +103,8 @@ class SettingItem
         return true;
     }
 
-    public function forceUpdate(): bool
+    private function operationForceUpdate(): bool
     {
-        if ($this->getOperationType() !== Operation::FORCE_UPDATE) {
-            return false;
-        }
         $setting = Setting::where('key', $this->key)->firstOrFail();
         $setting->update([
             'type' => $this->definedType,
@@ -112,28 +114,12 @@ class SettingItem
         return true;
     }
 
-    public function delete(): bool
+    private function operationDelete(): bool
     {
-        if ($this->getOperationType() !== Operation::DELETE) {
-            return false;
-        }
         Setting::where('key', $this->key)
             ->first()
             ->delete();
 
         return true;
-    }
-
-    public function sync(bool $forced = false): bool
-    {
-        $results[] = $this->create() ? 1 : 0;
-        $results[] = $this->update() ? 1 : 0;
-        if ($forced) {
-            $results[] = $this->forceUpdate() ? 1 : 0;
-        }
-        $results[] = $this->delete() ? 1 : 0;
-
-        return array_sum($results) > 0;
-
     }
 }

@@ -3,10 +3,7 @@
 namespace XGrz\Settings\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Sleep;
-use XGrz\Settings\Helpers\CommandsHelper;
-
-use function Laravel\Prompts\progress;
+use XGrz\Settings\Actions\SynchronizeSettingsAction;
 
 class SettingsSyncCommand extends Command
 {
@@ -16,16 +13,14 @@ class SettingsSyncCommand extends Command
 
     public function handle(): void
     {
-        $helper = new CommandsHelper;
-        if ($helper->synchronizable()->count() === 0) {
-            $this->newLine();
-            $this->warn('All settings are up to date.');
-            $this->newLine();
+        $action = SynchronizeSettingsAction::make();
+        if ($action->getTableBody()->isEmpty()) {
+            $this->warn('All settings are synchronized.');
 
             return;
         }
 
-        $this->table($helper->heading(), $helper->synchronizable(true));
+        $this->table($action->getTableHeading(), $action->getTableBody());
 
         if (!$this->confirm('Do you want to sync settings?', true)) {
             $this->warn('Aborted. No changes were made.');
@@ -33,23 +28,10 @@ class SettingsSyncCommand extends Command
             return;
         }
 
-        progress(
-            label: 'Synchronizing settings...',
-            steps: $helper->synchronizable(),
-            callback: function ($setting, $progress) {
-                Sleep::for(100)->millisecond();
-                $progress
-                    ->label('Synchronizing ' . $setting->key)
-                    ->hint('Synchronized ' . $setting->key);
-
-                return $setting->sync();
-
-            },
-            hint: 'Waiting for settings to be synchronized...'
-        );
+        $action->executeWithProgress();
 
         $this->newLine();
-        $this->info('Settings synchronized successfully.');
+        $this->info('Done');
         $this->newLine();
     }
 }
