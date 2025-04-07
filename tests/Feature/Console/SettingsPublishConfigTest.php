@@ -1,6 +1,6 @@
 <?php
 
-namespace XGrz\Settings\Tests\Feature\Console\Commands;
+namespace Console;
 
 use Illuminate\Support\Facades\File;
 use XGrz\Settings\Tests\TestCase;
