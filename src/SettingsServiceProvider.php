@@ -39,7 +39,7 @@ class SettingsServiceProvider extends ServiceProvider
 
         $this->publishes(
             [
-                __DIR__ . '/../config/package-config.php' => config_path('app-definitions.php'),
+                __DIR__ . '/../config/package-config.php' => config_path('app-settings.php'),
                 __DIR__ . '/../settings/definitions.php' => base_path('settings/definitions.php'),
             ],
             'settings-config'
