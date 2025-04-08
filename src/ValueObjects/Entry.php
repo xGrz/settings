@@ -52,18 +52,6 @@ class Entry
     /**
      * @throws UnresolvableValueTypeException
      */
-    public function toArray(): array
-    {
-        return [
-            'description' => $this->getDescription(),
-            'type' => $this->getType(),
-            'value' => $this->getValue(),
-        ];
-    }
-
-    /**
-     * @throws UnresolvableValueTypeException
-     */
     public function getType(): ?Type
     {
         if (! $this->type instanceof Type) {

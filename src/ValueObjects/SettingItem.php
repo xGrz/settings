@@ -123,13 +123,4 @@ class SettingItem
         return true;
     }
 
-    public function isDefined(): bool
-    {
-        return isset($this->definedType);
-    }
-
-    public function isStored(): bool
-    {
-        return isset($this->storedType);
-    }
 }
