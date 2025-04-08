@@ -28,7 +28,7 @@ class SettingsSyncCommand extends Command
         $forceUpdatable = $settingItems->getItems(Operation::FORCE_UPDATE);
 
         if ($updatableTable->isEmpty()) {
-            $this->warn('All settings are synchronized.');
+            $this->warn('Settings are already synchronized');
 
             return 1;
         }
@@ -50,11 +50,6 @@ class SettingsSyncCommand extends Command
                 $this->performUpdate($forceUpdatable);
             }
         }
-
-        $this->newLine();
-        $this->info('Done');
-        $this->newLine();
-
         return 0;
     }
 

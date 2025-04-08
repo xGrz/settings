@@ -27,4 +27,19 @@ class ShowCommandTest extends TestCase
         $this->assertStringContainsString('Setting not found', $output);
     }
 
+    public function test_search_by_key()
+    {
+        $this->artisan('settings:reset', ['--force' => true]);
+
+        $settingsMatch = Setting::where('key', 'LIKE', "%system%")->orderBy('key')->pluck('key', 'id')->all();
+
+        $this->artisan('settings:show')
+            ->expectsSearch(
+                'Select a setting to view details:',
+                'system.address.city',
+                'system',
+                $settingsMatch
+            );
+    }
+
 }

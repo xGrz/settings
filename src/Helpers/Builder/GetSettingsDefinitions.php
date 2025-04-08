@@ -18,8 +18,8 @@ class GetSettingsDefinitions
      */
     public static function raw(): array
     {
-        return File::exists(base_path('settings/definitions.php'))
-            ? include base_path('settings/definitions.php')
+        return File::exists(SettingsConfig::getDefinitionsPathFile())
+            ? SettingsConfig::getRawSettingDefinitions()
             : throw new ConfigFileNotFoundException('Settings definitions file not found. Have you run `php artisan settings:publish`?');
     }
 

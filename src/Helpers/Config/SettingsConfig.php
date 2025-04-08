@@ -42,4 +42,9 @@ class SettingsConfig
     {
         return base_path('settings/definitions.php');
     }
+
+    public static function getRawSettingDefinitions(): array
+    {
+        return include self::getDefinitionsPathFile();
+    }
 }
