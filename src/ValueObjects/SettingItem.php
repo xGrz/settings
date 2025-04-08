@@ -4,7 +4,7 @@ namespace XGrz\Settings\ValueObjects;
 
 use XGrz\Settings\Enums\Operation;
 use XGrz\Settings\Enums\Type;
-use XGrz\Settings\Helpers\SettingsConfig;
+use XGrz\Settings\Helpers\Config\SettingsConfig;
 use XGrz\Settings\Models\Setting;
 
 class SettingItem
@@ -69,18 +69,18 @@ class SettingItem
         return $this->operation;
     }
 
-    public function store(): bool
+    public function performOperation(): bool
     {
         return match ($this->getOperationType()) {
-            Operation::CREATE => $this->operationCreate(),
-            Operation::UPDATE => $this->operationUpdate(),
-            Operation::FORCE_UPDATE => $this->operationForceUpdate(),
-            Operation::DELETE => $this->operationDelete(),
+            Operation::CREATE => $this->performOperationCreate(),
+            Operation::UPDATE => $this->performOperationUpdate(),
+            Operation::FORCE_UPDATE => $this->performOperationForceUpdate(),
+            Operation::DELETE => $this->performOperationDelete(),
             Operation::UNCHANGED => false,
         };
     }
 
-    private function operationCreate(): bool
+    private function performOperationCreate(): bool
     {
         Setting::create([
             'key' => $this->key,
@@ -92,7 +92,7 @@ class SettingItem
         return true;
     }
 
-    private function operationUpdate(): bool
+    private function performOperationUpdate(): bool
     {
         Setting::where('key', $this->key)
             ->first()
@@ -103,7 +103,7 @@ class SettingItem
         return true;
     }
 
-    private function operationForceUpdate(): bool
+    private function performOperationForceUpdate(): bool
     {
         $setting = Setting::where('key', $this->key)->firstOrFail();
         $setting->update([
@@ -114,12 +114,22 @@ class SettingItem
         return true;
     }
 
-    private function operationDelete(): bool
+    private function performOperationDelete(): bool
     {
         Setting::where('key', $this->key)
             ->first()
             ->delete();
 
         return true;
+    }
+
+    public function isDefined(): bool
+    {
+        return isset($this->definedType);
+    }
+
+    public function isStored(): bool
+    {
+        return isset($this->storedType);
     }
 }

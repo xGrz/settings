@@ -6,7 +6,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use XGrz\Settings\Exceptions\ConfigFileNotFoundException;
-use XGrz\Settings\Helpers\SettingsConfig;
+use XGrz\Settings\Helpers\Config\SettingsConfig;
 use XGrz\Settings\ValueObjects\Entry;
 
 class GetSettingsDefinitions

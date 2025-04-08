@@ -8,7 +8,7 @@ use Illuminate\Support\Carbon;
 use XGrz\Settings\Casts\DynamicSettingValueCast;
 use XGrz\Settings\Casts\KeyNameCast;
 use XGrz\Settings\Enums\Type;
-use XGrz\Settings\Helpers\SettingsConfig;
+use XGrz\Settings\Helpers\Config\SettingsConfig;
 use XGrz\Settings\Observers\SettingObserver;
 
 /**

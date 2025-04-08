@@ -4,7 +4,7 @@ namespace XGrz\Settings\Casts;
 
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
-use XGrz\Settings\Helpers\SettingsConfig;
+use XGrz\Settings\Helpers\Config\SettingsConfig;
 
 class KeyNameCast implements CastsAttributes
 {

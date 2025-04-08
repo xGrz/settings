@@ -4,8 +4,8 @@ namespace XGrz\Settings\ValueObjects;
 
 use XGrz\Settings\Enums\Type;
 use XGrz\Settings\Exceptions\UnresolvableValueTypeException;
-use XGrz\Settings\Helpers\CastValueToType;
-use XGrz\Settings\Helpers\DetectValueType;
+use XGrz\Settings\Helpers\Values\CastValueToType;
+use XGrz\Settings\Helpers\Values\DetectValueType;
 
 class Entry
 {

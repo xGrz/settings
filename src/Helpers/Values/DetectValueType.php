@@ -1,6 +1,6 @@
 <?php
 
-namespace XGrz\Settings\Helpers;
+namespace XGrz\Settings\Helpers\Values;
 
 use XGrz\Settings\Enums\Type;
 use XGrz\Settings\Exceptions\UnresolvableValueTypeException;

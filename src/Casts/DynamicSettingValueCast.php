@@ -4,7 +4,7 @@ namespace XGrz\Settings\Casts;
 
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
-use XGrz\Settings\Helpers\CastValueToType;
+use XGrz\Settings\Helpers\Values\CastValueToType;
 
 class DynamicSettingValueCast implements CastsAttributes
 {

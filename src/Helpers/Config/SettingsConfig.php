@@ -1,6 +1,6 @@
 <?php
 
-namespace XGrz\Settings\Helpers;
+namespace XGrz\Settings\Helpers\Config;
 
 use Illuminate\Support\Facades\Config;
 use XGrz\Settings\Enums\KeyNaming;
@@ -31,5 +31,15 @@ class SettingsConfig
         }
 
         return KeyNaming::tryFrom($naming) ?? $default;
+    }
+
+    public static function getConfigPath(): string
+    {
+        return config_path('app-settings.php');
+    }
+
+    public static function getDefinitionsPath(): string
+    {
+        return base_path('settings/definitions.php');
     }
 }

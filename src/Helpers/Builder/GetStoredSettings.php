@@ -7,7 +7,7 @@ use XGrz\Settings\Models\Setting;
 
 class GetStoredSettings
 {
-    private static function getFromDatabase()
+    private static function getFromDatabase(): Collection
     {
         return Setting::query()
             ->orderBy('key')
@@ -20,7 +20,7 @@ class GetStoredSettings
     public static function asCollection(): Collection
     {
         return collect(self::getFromDatabase())
-            ->mapWithKeys(function (Setting $setting) {
+            ->mapWithKeys(function(Setting $setting) {
                 return [$setting->key => $setting];
             });
     }

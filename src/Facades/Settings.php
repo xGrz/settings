@@ -5,7 +5,7 @@ namespace XGrz\Settings\Facades;
 use Arr;
 use XGrz\Settings\Enums\Type;
 use XGrz\Settings\Exceptions\SettingKeyNotFoundException;
-use XGrz\Settings\Helpers\SettingsConfig;
+use XGrz\Settings\Helpers\Config\SettingsConfig;
 use XGrz\Settings\Models\Setting;
 
 class Settings

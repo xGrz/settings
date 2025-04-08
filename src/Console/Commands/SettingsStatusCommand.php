@@ -4,6 +4,7 @@ namespace XGrz\Settings\Console\Commands;
 
 use Illuminate\Console\Command;
 use XGrz\Settings\Actions\ListSettingsAction;
+use XGrz\Settings\Helpers\SettingItems;
 
 class SettingsStatusCommand extends Command
 {
@@ -13,7 +14,7 @@ class SettingsStatusCommand extends Command
 
     public function handle(): void
     {
-        $action = ListSettingsAction::make();
-        $this->table($action->getTableHeading(), $action->getTableBody());
+        $settings = new SettingItems();
+        $this->table($settings->getTableHeading(), $settings->getTableBody());
     }
 }
