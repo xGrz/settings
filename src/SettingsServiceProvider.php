@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use XGrz\Settings\Console\Commands\SettingsFormatKeysCommand;
 use XGrz\Settings\Console\Commands\SettingShowCommand;
 use XGrz\Settings\Console\Commands\SettingsPublishConfigCommand;
+use XGrz\Settings\Console\Commands\SettingsPublishLangCommand;
 use XGrz\Settings\Console\Commands\SettingsResetCommand;
 use XGrz\Settings\Console\Commands\SettingsStatusCommand;
 use XGrz\Settings\Console\Commands\SettingsSyncCommand;
@@ -34,6 +35,7 @@ class SettingsServiceProvider extends ServiceProvider
             SettingsFormatKeysCommand::class,
             SettingsResetCommand::class,
             SettingsPublishConfigCommand::class,
+            SettingsPublishLangCommand::class,
             SettingShowCommand::class,
         ]);
 

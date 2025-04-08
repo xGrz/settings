@@ -33,12 +33,12 @@ class SettingsConfig
         return KeyNaming::tryFrom($naming) ?? $default;
     }
 
-    public static function getConfigPath(): string
+    public static function getConfigPathFile(): string
     {
         return config_path('app-settings.php');
     }
 
-    public static function getDefinitionsPath(): string
+    public static function getDefinitionsPathFile(): string
     {
         return base_path('settings/definitions.php');
     }

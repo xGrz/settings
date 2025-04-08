@@ -10,8 +10,9 @@ class SettingsPublishLangCommand extends Command
 
     protected $description = 'Publishes settings lang files';
 
-    public function handle(): void
+    public function handle()
     {
-        $this->call('vendor:publish', ['--tag' => 'settings-config']);
+        $this->call('vendor:publish', ['--tag' => 'settings-lang']);
+        return 0;
     }
 }
