@@ -8,21 +8,23 @@ use function Laravel\Prompts\search;
 
 class SettingShowCommand extends Command
 {
-    protected $signature = 'settings:show';
+    protected $signature = 'settings:show {--key= : Setting key}';
 
     protected $description = 'Command description';
 
-    public function handle(): void
+    public function handle(): int
     {
         Setting::orderBy('key')->get()->pluck('key', 'id')->toArray();
 
-        $selectedSetting = search(
-            'Select a setting to view details:',
-            fn(string $value) => Setting::where('key', 'LIKE', "%{$value}%")->orderBy('key')->pluck('key', 'id')->all(),
-            scroll: 10,
-            required: true,
-        );
-        $setting = Setting::find($selectedSetting);
+        $setting = ($this->option('key'))
+            ? self::searchByKey($this->option('key'))
+            : self::showManualSearch();
+
+        if (! $setting) {
+            $this->error('Setting not found.');
+            return 1;
+        }
+
         $this->line('<fg=green>Showing details for setting:</>');
         $this->components->twoColumnDetail('Key name', '<fg=bright-green>' . $setting->key . '</>');
         $this->components->twoColumnDetail('Type', '<fg=yellow>' . $setting->type->name . '</>');
@@ -30,6 +32,22 @@ class SettingShowCommand extends Command
         $this->components->twoColumnDetail('Description', self::formatDescription($setting->description));
         $this->components->twoColumnDetail('Created at', '<fg=bright-blue>' . $setting->created_at->format('Y-m-d H:i:s') . '</>');
         $this->components->twoColumnDetail('Updated at', '<fg=bright-blue>' . $setting->updated_at->format('Y-m-d H:i:s') . '</>');
+        return 0;
+    }
+
+    private function searchByKey(string $key): ?Setting
+    {
+        return Setting::where('key', $this->option('key'))->first();
+    }
+
+    private function showManualSearch(): ?Setting
+    {
+        $settingId = search(
+            'Select a setting to view details:',
+            fn(string $value) => Setting::where('key', 'LIKE', "%{$value}%")->orderBy('key')->pluck('key', 'id')->all(),
+            scroll: 10,
+        );
+        return Setting::find($settingId);
     }
 
     private function formatValue(mixed $value): string

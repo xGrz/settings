@@ -11,13 +11,13 @@ class SettingsSyncCommand extends Command
 
     protected $description = 'View settings configuration status';
 
-    public function handle(): void
+    public function handle(): int
     {
         $action = SynchronizeSettingsAction::make();
         if ($action->getTableBody()->isEmpty()) {
             $this->warn('All settings are synchronized.');
 
-            return;
+            return 1;
         }
 
         $this->table($action->getTableHeading(), $action->getTableBody());
@@ -25,7 +25,7 @@ class SettingsSyncCommand extends Command
         if (! $this->confirm('Do you want to sync settings?', true)) {
             $this->warn('Aborted. No changes were made.');
 
-            return;
+            return 2;
         }
 
         $action->executeWithProgress();
@@ -33,5 +33,6 @@ class SettingsSyncCommand extends Command
         $this->newLine();
         $this->info('Done');
         $this->newLine();
+        return 0;
     }
 }
