@@ -4,6 +4,7 @@ namespace XGrz\Settings\Tests\Feature\ConsoleCommands;
 
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
+use Illuminate\Testing\PendingCommand;
 use XGrz\Settings\Models\Setting;
 use XGrz\Settings\Tests\TestCase;
 
@@ -29,6 +30,10 @@ class ShowCommandTest extends TestCase
 
     public function test_search_by_key()
     {
+        if (! class_exists(PendingCommand::class) || ! method_exists(PendingCommand::class, 'expectsSearch')) {
+            $this->markTestSkipped('This test requires Laravel 11 with expectsSearch support.');
+        }
+
         $this->artisan('settings:reset', ['--force' => true]);
 
         $settingsMatch = Setting::where('key', 'LIKE', "%system%")->orderBy('key')->pluck('key', 'id')->all();
