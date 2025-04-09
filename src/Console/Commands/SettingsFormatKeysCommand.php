@@ -3,6 +3,7 @@
 namespace XGrz\Settings\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Config;
 use XGrz\Settings\Models\Setting;
 
@@ -14,6 +15,7 @@ class SettingsFormatKeysCommand extends Command
 
     public function handle(): int
     {
+        Cache::clear();
         $type = Config::get('app-settings.key_name_generator')->name;
         if (! $this->confirm('Are you sure you want to regenerate keys with ' . $type . '?')) {
             $this->warn('Aborted. No changes were made.');
