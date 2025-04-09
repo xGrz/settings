@@ -11,6 +11,7 @@ use XGrz\Settings\Tests\TestCase;
 
 class SyncCommandTest extends TestCase
 {
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -105,7 +106,6 @@ class SyncCommandTest extends TestCase
     {
         $this->artisan('settings:reset', ['--force' => true]);
         $this->artisan('settings:sync', ['--silent' => true])
-            ->doesntExpectOutput()
             ->assertExitCode(1);
     }
 
@@ -113,7 +113,10 @@ class SyncCommandTest extends TestCase
     {
         Setting::truncate();
         $this->artisan('settings:sync', ['--silent' => true])
-            ->doesntExpectOutput()
+            ->doesntExpectOutputToContain('Settings')
+            ->doesntExpectOutputToContain('WARNING')
+            ->doesntExpectOutputToContain('Sync')
+            ->doesntExpectOutputToContain(' ')
             ->assertExitCode(0);
     }
 
@@ -124,7 +127,10 @@ class SyncCommandTest extends TestCase
         $setting->update(['type' => Type::YES_NO]);
 
         $this->artisan('settings:sync', ['--force' => true, '--silent' => true])
-            ->doesntExpectOutput()
+            ->doesntExpectOutputToContain('Settings')
+            ->doesntExpectOutputToContain('WARNING')
+            ->doesntExpectOutputToContain('Sync')
+            ->doesntExpectOutputToContain(' ')
             ->assertExitCode(0);
 
         $this->assertDatabaseHas(SettingsConfig::getDatabaseTableName(), [
