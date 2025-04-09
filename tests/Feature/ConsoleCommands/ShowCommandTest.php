@@ -4,7 +4,6 @@ namespace XGrz\Settings\Tests\Feature\ConsoleCommands;
 
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
-use Illuminate\Testing\PendingCommand;
 use XGrz\Settings\Models\Setting;
 use XGrz\Settings\Tests\TestCase;
 
@@ -12,6 +11,10 @@ class ShowCommandTest extends TestCase
 {
     public function test_can_show_setting_with_line_parameter()
     {
+        if ($this->laravelVersion() < 11) {
+            $this->markTestSkipped('Laravel 11+ only test.');
+        }
+
         $this->artisan('settings:reset', ['--force' => true]);
         $setting = Setting::first();
         Artisan::call('settings:show', ['--key' => $setting->key]);
@@ -23,6 +26,10 @@ class ShowCommandTest extends TestCase
 
     public function test_shows_error_when_key_not_found()
     {
+        if ($this->laravelVersion() < 11) {
+            $this->markTestSkipped('Laravel 11+ only test.');
+        }
+
         Artisan::call('settings:show', ['--key' => Str::random(10)]);
         $output = Artisan::output();
         $this->assertStringContainsString('Setting not found', $output);
@@ -30,8 +37,8 @@ class ShowCommandTest extends TestCase
 
     public function test_search_by_key()
     {
-        if (! class_exists(PendingCommand::class) || ! method_exists(PendingCommand::class, 'expectsSearch')) {
-            $this->markTestSkipped('This test requires Laravel 11 with expectsSearch support.');
+        if ($this->laravelVersion() < 11) {
+            $this->markTestSkipped('Laravel 11+ only test.');
         }
 
         $this->artisan('settings:reset', ['--force' => true]);

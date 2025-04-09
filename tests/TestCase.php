@@ -28,4 +28,11 @@ abstract class TestCase extends Orchestra
         File::delete(SettingsConfig::getDefinitionsPathFile());
         $this->artisan('settings:publish-config');
     }
+
+    protected function laravelVersion(): float
+    {
+        $ver = $this->app->version();
+        $ver = explode('.', $ver);
+        return (float)$ver[0] . '.' . $ver[1];
+    }
 }

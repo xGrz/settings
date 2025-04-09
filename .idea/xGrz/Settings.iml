@@ -9,7 +9,6 @@
       <excludeFolder url="file://$MODULE_DIR$/../../vendor/fakerphp/faker" />
       <excludeFolder url="file://$MODULE_DIR$/../../vendor/filp/whoops" />
       <excludeFolder url="file://$MODULE_DIR$/../../vendor/hamcrest/hamcrest-php" />
-      <excludeFolder url="file://$MODULE_DIR$/../../vendor/laravel/pail" />
       <excludeFolder url="file://$MODULE_DIR$/../../vendor/laravel/tinker" />
       <excludeFolder url="file://$MODULE_DIR$/../../vendor/mockery/mockery" />
       <excludeFolder url="file://$MODULE_DIR$/../../vendor/myclabs/deep-copy" />
@@ -45,7 +44,6 @@
       <excludeFolder url="file://$MODULE_DIR$/../../vendor/sebastian/recursion-context" />
       <excludeFolder url="file://$MODULE_DIR$/../../vendor/sebastian/type" />
       <excludeFolder url="file://$MODULE_DIR$/../../vendor/sebastian/version" />
-      <excludeFolder url="file://$MODULE_DIR$/../../vendor/symfony/polyfill-php84" />
       <excludeFolder url="file://$MODULE_DIR$/../../vendor/symfony/yaml" />
       <excludeFolder url="file://$MODULE_DIR$/../../vendor/theseer/tokenizer" />
       <excludeFolder url="file://$MODULE_DIR$/../../vendor/brick/math" />
@@ -58,9 +56,6 @@
       <excludeFolder url="file://$MODULE_DIR$/../../vendor/egulias/email-validator" />
       <excludeFolder url="file://$MODULE_DIR$/../../vendor/fruitcake/php-cors" />
       <excludeFolder url="file://$MODULE_DIR$/../../vendor/graham-campbell/result-type" />
-      <excludeFolder url="file://$MODULE_DIR$/../../vendor/guzzlehttp/guzzle" />
-      <excludeFolder url="file://$MODULE_DIR$/../../vendor/guzzlehttp/promises" />
-      <excludeFolder url="file://$MODULE_DIR$/../../vendor/guzzlehttp/psr7" />
       <excludeFolder url="file://$MODULE_DIR$/../../vendor/guzzlehttp/uri-template" />
       <excludeFolder url="file://$MODULE_DIR$/../../vendor/iamcal/sql-parser" />
       <excludeFolder url="file://$MODULE_DIR$/../../vendor/larastan/larastan" />
@@ -72,8 +67,6 @@
       <excludeFolder url="file://$MODULE_DIR$/../../vendor/league/flysystem" />
       <excludeFolder url="file://$MODULE_DIR$/../../vendor/league/flysystem-local" />
       <excludeFolder url="file://$MODULE_DIR$/../../vendor/league/mime-type-detection" />
-      <excludeFolder url="file://$MODULE_DIR$/../../vendor/league/uri" />
-      <excludeFolder url="file://$MODULE_DIR$/../../vendor/league/uri-interfaces" />
       <excludeFolder url="file://$MODULE_DIR$/../../vendor/monolog/monolog" />
       <excludeFolder url="file://$MODULE_DIR$/../../vendor/nesbot/carbon" />
       <excludeFolder url="file://$MODULE_DIR$/../../vendor/nette/schema" />
@@ -84,15 +77,10 @@
       <excludeFolder url="file://$MODULE_DIR$/../../vendor/psr/clock" />
       <excludeFolder url="file://$MODULE_DIR$/../../vendor/psr/container" />
       <excludeFolder url="file://$MODULE_DIR$/../../vendor/psr/event-dispatcher" />
-      <excludeFolder url="file://$MODULE_DIR$/../../vendor/psr/http-client" />
-      <excludeFolder url="file://$MODULE_DIR$/../../vendor/psr/http-factory" />
-      <excludeFolder url="file://$MODULE_DIR$/../../vendor/psr/http-message" />
       <excludeFolder url="file://$MODULE_DIR$/../../vendor/psr/log" />
       <excludeFolder url="file://$MODULE_DIR$/../../vendor/psr/simple-cache" />
-      <excludeFolder url="file://$MODULE_DIR$/../../vendor/ralouphie/getallheaders" />
       <excludeFolder url="file://$MODULE_DIR$/../../vendor/ramsey/collection" />
       <excludeFolder url="file://$MODULE_DIR$/../../vendor/ramsey/uuid" />
-      <excludeFolder url="file://$MODULE_DIR$/../../vendor/symfony/clock" />
       <excludeFolder url="file://$MODULE_DIR$/../../vendor/symfony/console" />
       <excludeFolder url="file://$MODULE_DIR$/../../vendor/symfony/css-selector" />
       <excludeFolder url="file://$MODULE_DIR$/../../vendor/symfony/deprecation-contracts" />
@@ -124,9 +112,7 @@
       <excludeFolder url="file://$MODULE_DIR$/../../vendor/vlucas/phpdotenv" />
       <excludeFolder url="file://$MODULE_DIR$/../../vendor/voku/portable-ascii" />
       <excludeFolder url="file://$MODULE_DIR$/../../vendor/webmozart/assert" />
-      <excludeFolder url="file://$MODULE_DIR$/../../vendor/staabm/side-effects-detector" />
       <excludeFolder url="file://$MODULE_DIR$/../../vendor/_laravel_idea" />
-      <excludeFolder url="file://$MODULE_DIR$/../../vendor/laravel/pint" />
       <excludeFolder url="file://$MODULE_DIR$/../../coverage" />
       <excludeFolder url="file://$MODULE_DIR$/../../vendor" />
     </content>
