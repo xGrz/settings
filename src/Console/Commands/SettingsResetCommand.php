@@ -28,17 +28,19 @@ class SettingsResetCommand extends Command
         Setting::truncate();
 
         $settings = (new SettingItems())->getItems(Operation::CREATE);
-        progress(
-            'Resetting settings...',
-            $settings,
-            function(SettingItem $setting, $progress) {
-                Sleep::for(100)->millisecond();
-                $progress
-                    ->label('Processing ' . $setting->key)
-                    ->hint('Processed ' . $setting->key);
-                return $setting->performOperation();
-            },
-        );
+        if ($settings->isNotEmpty()) {
+            progress(
+                'Resetting settings...',
+                $settings,
+                function(SettingItem $setting, $progress) {
+                    Sleep::for(100)->millisecond();
+                    $progress
+                        ->label('Processing ' . $setting->key)
+                        ->hint('Processed ' . $setting->key);
+                    return $setting->performOperation();
+                },
+            );
+        }
 
         $this->newLine();
         $this->info('Reset settings completed successfully.');
