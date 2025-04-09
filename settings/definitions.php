@@ -2,6 +2,14 @@
 
 use XGrz\Settings\ValueObjects\Entry;
 
+/**
+ * After changing, adding or removing definitions, remember to run the command:
+ *
+ * `php artisan settings:sync`
+ *
+ * Consider adding Type (`XGrz\Settings\Enums\Type`) to each Entry
+ */
+
 return [
     'system' => [
         'address' => [
