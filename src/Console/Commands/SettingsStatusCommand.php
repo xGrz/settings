@@ -3,7 +3,6 @@
 namespace XGrz\Settings\Console\Commands;
 
 use Illuminate\Console\Command;
-use XGrz\Settings\Actions\ListSettingsAction;
 use XGrz\Settings\Helpers\SettingItems;
 
 class SettingsStatusCommand extends Command
@@ -15,6 +14,10 @@ class SettingsStatusCommand extends Command
     public function handle(): void
     {
         $settings = new SettingItems();
-        $this->table($settings->getTableHeading(), $settings->getTableBody());
+        if ($settings->getItems()->isNotEmpty()) {
+            $this->table($settings->getTableHeading(), $settings->getTableBody());
+        } else {
+            $this->warn('Settings not found');
+        }
     }
 }
