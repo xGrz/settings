@@ -43,14 +43,12 @@
     "orchestra/testbench": "^8.0 || ^9.0 || ^10.0",
     "phpunit/phpunit": "^10.0 || ^11.0",
     "phpstan/phpstan": "^1.0 || ^2.0",
-    "larastan/larastan": "^2.0 || ^3.0",
-    "laravel/pint": "^1.21"
+    "larastan/larastan": "^2.0 || ^3.0"
   },
   "scripts": {
     "qtest": "phpunit --colors --testdox",
     "qtestc": "phpunit --colors --testdox --coverage-text --coverage-html ./coverage",
     "phpstan": "vendor/bin/phpstan --configuration=phpstan.neon --memory-limit=2G",
-    "pint": "vendor/bin/pint",
     "test": [
       "@phpstan",
       "@qtestc"
