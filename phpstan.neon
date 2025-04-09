@@ -9,3 +9,9 @@ parameters:
     paths:
         - src
         - tests
+
+    ignoreErrors:
+        -
+            message: '#Cannot call method .*expectsSearch.*#'
+            path: '*/ShowCommandTest.php'
+

@@ -11,7 +11,7 @@ class ShowCommandTest extends TestCase
 {
     public function test_can_show_setting_with_line_parameter()
     {
-        if ($this->laravelVersion() < 11) {
+        if ($this->laravelVersionIs('11', '<')) {
             $this->markTestSkipped('Laravel 11+ only test.');
         }
 
@@ -26,7 +26,7 @@ class ShowCommandTest extends TestCase
 
     public function test_shows_error_when_key_not_found()
     {
-        if ($this->laravelVersion() < 11) {
+        if ($this->laravelVersionIs('11', '<')) {
             $this->markTestSkipped('Laravel 11+ only test.');
         }
 
@@ -37,15 +37,14 @@ class ShowCommandTest extends TestCase
 
     public function test_search_by_key()
     {
-        if ($this->laravelVersion() < 11) {
+        if ($this->laravelVersionIs('11', '<')) {
             $this->markTestSkipped('Laravel 11+ only test.');
         }
-
+        
         $this->artisan('settings:reset', ['--force' => true]);
 
         $settingsMatch = Setting::where('key', 'LIKE', "%system%")->orderBy('key')->pluck('key', 'id')->all();
 
-        /** @phpstan-ignore-next-line */
         $this->artisan('settings:show')
             ->expectsSearch(
                 'Select a setting to view details:',

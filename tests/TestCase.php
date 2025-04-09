@@ -2,6 +2,7 @@
 
 namespace XGrz\Settings\Tests;
 
+use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\File;
 use Orchestra\Testbench\TestCase as Orchestra;
 use XGrz\Settings\Helpers\Config\SettingsConfig;
@@ -29,12 +30,8 @@ abstract class TestCase extends Orchestra
         $this->artisan('settings:publish-config');
     }
 
-    protected function laravelVersion(): float
+    protected function laravelVersionIs(string $version, string $operator): bool
     {
-        $ver = $this->app->version();
-        $ver = explode('.', $ver);
-        $mainVer = (int)$ver[0];
-        $subVer = (int)$ver[1];
-        return $mainVer + ($subVer / 100);
+        return version_compare(Application::VERSION, $version, $operator);
     }
 }
