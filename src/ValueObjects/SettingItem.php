@@ -4,6 +4,7 @@ namespace XGrz\Settings\ValueObjects;
 
 use XGrz\Settings\Enums\Operation;
 use XGrz\Settings\Enums\Type;
+use XGrz\Settings\Exceptions\SettingItemDefinitionException;
 use XGrz\Settings\Helpers\Config\SettingsConfig;
 use XGrz\Settings\Models\Setting;
 
@@ -45,23 +46,27 @@ class SettingItem
 
     private function detectOperationType(): Operation
     {
-        if (isset($this->definedType) && isset($this->storedType) && $this->storedType === $this->definedType) {
+        if (isset($this->definedType) && isset($this->storedType) && $this->storedType === $this->definedType and $this->storedDescription === $this->definedDescription) {
             return Operation::UNCHANGED;
         }
 
-        if (isset($this->definedType) && ! isset($this->storedType)) {
+        if (! isset($this->definedType) && ! isset($this->storedType)) {
+            throw new SettingItemDefinitionException('Types (stored and defined) are not set.');
+        }
+
+        if (! isset($this->storedType)) {
             return Operation::CREATE;
         }
 
-        if (! isset($this->definedType) && isset($this->storedType)) {
+        if (! isset($this->definedType)) {
             return Operation::DELETE;
         }
 
-        if (isset($this->definedType) && isset($this->storedType) && $this->storedType->canBeChangedTo($this->definedType)) {
-            return Operation::UPDATE;
+        if ($this->storedType !== $this->definedType && ! $this->storedType->canBeChangedTo($this->definedType)) {
+            return Operation::FORCE_UPDATE;
         }
 
-        return Operation::FORCE_UPDATE;
+        return Operation::UPDATE;
     }
 
     public function getOperationType(): Operation
@@ -98,6 +103,7 @@ class SettingItem
             ->first()
             ->update([
                 'type' => $this->definedType,
+                'description' => $this->definedDescription,
             ]);
 
         return true;
@@ -109,6 +115,7 @@ class SettingItem
         $setting->update([
             'type' => $this->definedType,
             'value' => $setting->value, // todo: force cast value to new type in observer
+            'description' => $this->definedDescription,
         ]);
 
         return true;

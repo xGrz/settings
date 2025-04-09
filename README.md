@@ -77,6 +77,24 @@ default value will be returned.
 settings(stirng $keyName, mixed $defaultValue);
 ```
 
+### Retrieving an entire branch of settings
+
+If you want to retrieve an entire branch of settings for a specific key, you must use a dot at the end. For example, to
+retrieve the "system" branch, use:
+
+```php
+settings('system.');
+``` 
+
+If there are keys named `system.abc` and `system.bca`, an array will be returned:
+
+```
+array(
+   'abc' => 'value1',
+   'bca' => 'value2',
+);
+```
+
 ## Warnings
 
 #### Avoid changing values at database level.
