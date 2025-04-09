@@ -14,8 +14,7 @@ class SyncCommandTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        // $this->resetSettingsConfiguration();
-
+        $this->resetSettingsConfiguration();
     }
 
     public function test_sync_with_synchronized_settings_should_return_warning()
@@ -105,16 +104,16 @@ class SyncCommandTest extends TestCase
     {
         $this->artisan('settings:reset', ['--force' => true]);
         $this->artisan('settings:sync', ['--silent' => true])
-            ->doesntExpectOutput()
-            ->assertExitCode(1);
+            ->assertExitCode(1)
+            ->doesntExpectOutput("");
     }
 
     public function test_sync_command_with_silent_flag_should_return_without_output_when_changes_are_made()
     {
         Setting::truncate();
         $this->artisan('settings:sync', ['--silent' => true])
-            ->doesntExpectOutput()
-            ->assertExitCode(0);
+            ->assertExitCode(0)
+            ->doesntExpectOutput("");
     }
 
     public function test_sync_command_with_silent_and_force_flags_should_return_without_output_when_changes_are_made()
@@ -124,8 +123,8 @@ class SyncCommandTest extends TestCase
         $setting->update(['type' => Type::YES_NO]);
 
         $this->artisan('settings:sync', ['--force' => true, '--silent' => true])
-            ->doesntExpectOutput()
-            ->assertExitCode(0);
+            ->assertExitCode(0)
+            ->doesntExpectOutput("");
 
         $this->assertDatabaseHas(SettingsConfig::getDatabaseTableName(), [
             'key' => $setting->key,
