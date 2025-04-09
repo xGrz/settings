@@ -114,7 +114,7 @@ class SettingItem
         $setting = Setting::where('key', $this->key)->firstOrFail();
         $setting->update([
             'type' => $this->definedType,
-            'value' => $setting->value, // todo: force cast value to new type in observer
+            'value' => $setting->value,
             'description' => $this->definedDescription,
         ]);
 
