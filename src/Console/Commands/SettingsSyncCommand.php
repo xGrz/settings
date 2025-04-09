@@ -115,7 +115,7 @@ class SettingsSyncCommand extends Command
             });
         } else {
             progress(
-                'Syncing settings...',
+                'Synchronizing settings...',
                 $settings,
                 function(SettingItem $setting) {
                     Sleep::for(100)->millisecond();
