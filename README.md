@@ -19,8 +19,7 @@ development and production environments. Here are the main functions and feature
 4. **Performance** - utilization of caching mechanism (Redis or File recommended) to limit database queries
 5. **Naming Standardization** - automatic formatting of keys according to the chosen convention (camel case, kebab case,
    or snake case)
-6. **Keys** - `prefix.suffix` naming convention for all settings keys
-
+6. **Nested keys** - `prefix.suffix` naming convention for all settings keys allows store structured data.
 
 ## Installation
 
@@ -33,22 +32,21 @@ development and production environments. Here are the main functions and feature
 2. Edit the configuration file in your `config/app-settings` folder:
     - Customize your database table name
     - Set the cache key
-   - Select [key generator convention](docs/key_generator.md)
+    - Select [key generator convention](docs/key_generator.md)
     - Define the cache timeout
 
-3. The last key in the `app-settings` config file is `initial`. This is very useful during development. You can
-   predefine setting keys and values and inject them into every application instance ([see details](docs/settings.md))
-
-4. After customizing your configuration file, run the migration:
+3. After customizing your configuration file, run the migration:
    ```
    php artisan migrate
    ```
    **Note:** Once the migration is completed, the `database_table` value in `config/app-settings` cannot be changed.
-   Modifying it will break your application.
+   Modifying it can break your application.
+
+4. Define your settings in `settings/definitions.php` file (in main app directory) [details](docs/definitions.md).
 
 5. Once your configuration is complete, initialize your settings with:
    ```
-   php artisan settings:init
+   php artisan settings:sync
    ```
 
 ## Usage
@@ -61,7 +59,7 @@ You have two simple ways to retrieve your configuration values:
 try {
     XGrz\Settings\Facades\Settings::get($keyName);
 } catch (XGrz\Settings\Exceptions\SettingKeyNotFoundException $e) {
-    // Setting not found
+    // Setting not found exception
 }
 ```  
 
@@ -76,7 +74,7 @@ pass a second parameter to the `settings` helper as a default value. In this cas
 default value will be returned.
 
 ```php
-settings($keyName, $defaultValue);
+settings(stirng $keyName, mixed $defaultValue);
 ```
 
 ## Warnings
@@ -95,9 +93,16 @@ Preferred method for any changes is using model `XGrz\Settings\Models\Setting::c
 
 #### Key generation
 
-Prefix and suffix of each key are joined by dot (.) and creates `key`. Key is virtually generated at database level and
-can be changed only by editing prefix or suffix.
-Prefix and suffix are internally formatted as camel case (for ex. systemName).
+Definition file is flattened with dot naming convention. Partial key names are formatted with defined generator type in
+your `config/app-settings.php` (_camel case_ | kebab case | snake case).
+
+If you decide to change key name generator type you can reformat your keys by using artisan console command:
+
+```
+   php artisan settings:format-keys
+```
+
+This command will walk through your config and apply new key naming type.
 
 #### Changing setting type
 
@@ -109,7 +114,7 @@ Allowed type changes:
 - ```SettingType::INTEGER``` to ```SettingType::FLOAT``` (cannot change-back to integer)
 - ```SettingType::STRING``` to ```SettingType::TEXT``` (cannot change-back to string)
 
-You can delete key and create new one if you need to change setting_type to other types. 
+You can delete key and create new one if you need to change setting_type to other types.
 
 ## Compatibility
 
