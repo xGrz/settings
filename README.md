@@ -95,6 +95,11 @@ array(
 );
 ```
 
+## CI/CD deployments
+
+In your deployment script you should consider to add `php artisan settings:sync --silent` for safe settings sync, or
+`php artisan settings:sync --silent --force` if you want to force sync settings (test your app first!)
+
 ## Warnings
 
 #### Avoid changing values at database level.
