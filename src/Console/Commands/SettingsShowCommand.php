@@ -6,7 +6,7 @@ use Illuminate\Console\Command;
 use XGrz\Settings\Models\Setting;
 use function Laravel\Prompts\search;
 
-class SettingShowCommand extends Command
+class SettingsShowCommand extends Command
 {
     protected $signature = 'settings:show {--key= : Setting key}';
 

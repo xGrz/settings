@@ -12,74 +12,117 @@ use function Laravel\Prompts\progress;
 
 class SettingsSyncCommand extends Command
 {
-    protected $signature = 'settings:sync';
+    protected $signature = 'settings:sync {--silent : Silent mode.} {--force : Force update settings.}';
 
     protected $description = 'View settings configuration status';
 
+    protected bool $isSilent = false;
+    protected bool $isForce = false;
+
+    protected Collection $updatableTable;
+    protected Collection $safeUpdatableTable;
+    protected Collection $forceUpdatableTable;
+    protected Collection $safeUpdatable;
+    protected Collection $forceUpdatable;
+
+    private function setUp()
+    {
+        $this->isSilent = $this->option('silent');
+        $this->isForce = $this->option('silent') && $this->option('force');
+
+        $settingItems = new SettingItems();
+
+        $this->updatableTable = $settingItems->getTableBody([Operation::CREATE, Operation::UPDATE, Operation::DELETE, Operation::FORCE_UPDATE]);
+        $this->safeUpdatableTable = $settingItems->getTableBody([Operation::CREATE, Operation::UPDATE, Operation::DELETE]);
+        $this->forceUpdatableTable = $settingItems->getTableBody([Operation::FORCE_UPDATE]);
+        $this->safeUpdatable = $settingItems->getItems([Operation::CREATE, Operation::UPDATE, Operation::DELETE]);
+        $this->forceUpdatable = $settingItems->getItems(Operation::FORCE_UPDATE);
+    }
 
     public function handle(): int
     {
-        $settingItems = new SettingItems();
+        $this->setUp();
 
-        $updatableTable = $settingItems->getTableBody([Operation::CREATE, Operation::UPDATE, Operation::DELETE, Operation::FORCE_UPDATE]);
-        $safeUpdatableTable = $settingItems->getTableBody([Operation::CREATE, Operation::UPDATE, Operation::DELETE]);
-        $forceUpdatableTable = $settingItems->getTableBody([Operation::FORCE_UPDATE]);
-        $safeUpdatable = $settingItems->getItems([Operation::CREATE, Operation::UPDATE, Operation::DELETE]);
-        $forceUpdatable = $settingItems->getItems(Operation::FORCE_UPDATE);
-
-        if ($updatableTable->isEmpty()) {
-            $this->warn('Settings are already synchronized');
-
+        if ($this->updatableTable->isEmpty()) {
+            $this->renderNoUpdatesMessage();
             return 1;
         }
 
-        if ($forceUpdatableTable->isNotEmpty()) {
-            $this->components->alert('WARNING! UNSAFE OPERATION! Force update will cause value data loss.');
+        $this->renderWarning();
+
+        $this->renderTable();
+
+        if ($this->askForSynchronize()) {
+            $this->performUpdate($this->safeUpdatable);
         }
 
-        $this->table(SettingItems::getTableHeading(), $updatableTable);
-
-        if ($safeUpdatableTable->isNotEmpty()) {
-            if ($this->askForSynchronize($settingItems)) {
-                $this->performUpdate($safeUpdatable);
-            }
+        if ($this->askForForceUpdate()) {
+            $this->performUpdate($this->forceUpdatable);
         }
 
-        if ($forceUpdatableTable->isNotEmpty()) {
-            if ($this->askForForceUpdate($settingItems)) {
-                $this->performUpdate($forceUpdatable);
-            }
-        }
         return 0;
     }
 
-
-    private function askForSynchronize(SettingItems $settingItems): ?bool
+    private function renderNoUpdatesMessage(): void
     {
-        $settings = $settingItems->getTableBody([Operation::CREATE, Operation::UPDATE, Operation::DELETE]);
-        if ($settings->isEmpty()) return NULL;
-
-        return $this->confirm('Do you want to sync settings?', true);
+        if (! $this->isSilent) {
+            $this->warn('Settings are already synchronized');
+        }
     }
 
-    private function askForForceUpdate(SettingItems $settingItems): ?bool
+    private function renderWarning(): void
     {
-        $settings = $settingItems->getTableBody([Operation::FORCE_UPDATE]);
-        if ($settings->isEmpty()) return NULL;
-        $this->newLine();
-        return $this->confirm('Do you want to force update settings?');
+        if ($this->forceUpdatableTable->isNotEmpty() && ! $this->isSilent) {
+            $this->components->alert('WARNING! UNSAFE OPERATION! Force update will cause setting value data loss.');
+        }
+    }
+
+    private function renderTable(): void
+    {
+        if ($this->updatableTable->isEmpty()) return;
+        if ($this->isSilent) return;
+        $this->table(SettingItems::getTableHeading(), $this->updatableTable);
+    }
+
+    private function askForSynchronize(): ?bool
+    {
+        if ($this->safeUpdatableTable->isEmpty()) {
+            return NULL;
+        }
+
+        return $this->isSilent || $this->confirm('Do you want to sync settings?', true);
+    }
+
+    private function askForForceUpdate(): ?bool
+    {
+        if ($this->forceUpdatableTable->isEmpty()) {
+            return NULL;
+        }
+
+        if ($this->isForce) {
+            return true;
+        }
+
+        return $this->isSilent || $this->confirm('Do you want to force update settings?');
     }
 
     private function performUpdate(Collection $settings): void
     {
-        progress(
-            'Syncing settings...',
-            $settings,
-            function(SettingItem $setting) {
-                Sleep::for(100)->millisecond();
-                return $setting->performOperation();
-            }
-        );
+        if ($settings->isEmpty()) return;
+        if ($this->isSilent) {
+            $settings->each(function(SettingItem $setting) {
+                $setting->performOperation();
+            });
+        } else {
+            progress(
+                'Syncing settings...',
+                $settings,
+                function(SettingItem $setting) {
+                    Sleep::for(100)->millisecond();
+                    return $setting->performOperation();
+                }
+            );
+        }
     }
 
 }
