@@ -40,7 +40,7 @@ class ShowCommandTest extends TestCase
         if ($this->laravelVersionIs('11', '<')) {
             $this->markTestSkipped('Laravel 11+ only test.');
         }
-        
+
         $this->artisan('settings:reset', ['--force' => true]);
 
         $settingsMatch = Setting::where('key', 'LIKE', "%system%")->orderBy('key')->pluck('key', 'id')->all();

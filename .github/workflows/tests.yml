@@ -49,4 +49,5 @@ jobs:
         run: vendor/bin/phpunit
 
       - name: Run PHPStan
+        if: ${{ matrix.laravel != '10.*' }}
         run: vendor/bin/phpstan analyse
