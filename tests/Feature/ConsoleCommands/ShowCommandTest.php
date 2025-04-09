@@ -45,6 +45,7 @@ class ShowCommandTest extends TestCase
 
         $settingsMatch = Setting::where('key', 'LIKE', "%system%")->orderBy('key')->pluck('key', 'id')->all();
 
+        /** @phpstan-ignore-next-line */
         $this->artisan('settings:show')
             ->expectsSearch(
                 'Select a setting to view details:',

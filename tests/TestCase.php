@@ -33,6 +33,8 @@ abstract class TestCase extends Orchestra
     {
         $ver = $this->app->version();
         $ver = explode('.', $ver);
-        return (float)$ver[0] . '.' . $ver[1];
+        $mainVer = (int)$ver[0];
+        $subVer = (int)$ver[1];
+        return $mainVer + ($subVer / 100);
     }
 }
