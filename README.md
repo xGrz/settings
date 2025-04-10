@@ -27,6 +27,7 @@ development and production environments. Here are the main functions and feature
     ```
     composer require xgrz/settings
     php artisan settings:publish-config
+    php artisan settings:publish-migration
     ```
 
 2. Edit the configuration file in your `config/app-settings` folder:
