@@ -13,6 +13,6 @@ class SettingsPublishLangCommand extends Command
     public function handle()
     {
         $this->call('vendor:publish', ['--tag' => 'settings-lang']);
-        return 0;
+        return Command::SUCCESS;
     }
 }

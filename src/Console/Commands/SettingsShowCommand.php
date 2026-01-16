@@ -22,7 +22,7 @@ class SettingsShowCommand extends Command
 
         if (! $setting) {
             $this->error('Setting not found.');
-            return 1;
+            return Command::FAILURE;
         }
 
         $this->line('<fg=green>Showing details for setting:</>');
@@ -32,7 +32,7 @@ class SettingsShowCommand extends Command
         $this->components->twoColumnDetail('Description', self::formatDescription($setting->description));
         $this->components->twoColumnDetail('Created at', '<fg=bright-blue>' . $setting->created_at->format('Y-m-d H:i:s') . '</>');
         $this->components->twoColumnDetail('Updated at', '<fg=bright-blue>' . $setting->updated_at->format('Y-m-d H:i:s') . '</>');
-        return 0;
+        return Command::SUCCESS;
     }
 
     private function searchByKey(string $key): ?Setting

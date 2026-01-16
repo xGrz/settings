@@ -22,7 +22,7 @@ class SettingsResetCommand extends Command
             $this->warn('Aborted. No changes were made.');
             $this->newLine();
 
-            return 1;
+            return Command::FAILURE;
         }
 
         Setting::truncate();
@@ -46,6 +46,6 @@ class SettingsResetCommand extends Command
         $this->info('Reset settings completed successfully.');
         $this->newLine();
         $this->call('settings:status');
-        return 0;
+        return Command::SUCCESS;
     }
 }

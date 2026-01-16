@@ -11,7 +11,7 @@ class SettingsStatusCommand extends Command
 
     protected $description = 'View settings configuration status';
 
-    public function handle(): void
+    public function handle(): int
     {
         $settings = new SettingItems();
         if ($settings->getItems()->isNotEmpty()) {
@@ -19,5 +19,7 @@ class SettingsStatusCommand extends Command
         } else {
             $this->warn('Settings not found');
         }
+
+        return Command::SUCCESS;
     }
 }

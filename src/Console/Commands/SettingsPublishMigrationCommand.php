@@ -13,6 +13,6 @@ class SettingsPublishMigrationCommand extends Command
     public function handle(): int
     {
         $this->call('vendor:publish', ['--tag' => 'settings-migrations']);
-        return 0;
+        return Command::SUCCESS;
     }
 }

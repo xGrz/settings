@@ -45,7 +45,7 @@ class SettingsSyncCommand extends Command
 
         if ($this->updatableTable->isEmpty()) {
             $this->renderNoUpdatesMessage();
-            return 1;
+            return Command::SUCCESS;
         }
 
         $this->renderWarning();
@@ -60,7 +60,7 @@ class SettingsSyncCommand extends Command
             $this->performUpdate($this->forceUpdatable);
         }
 
-        return 0;
+        return Command::SUCCESS;
     }
 
     private function renderNoUpdatesMessage(): void

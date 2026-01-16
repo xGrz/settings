@@ -19,13 +19,13 @@ class SyncCommandTest extends TestCase
 
     }
 
-    public function test_sync_with_synchronized_settings_should_return_warning()
+    public function test_sync_with_synchronized_settings_should_return_success()
     {
         $this->artisan('settings:reset', ['--force' => true]);
 
         $this->artisan('settings:sync')
             ->expectsOutput('Settings are already synchronized')
-            ->assertExitCode(1);
+            ->assertExitCode(0);
     }
 
     public function test_sync_should_ask_for_confirmation_on_safe_update()
@@ -106,7 +106,7 @@ class SyncCommandTest extends TestCase
     {
         $this->artisan('settings:reset', ['--force' => true]);
         $this->artisan('settings:sync', ['--silent' => true])
-            ->assertExitCode(1);
+            ->assertExitCode(0);
     }
 
     public function test_sync_command_with_silent_flag_should_return_without_output_when_changes_are_made()
