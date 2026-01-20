@@ -28,6 +28,9 @@ class Entry
         return new self($value, $type, $description);
     }
 
+    /**
+     * @deprecated Use `Entry` type helpers instead.
+     */
     public function type(?Type $settingType): static
     {
         $this->type = $settingType;
