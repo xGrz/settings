@@ -72,4 +72,48 @@ class Entry
 
         return CastValueToType::make($this->value, $type);
     }
+
+    public function stringValue(): static
+    {
+        $this->type(Type::STRING);
+
+        return $this;
+    }
+
+    public function textValue(): static
+    {
+        $this->type(Type::TEXT);
+
+        return $this;
+    }
+
+    public function floatValue(): static
+    {
+        $this->type(Type::FLOAT);
+
+        return $this;
+    }
+
+    public function integerValue(): static
+    {
+        $this->type(Type::INTEGER);
+
+        return $this;
+    }
+
+    public function onOffValue(): static
+    {
+        $this->type(Type::ON_OFF);
+
+        return $this;
+    }
+
+
+    public function yesNoValue(): static
+    {
+        $this->type(Type::YES_NO);
+
+        return $this;
+    }
+
 }
