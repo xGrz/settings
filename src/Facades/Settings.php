@@ -6,6 +6,7 @@ use Arr;
 use XGrz\Settings\Enums\Type;
 use XGrz\Settings\Exceptions\SettingKeyNotFoundException;
 use XGrz\Settings\Helpers\Config\SettingsConfig;
+use XGrz\Settings\Helpers\SettingItem;
 use XGrz\Settings\Models\Setting;
 
 class Settings
@@ -21,11 +22,14 @@ class Settings
     {
         if (count($this->settings)) return $this->settings;
 
-        $this->settings = cache()->remember(
+        $settings = (array)cache()->remember(
             SettingsConfig::getCacheKey(),
             SettingsConfig::getCacheTTL(),
-            fn() => Setting::all()->pluck('value', 'key')->toArray()
+            fn() => Setting::get()->mapWithKeys(fn(Setting $setting) => [$setting->key => SettingItem::make($setting)])->toArray()
         );
+
+        $this->settings = $settings;
+
         return $this->settings;
     }
 
@@ -39,23 +43,34 @@ class Settings
         return self::getInstance()->getSettings();
     }
 
+    private static function keyExists(string $key): bool
+    {
+        return array_key_exists($key, self::getInstance()->getSettings());
+    }
 
     /**
      * @throws SettingKeyNotFoundException
      */
-    public static function get(string $key)
+    public static function get(?string $key = NULL)
     {
-        if (array_key_exists($key, self::getInstance()->getSettings())) {
-            return self::getInstance()->getSettings()[$key];
+        if (empty($key)) {
+            return collect(self::getInstance()->getSettings())
+                ->map(fn(SettingItem $setting) => $setting->value)
+                ->toArray();
         }
+
+        if (self::keyExists($key)) {
+            return self::getInstance()->getSettings()[$key]->value;
+        }
+
         if (str($key)->endsWith('.')) {
             $key = str($key)->replaceEnd('.', '')->toString();
             $multiple = [];
-            foreach (self::getInstance()->getSettings() as $keyName => $value) {
+            foreach (self::getInstance()->getSettings() as $keyName => $settingItem) {
                 if (str($keyName)->startsWith($key)) {
                     $partialKey = str($keyName)->replaceStart($key, '')->replaceStart('.', '')->toString();
                     if (! empty($partialKey)) {
-                        $multiple[$partialKey] = $value;
+                        $multiple[$partialKey] = $settingItem->value;
                     }
                 }
             }
@@ -80,6 +95,17 @@ class Settings
         self::invalidateCache();
     }
 
+    /**
+     * @throws SettingKeyNotFoundException
+     */
+    public static function type(string $key): Type
+    {
+        if (self::keyExists($key)) {
+            return self::getInstance()->getSettings()[$key]->type;
+        }
+        throw new SettingKeyNotFoundException('Setting key [' . $key . '] not found');
+    }
+
     private function resetSettings(): void
     {
         $this->settings = [];
@@ -97,18 +123,13 @@ class Settings
         self::getInstance()->getSettings();
     }
 
-    public static function getTypes()
+    public static function getTypes(): array
     {
         $types = [];
         foreach (Type::cases() as $type) {
             $types[$type->value] = $type->getLabel();
         }
         return $types;
-    }
-
-    public function __invoke()
-    {
-        // TODO: Implement __invoke() method.
     }
 
 }

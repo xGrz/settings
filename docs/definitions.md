@@ -38,6 +38,11 @@ required. Entry can detect value type, however it is recommended to set it manua
 | null                     | *Undetected*  |
 | string (up to 200 chars) | Type::STRING  |
 | string (200+ chars)      | Type::TEXT    |
+| '0123'                   | Type::DIGITS  |
 
+From v 2.0.6 you can also set `Type::DIGITS`. It is useful to store values with digits only and starting with zero (
+postal codes, phone numbers).
+
+**Note:** `Type::DIGITS` with erase all chars except digits, for example `00-950A` with be stored as `00950`.
 
 

@@ -12,7 +12,7 @@ class SettingsConfig
         return Config::get('app-settings.database_table', 'system_settings');
     }
 
-    public static function getCacheKey(): ?string
+    public static function getCacheKey(): string
     {
         return Config::get('app-settings.cache.key', 'app_settings');
     }

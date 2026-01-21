@@ -38,6 +38,12 @@ class DetectValueTypeTest extends TestCase
         $this->assertNotSame(Type::STRING, DetectValueType::make(Str::random(201)));
     }
 
+    public function test_can_detect_digits_value_type()
+    {
+        $this->assertSame(Type::DIGITS, DetectValueType::make('02129'));
+    }
+
+
     public function test_can_detect_test_values()
     {
         $this->assertSame(Type::TEXT, DetectValueType::make(Str::random(201)));
@@ -64,4 +70,5 @@ class DetectValueTypeTest extends TestCase
         $this->expectExceptionMessage('Could not detect setting type by its value [array] given.');
         DetectValueType::make([]);
     }
+
 }

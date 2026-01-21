@@ -15,12 +15,19 @@ class DetectValueType
         if (is_bool($value)) {
             return Type::YES_NO;
         }
+
         if (is_float($value)) {
             return Type::FLOAT;
         }
+
         if (is_int($value)) {
             return Type::INTEGER;
         }
+
+        if (is_string($value) && str($value)->startsWith('0') && is_numeric($value)) {
+            return Type::DIGITS;
+        }
+
         if (is_string($value)) {
             return str($value)->length() > 200 ? Type::TEXT : Type::STRING;
         }

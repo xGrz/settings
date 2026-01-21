@@ -73,5 +73,41 @@ class SettingsFacadeTest extends TestCase
         $this->assertSame(__('settings::types.yes_no'), $types[Type::YES_NO->value]);
     }
 
+    public function test_set_setting_value()
+    {
+        Settings::set('system.address.name', '2nd Street');
+        $this->assertSame('2nd Street', settings('system.address.name'));
+    }
+
+    public function test_set_setting_value_with_global_helper()
+    {
+        setSetting('system.address.name', '3rd Street');
+        $this->assertSame('3rd Street', settings('system.address.name'));
+    }
+
+    public function test_set_setting_value_for_non_existing_key()
+    {
+        $this->expectException(SettingKeyNotFoundException::class);
+        $this->expectExceptionMessage('Setting key [system.address.nam] not found');
+
+        Settings::set('system.address.nam', '2nd Street');
+        $this->assertSame('2nd Street', settings('system.address.name'));
+    }
+
+    public function test_can_get_setting_type()
+    {
+        $type = Settings::type('system.address.name');
+        $this->assertSame(Type::STRING, $type);
+    }
+
+    public function test_can_get_all_settings_with_get_method()
+    {
+        $settings = Settings::get();
+
+        $this->assertIsArray($settings);
+        $this->assertArrayHasKey('system.address.name', $settings);
+        $this->assertEquals(10, count($settings));
+    }
+
 
 }

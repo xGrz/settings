@@ -87,6 +87,12 @@ retrieve the "system" branch, use:
 settings('system.');
 ``` 
 
+From v2.0.6 you can also retrieve an entire main branch of settings using the `get` method:
+
+```php
+settings();
+```
+
 If there are keys named `system.abc` and `system.bca`, an array will be returned:
 
 ```
@@ -95,6 +101,16 @@ array(
    'bca' => 'value2',
 );
 ```
+
+### Storing setting values
+
+From v2.0.6 you can also store settings using the `set` method:
+
+```php
+setSetting(string $key, mixed $value);
+```
+
+**Note:** If the key does not exist, exception will be thrown.
 
 ## CI/CD deployments
 
