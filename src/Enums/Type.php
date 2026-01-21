@@ -10,7 +10,6 @@ enum Type: int
     case STRING = 11;
     case INTEGER = 20;
     case FLOAT = 21;
-
     case DIGITS = 22;
 
     public function getLabel(): string

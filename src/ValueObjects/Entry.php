@@ -119,4 +119,11 @@ class Entry
         return $this;
     }
 
+    public function digitsValue(): static
+    {
+        $this->type(Type::DIGITS);
+        
+        return $this;
+    }
+
 }
