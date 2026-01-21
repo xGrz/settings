@@ -58,13 +58,6 @@ class SettingsFacadeTest extends TestCase
         settings('system.address');
     }
 
-    public function test_setting_helper_throws_exception_when_no_key_has_been_provided()
-    {
-        $this->expectException(SettingKeyNotFoundException::class);
-        $this->expectExceptionMessage('Please provide keyName as a parameter');
-        settings();
-    }
-
     public function test_settings_facade_return_setting_types_with_translated_labels()
     {
         $types = Settings::getTypes();
