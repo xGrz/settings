@@ -13,10 +13,6 @@ if (! function_exists('settings')) {
      */
     function settings(?string $key = NULL, ...$defaultValue): int|float|bool|null|string|array
     {
-        if (empty($key)) {
-            throw new SettingKeyNotFoundException('Please provide keyName as a parameter');
-        }
-
         try {
             return Settings::get($key);
         } catch (SettingKeyNotFoundException $ex) {
