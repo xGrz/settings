@@ -171,6 +171,28 @@ class SettingModelTest extends TestCase
         ]);
     }
 
+    public function test_cast_value_to_digits_where_starts_with_zero(): void
+    {
+        $s = self::createSetting(Type::DIGITS);
+        $s->update(['value' => '02-920']);
+        $this->assertSame('02920', $s->value);
+        $this->assertDatabaseHas(SettingsConfig::getDatabaseTableName(), [
+            'id' => $s->id,
+            'value' => '02920',
+        ]);
+    }
+
+    public function test_cast_value_to_digits_where_contains_letters(): void
+    {
+        $s = self::createSetting(Type::DIGITS);
+        $s->update(['value' => 'A02-920A']);
+        $this->assertSame('02920', $s->value);
+        $this->assertDatabaseHas(SettingsConfig::getDatabaseTableName(), [
+            'id' => $s->id,
+            'value' => '02920',
+        ]);
+    }
+
     public function test_can_store_null_on_integer()
     {
         $s = self::createSetting(Type::INTEGER);

@@ -67,6 +67,19 @@ class Settings
         throw new SettingKeyNotFoundException('Setting key [' . $key . '] not found');
     }
 
+    /**
+     * @throws SettingKeyNotFoundException
+     */
+    public static function set(string $key, string|int|float|null $value): void
+    {
+        $setting = Setting::firstWhere('key', $key);
+        if (empty($setting)) {
+            throw new SettingKeyNotFoundException('Setting key [' . $key . '] not found');
+        }
+        $setting->update(['value' => $value]);
+        self::invalidateCache();
+    }
+
     private function resetSettings(): void
     {
         $this->settings = [];
@@ -91,6 +104,11 @@ class Settings
             $types[$type->value] = $type->getLabel();
         }
         return $types;
+    }
+
+    public function __invoke()
+    {
+        // TODO: Implement __invoke() method.
     }
 
 }

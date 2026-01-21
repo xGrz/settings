@@ -7,4 +7,5 @@ return [
     'text' => 'Wartość opisowa',
     'on_off' => 'Wartość logiczna (włączony/wyłączony)',
     'yes_no' => 'Wartość logiczna (tak/nie)',
+    'digits' => 'Cyfry',
 ];

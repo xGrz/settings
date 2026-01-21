@@ -11,6 +11,8 @@ enum Type: int
     case INTEGER = 20;
     case FLOAT = 21;
 
+    case DIGITS = 22;
+
     public function getLabel(): string
     {
         return match ($this) {
@@ -20,6 +22,7 @@ enum Type: int
             self::INTEGER => __('settings::types.integer'),
             self::FLOAT => __('settings::types.float'),
             self::STRING => __('settings::types.string'),
+            self::DIGITS => __('settings::types.digits'),
         };
     }
 
@@ -29,8 +32,9 @@ enum Type: int
         return match ($this) {
             self::ON_OFF => [self::YES_NO],
             self::YES_NO => [self::ON_OFF],
-            self::INTEGER => [self::FLOAT],
+            self::INTEGER => [self::FLOAT, self::DIGITS],
             self::STRING => [self::TEXT],
+            self::DIGITS => [self::TEXT, self::INTEGER],
             default => [],
         };
     }
@@ -47,6 +51,7 @@ enum Type: int
             self::INTEGER => str($value)->toInteger(),
             self::FLOAT => str($value)->replace(',', '.')->toFloat(),
             self::STRING, self::TEXT => str($value)->toString(),
+            self::DIGITS => str($value)->replaceMatches('/\D+/', '')->toString(),
         };
     }
 
